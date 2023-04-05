@@ -5,8 +5,8 @@ import itertools
 def make_environment_attributes(columns, rows) -> dict:
     special_events = [('BOSS', 'FINAL-BOSS'), ('BOSS', 'MID-BOSS')]
     special_places = [(1, 0), (4, 2)]
-    resource_list = [('ITEM', 'HEALING POTIONS'), ('ITEM','STATUS POTIONS'), ('ITEM','ATTRIBUTE POTION'),
-                     ('ITEM', 'STATUS POTIONS'), ('ITEM', 'HEALING POTIONS'), ('ITEM','ATTRIBUTE POTION'),
+    resource_list = [('ITEM', 'HEALING POTIONS'), ('ITEM', 'STATUS POTIONS'), ('ITEM', 'ATTRIBUTE POTION'),
+                     ('ITEM', 'STATUS POTIONS'), ('ITEM', 'HEALING POTIONS'), ('ITEM', 'ATTRIBUTE POTION'),
                      ('ITEM', 'ATTRIBUTE POTION')]
 
     def create_items_locations():
@@ -19,7 +19,7 @@ def make_environment_attributes(columns, rows) -> dict:
             continue
         return place
 
-    def fill_empty_location() -> list:
+    def fill_empty_location():
         for room in list(itertools.product(range(columns), range(rows))):
             if room not in special_places:
                 special_events.append(('RANDOM',''))
