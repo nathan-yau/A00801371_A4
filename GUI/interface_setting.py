@@ -16,7 +16,7 @@ def gui_default_setting(game_window, game_title, icon_path, window_size):
 
 def closing_event() -> None:
     if tk.messagebox.askyesno(title="Confirm?", message="Do you confirm to close this awesome game?"):
-        quit()
+        exit()
 
 
 def gui_menubar(overall_gui) -> None:
