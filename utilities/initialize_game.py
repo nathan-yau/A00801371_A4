@@ -6,7 +6,7 @@ from save_load.save_game_file import create_save_file
 from save_load import DEFAULT_SAVE_FOLDER
 
 
-def load_into_game(all_interface_widgets:dict, game_info: dict):
+def load_into_game(all_interface_widgets: dict, game_info: dict):
     """
 
     :param all_interface_widgets:
