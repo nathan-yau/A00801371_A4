@@ -1,8 +1,9 @@
 GAME_NAME = "Oasis of the Lost Adventure"
 GAME_ICON = "./images/icon.png",
+GAME_BANNER = "./images/banner.png"
 GAME_COVER_PHOTO = "./images/cover_photo.png"
 GAME_MAP_PATH = "./images/maps/oasis_map_{}.png"
-GAME_ITEM_IMAGE_PATH = "./images/{}.png"
+GAME_ITEM_IMAGE_PATH = "./images/items/{}.png"
 GAME_ENEMY_IMAGE_PATH = "./images/enemy/{}.png"
 GAME_LOCATION_IMAGE_PATH = "./images/locations/{}.png"
 GUI_WINDOW_SIZE = "820x600"
