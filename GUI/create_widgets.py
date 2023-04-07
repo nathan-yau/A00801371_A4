@@ -165,5 +165,13 @@ def create_click_button(belonging_frame, widget_name_id: str, message: str, butt
 
 
 def attach_button_function_call(button_name, callable_function):
-    button_name.config(command=callable_function)
+    """
+    Attach a function to a button.
 
+    :param button_name: an existing tkinter button object
+    :param callable_function: a callable function that exists
+    :precondition: button_name must be an existing tkinter button object
+    :precondition: callable_function must be a callable function
+    :postcondition: attach callable function to a button
+    """
+    button_name.config(command=callable_function)
