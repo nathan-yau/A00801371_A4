@@ -2,44 +2,99 @@ import tkinter as tk
 from functools import partial
 
 from GUI.create_widgets import create_click_button, create_text_label, create_image_label, attach_button_function_call
-from GUI import GAME_MAP_PATH, GAME_ITEM_IMAGE_PATH, GAME_LOCATION_IMAGE_PATH
+from GUI import GAME_MAP_PATH, GAME_LOCATION_IMAGE_PATH
 from GUI import interface_setting
 from events.action_manager import gameplay
 
 from save_load.save_game_file import create_save_file
 from GUI_update.status_frame import update_status_message
-import inspect
+from events.serach_event import search, create_items_display
 
 
-def create_status_frame(overall_game_frame, player_data):
-    left_frame = tk.Frame(overall_game_frame['Top Frame'], bd=1, relief='sunken', padx=0, pady=0)
-    left_frame.grid(column=0, row=0, rowspan=2, sticky='nsw')
+def create_status_frame(overall_game_frame: dict, player_data: dict) -> tk.Frame:
+    """
+    Create a frame on the left side of the GUI to display character's status and map based on their location.
 
-    def left_frame_grid_setting():
+    :param overall_game_frame: a dictionary that contain the description of the tkinter objects in string as keys and
+                               their associated frame or widget objects as value
+    :param player_data: a dictionary that contains the description of the character's attributes as key and
+                        its corresponding data as values
+    :precondition: a tkinter root window must exist and contain at least one frame
+    :precondition: overall_game_frame must be a dictionary that contains the description of the tkinter objects in
+                   string as key and their associated frame or widget objects as value
+    :precondition: overall_game_frame must contain a key named as 'Top Frame'
+    :precondition: the value of the key "Top Frame" in overall_game_frame dictionary must be an existing tkinter frame
+    :precondition: player_data must be a dictionary that contains the description of the character's attributes as
+                   key and its corresponding data as values
+    :precondition: player_data must contain keys named as "Name", "X-coordinate" and "Y-coordinate"
+    :postcondition: create a tkinter Frame that contains status and map widgets on the top of the GUI window
+    :raise TypeError: if interface_frames is not a dictionary
+                      if player_data is not a dictionary
+    :raise KeyError: if interface_frames does not contain "Top Frame" as key
+                     if player_data does not contain "Name", "X-coordinate" and "Y-coordinate" as key
+    :raise AttributeError: if the value of the key "Top Frame" in interface_frame is not an existing tkinter frame
+    :return: a tkinter Frame that contains status and map widgets on the top of the GUI window
+    """
+    def left_frame_grid_setting() -> None:
+        """
+        Set up the grid in terms of column and row weights for a frame located on the left side of the GUI.
+
+        :postcondition: set up the grid in terms of column and row weights for a frame located on the
+                        left side of the GUI.
+        """
+        left_frame.grid(column=0, row=0, rowspan=2, sticky='nsw')
         left_frame.grid_columnconfigure(0, weight=1)
         for row, weight in enumerate([0, 0, 0, 1]):
             left_frame.grid_rowconfigure(row, weight=weight)
 
-    def create_character_status_widget():
-        create_text_label(frame=left_frame, widget_name="status_label", message=f"{player_data['Name']}'s Status",
-                          font_size=10, pady=5, relief="groove", bg="#E89F71")
+    def create_character_status_widget() -> None:
+        """
+        Create text labels for displaying character's status on the left side frame of the GUI.
+
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: widget name used in create_text_label() must not currently exist in the specific frame
+        :precondition: player_data must be a dictionary that contains the description of the character's attributes as
+                       key and its corresponding data as values
+        :precondition: player_data must contain keys named as "Name"
+        :raise KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
+                         if the widget name cannot be found in the specific frame after creation
+                         if player_data does not contain "Name" as key
+        """
+        create_text_label(frame_obj=left_frame, text_label_name="status_label",
+                          message=f"{player_data['Name']}'s Status", font_size=10, pady=5, relief="groove",
+                          bg="#E89F71")
         left_frame.children['status_label'].grid(row=2, sticky='nsew')
 
-        create_text_label(frame=left_frame, widget_name="character_status", font_size=12,
+        create_text_label(frame_obj=left_frame, text_label_name="character_status", font_size=12,
                           message=update_status_message(player_data), anchor="sw", justify="left")
         left_frame.children['character_status'].grid(row=3, sticky='n')
 
-    def create_map_widget():
+    def create_map_widget() -> None:
+        """
+        Create image label for displaying the game map on the left side frame of the GUI.
+
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: widget name used must not currently exist in the specific frame
+        :precondition: player_data must be a dictionary that contains the description of the character's attributes as
+                       key and its corresponding data as values
+        :precondition: player_data must contain keys named as "X-coordinate" and "Y-coordinate"
+        :postcondition: create image label for displaying the game map on the left side frame of the GUI
+        :raise KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
+                         if the widget name cannot be found in the specific frame after creation
+                         if player_data does not contain "X-coordinate" and "Y-coordinate" as keys
+        """
         coordinate = str(player_data["X-coordinate"]) + str(player_data["Y-coordinate"])
-        create_text_label(frame=left_frame, widget_name="map_label", message=f"Current Oasis Map",
+        create_text_label(frame_obj=left_frame, text_label_name="map_label", message=f"Current Oasis Map",
                           font_size=10, pady=5, relief="groove", bg="#E89F71")
         left_frame.children['map_label'].grid(row=0, sticky='new')
         create_image_label(frame=left_frame, widget_name="current_map", image_path=GAME_MAP_PATH.format(coordinate))
         left_frame.children['current_map'].grid(row=1, sticky='nsew')
 
-    left_frame_grid_setting()
-    create_character_status_widget()
-    create_map_widget()
+    left_frame = tk.Frame(overall_game_frame['Top Frame'], bd=1, relief='sunken', padx=0, pady=0)
+    left_frame_list = (left_frame_grid_setting, create_character_status_widget, create_map_widget)
+    [left_widget() for left_widget in left_frame_list]
     return left_frame
 
 
