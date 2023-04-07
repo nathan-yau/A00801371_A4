@@ -126,19 +126,42 @@ def create_user_entry(upper_frame, widget_id: str, box_width: int, entry_font_st
     tk.Entry(upper_frame, font=(entry_font_style, entry_font_size), width=box_width, name=widget_id).focus_set()
 
 
-def create_click_button(frame, widget_name: str, message: str, button_width: int = DEFAULT_BUTTON_WIDTH,
-                        font_style: str = DEFAULT_FONT, font_size: int = DEFAULT_FONT_SIZE,  **extra_setting):
+def create_click_button(belonging_frame, widget_name_id: str, message: str, button_width: int = DEFAULT_BUTTON_WIDTH,
+                        button_font_style: str = DEFAULT_FONT, button_font_size: int = DEFAULT_FONT_SIZE,
+                        **extra_setting):
     """
+    Create a tkinter button for player to click in a tkinter frame.
 
-    :param frame:
-    :param widget_name:
-    :param message:
-    :param button_width:
-    :param font_style:
-    :param font_size:
-    :return:
+    :param belonging_frame: a tkinter frame that allows for adding entry widget in an existed root window
+    :param widget_name_id: a string that represents the name of the creating entry box
+    :param message: a string that represents the desired text to display on the click button
+    :param button_width: an integer that indicates the width of the button
+    :param button_font_style: a string that represents a windows built-in font style. Default as DEFAULT_FONT
+    :param button_font_size: an integer that represents a font size. Default as DEFAULT_FONT_SIZE
+    :precondition: tkinter root window must exist and contain at least one frame
+    :precondition: belonging_frame must be an existing tkinter frame created for containing entry box
+                   in a tkinter root window
+    :precondition: widget_name_id must be a string that represents a unique name of the label
+    :precondition: button_font_style must represent an existing window built-in font style. Default as DEFAULT_FONT
+    :precondition: DEFAULT_FONT must exist in the __init__.py in GUI package
+    :precondition: button_font_size must represent an integer that represents a font size. Default as DEFAULT_FONT_SIZE
+    :precondition: DEFAULT_FONT_SIZE must exist in the __init__.py in GUI package
+    :postcondition: create a tkinter button for player to click in a tkinter frame
+    :raise RuntimeError: if tkinter root window has not been defined
+    :raise KeyError: if widget_name_id already exists in the specific frame
+    :raise TypeError: if widget_name_id, button_font_style and/or message is not a string type
+    :raise _tkinter.TclError: if belonging_frame is not a tkinter frame or does not exist in the tkinter root window
+                              if the key of **extra_setting is not a valid option for tkinter click function
+    :raise ValueError: if button_width and/or button_font_size is not a non-zero positive integer
     """
-    tk.Button(frame, text=message, font=(font_style, font_size), width=button_width, name=widget_name, **extra_setting)
+    if type(button_font_size) is not int or button_font_size <= 0 or type(button_width) is not int or button_width <= 0:
+        raise ValueError(f"Font Size & Button Width must be a non-zero positive integer.")
+    if type(button_font_style) is not str or type(widget_name_id) is not str or type(message) is not str:
+        raise TypeError(f"Font Style, Widget Name & Message must a string.")
+    if True in [widget_name_id == widget.winfo_name() for widget in belonging_frame.winfo_children()]:
+        raise KeyError(f"The widget name {widget_name_id} is taken in {belonging_frame} frame. Check for duplication.")
+    tk.Button(belonging_frame, text=message, font=(button_font_style, button_font_size),
+              width=button_width, name=widget_name_id, **extra_setting)
 
 
 def attach_button_function_call(button_name, callable_function):
