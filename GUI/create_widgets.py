@@ -171,4 +171,6 @@ def attach_button_function_call(button_name, callable_function):
     :raise TypeError: if callable_function is not a callable function or None type
     :raise AttributeError: if button_name is not a tkinter button
     """
+    if not callable(callable_function) and None:
+        raise TypeError("callable_function must be a callable function!")
     button_name.config(command=callable_function)
