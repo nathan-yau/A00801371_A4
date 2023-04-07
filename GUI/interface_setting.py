@@ -48,15 +48,35 @@ def closing_event(game_window) -> None:
         exit()
 
 
-def gui_menubar(overall_gui) -> None:
+def gui_menubar(overall_gui: dict) -> None:
+    """
+    Attach a newly created file menu dropdown tab with its options to the menu bar of the given GUI.
+
+    :param overall_gui: a dictionary that contain the description of the tkinter objects in string as keys and
+                        their associated frame or widget objects as value
+    :precondition: a tkinter root window must exist
+    :precondition: overall_gui must be a dictionary that contain the description of the tkinter objects in
+                   string as key and their associated frame or widget objects as value
+    :precondition: overall_gui must contain a key named as 'GUI'
+    :precondition: the value of "GUI" in overall_gui dictionary must be an existing tkinter root window
+    :postcondition: attach a newly created file menu dropdown tab with its options to the menu bar of the given GUI
+    :raise AttributeError: if the value of "GUI" in overall_gui dictionary is not a tkinter root window
+    """
     menu_bar = tk.Menu()
 
     def create_file_menu():
+        """
+        Create file menu dropdown tab with load game and exit game options on the menu bar of the given GUI.
+
+        :precondition: game_window a tkinter root window
+        :postcondition: close out all tkinter windows upon the player's confirmation on exiting the program
+        :raise AttributeError: if game_window is not a tkinter root window
+        """
         file_menu = tk.Menu(menu_bar, tearoff=False)
         menu_bar.add_cascade(menu=file_menu, label="File")
 
         file_dict = {"Load Game": partial(load_file, overall_gui),
-                     "Seperator": None, "Exit Game": closing_event}
+                     "Seperator": None, "Exit Game": partial(closing_event, overall_gui['GUI'])}
         for key, value in file_dict.items():
             if key == "Seperator":
                 file_menu.add_separator()
