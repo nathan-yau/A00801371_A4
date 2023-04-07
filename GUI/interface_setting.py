@@ -34,8 +34,17 @@ def gui_default_setting(game_window, game_title: str, icon_path: str, window_siz
     game_window.protocol("WM_DELETE_WINDOW", partial(closing_event, game_window))
 
 
-def closing_event() -> None:
+def closing_event(game_window) -> None:
+    """
+    Close out all tkinter windows upon the player's confirmation on exiting the program.
+
+    :param game_window: a tkinter root window
+    :precondition: game_window must be a tkinter root window
+    :postcondition: close out all tkinter windows upon the player's confirmation on exiting the program.
+    :raise AttributeError: if game_window is not a tkinter root window
+    """
     if tk.messagebox.askyesno(title="Confirm?", message="Do you confirm to close this awesome game?"):
+        game_window.destroy()
         exit()
 
 
