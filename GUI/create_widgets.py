@@ -16,8 +16,7 @@ def create_image_label(frame, widget_name: str, image_path: str):
     :precondition: image_path must be a string that is a file path
     :precondition: image_path must represent an existing image in the specific directory
     :postcondition: create a tkinter label that contains image represented by the provided path in a tkinter frame
-    :raise RuntimeError: if tkinter root window has not been defined
-    :raise _tkinter.TclError: if frame is not a tkinter frame or does not exist in the tkinter root window
+    :raise AttributeError: if frame is not a tkinter frame
     :raise KeyError: if widget_name already exists in the specific frame
     :raise TypeError: if widget_name or/and image_path is not a string type
     :raise FileNotFoundError: if the directory represented by image_path does not exist
@@ -43,8 +42,7 @@ def update_image_label(frame_object, label_name: str, image_directory: str):
     :precondition: image_directory must be a string that is a file path
     :precondition: image_directory must represent an existing image in the specific directory
     :postcondition: update the image of  a tkinter label represented by the provided path in a tkinter frame.
-    :raise RuntimeError: if tkinter root window has not been defined
-    :raise _tkinter.TclError: if frame_object is not a tkinter frame or does not exist in the tkinter root window
+    :raise AttributeError: if frame_object is not a tkinter frame
     :raise KeyError: if label_name does not exist in the specific frame
     :raise TypeError: if label_name or/and image_directory is not a string type
     :raise FileNotFoundError: if the directory represented by image_directory does not exist
@@ -73,13 +71,11 @@ def create_text_label(frame_obj, text_label_name: str, message: str, font_style:
     :precondition: font_size must represent an integer that represents a font size. Default as DEFAULT_FONT_SIZE
     :precondition: DEFAULT_FONT_SIZE must exist in the __init__.py in GUI package
     :postcondition: create a tkinter label that contains image represented by the provided path in a tkinter frame
-    :raise RuntimeError: if tkinter root window has not been defined
-    :raise _tkinter.TclError: if frame is not a tkinter frame or does not exist in the tkinter root window
-                              if the key of **additional_attribute is not a valid option for tkinter Label function
-                              if font_style is not a string
+    :raise _tkinter.TclError: if the key of **additional_attribute is not a valid option for tkinter Label function
     :raise TypeError: if font_style, text_label_name and/or message is not a string
     :raise KeyError: if text_label_name already exists in the specific frame
     :raise ValueError: if font_size is not a non-zero positive integer
+    :raise AttributeError: if frame_obj is not a tkinter frame
     """
     if type(font_style) is not str or type(text_label_name) is not str or type(message) is not str:
         raise TypeError(f"Font Style & Label Name & Message must a string.")
@@ -112,10 +108,9 @@ def create_user_entry(upper_frame, widget_id: str, box_width: int, entry_font_st
     :raise RuntimeError: if tkinter root window has not been defined
     :raise KeyError: if widget_id already exists in the specific frame
     :raise TypeError: if widget_id and/or entry_font_style is not a string type
-    :raise _tkinter.TclError: if frame is not a tkinter frame or does not exist in the tkinter root window
-                              if the key of **additional_attribute is not a valid option for tkinter Label function
-                              if box_width is not an integer
+    :raise _tkinter.TclError: if the key of **additional_attribute is not a valid option for tkinter Label function
     :raise ValueError: if box_width and/or entry_font_size is not a non-zero positive integer
+    :raise AttributeError: if upper_frame is not a tkinter frame
     """
     if type(box_width) is not int or box_width <= 0 or type(entry_font_size) is not int or entry_font_size <= 0:
         raise ValueError(f"Box Width & Font Size must be a non-zero positive integer")
@@ -150,9 +145,9 @@ def create_click_button(belonging_frame, widget_name_id: str, message: str, butt
     :raise RuntimeError: if tkinter root window has not been defined
     :raise KeyError: if widget_name_id already exists in the specific frame
     :raise TypeError: if widget_name_id, button_font_style and/or message is not a string type
-    :raise _tkinter.TclError: if belonging_frame is not a tkinter frame or does not exist in the tkinter root window
-                              if the key of **extra_setting is not a valid option for tkinter click function
+    :raise _tkinter.TclError: if the key of **extra_setting is not a valid option for tkinter click function
     :raise ValueError: if button_width and/or button_font_size is not a non-zero positive integer
+    :raise AttributeError: if belonging_frame is not a tkinter frame
     """
     if type(button_font_size) is not int or button_font_size <= 0 or type(button_width) is not int or button_width <= 0:
         raise ValueError(f"Font Size & Button Width must be a non-zero positive integer.")
@@ -171,7 +166,9 @@ def attach_button_function_call(button_name, callable_function):
     :param button_name: an existing tkinter button object
     :param callable_function: a callable function that exists
     :precondition: button_name must be an existing tkinter button object
-    :precondition: callable_function must be a callable function
+    :precondition: callable_function must be a callable function or None type
     :postcondition: attach callable function to a button
+    :raise TypeError: if callable_function is not a callable function or None type
+    :raise AttributeError: if button_name is not a tkinter button
     """
     button_name.config(command=callable_function)
