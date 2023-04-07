@@ -105,14 +105,13 @@ def create_user_entry(upper_frame, widget_id: str, box_width: int, entry_font_st
                    in a tkinter root window
     :precondition: widget_id must be a string that represents a unique name of the label
     :precondition: entry_font_style must represent an existing window built-in font style. Default as DEFAULT_FONT
-    :precondition: DEFAULT_FONT must exist in the __init__.py in GUI package
+    :precondition: DEFAULT_FONT must be defined
     :precondition: entry_font_size must represent an integer that represents a font size. Default as DEFAULT_FONT_SIZE
-    :precondition: DEFAULT_FONT_SIZE must exist in the __init__.py in GUI package
+    :precondition: DEFAULT_FONT_SIZE must be defined
     :postcondition: create a tkinter entry for player's input in a tkinter frame
-    :raise RuntimeError: if tkinter root window has not been defined
+    :raise NameError: if DEFAULT_FONT and/or DEFAULT_FONT_SIZE is not defined
     :raise KeyError: if widget_id already exists in the specific frame
     :raise TypeError: if widget_id and/or entry_font_style is not a string type
-    :raise _tkinter.TclError: if the key of **additional_attribute is not a valid option for tkinter Label function
     :raise ValueError: if box_width and/or entry_font_size is not a non-zero positive integer
     :raise AttributeError: if upper_frame is not a tkinter frame
     """
