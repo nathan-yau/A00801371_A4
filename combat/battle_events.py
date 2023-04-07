@@ -26,7 +26,7 @@ def check_if_alive(gui_dict, player_info):
 
 def activate_battle_button(interface_views, game_info, opponent, var):
     attach_button_function_call(button_name=interface_views['Buttons Frame'].children['physical_attack'],
-                                callable_function=partial(attack, 'magic', game_info['character'], interface_views,
+                                callable_function=partial(attack, 'physical', game_info['character'], interface_views,
                                                           opponent, var))
     attach_button_function_call(button_name=interface_views['Buttons Frame'].children['magic_attack'],
                                 callable_function=partial(attack, 'magic', game_info['character'], interface_views,
