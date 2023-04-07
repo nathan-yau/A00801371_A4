@@ -90,18 +90,40 @@ def create_text_label(frame_obj, text_label_name: str, message: str, font_style:
     tk.Label(frame_obj, text=message, font=(font_style, font_size), name=text_label_name, **additional_attribute)
 
 
-def create_user_entry(frame, widget_name: str, box_width: int, font_style: str = DEFAULT_FONT,
-                      font_size: int = DEFAULT_FONT_SIZE):
+def create_user_entry(upper_frame, widget_id: str, box_width: int, entry_font_style: str = DEFAULT_FONT,
+                      entry_font_size: int = DEFAULT_FONT_SIZE):
     """
+    Create a tkinter entry for player's input in a tkinter frame.
 
-    :param frame:
-    :param widget_name:
-    :param box_width:
-    :param font_style:
-    :param font_size:
-    :return:
+    :param upper_frame: a tkinter frame that allows for adding entry widget in an existed root window
+    :param widget_id: a string that represents the name of the creating entry box
+    :param box_width: an integer that indicates the width of the entry box
+    :param entry_font_style: a string that represents a windows built-in font style. Default as DEFAULT_FONT
+    :param entry_font_size: an integer that represents a font size. Default as DEFAULT_FONT_SIZE
+    :precondition: tkinter root window must exist and contain at least one frame
+    :precondition: upper_frame must be an existing tkinter frame created for containing entry box
+                   in a tkinter root window
+    :precondition: widget_id must be a string that represents a unique name of the label
+    :precondition: entry_font_style must represent an existing window built-in font style. Default as DEFAULT_FONT
+    :precondition: DEFAULT_FONT must exist in the __init__.py in GUI package
+    :precondition: entry_font_size must represent an integer that represents a font size. Default as DEFAULT_FONT_SIZE
+    :precondition: DEFAULT_FONT_SIZE must exist in the __init__.py in GUI package
+    :postcondition: create a tkinter entry for player's input in a tkinter frame
+    :raise RuntimeError: if tkinter root window has not been defined
+    :raise KeyError: if widget_id already exists in the specific frame
+    :raise TypeError: if widget_id and/or entry_font_style is not a string type
+    :raise _tkinter.TclError: if frame is not a tkinter frame or does not exist in the tkinter root window
+                              if the key of **additional_attribute is not a valid option for tkinter Label function
+                              if box_width is not an integer
+    :raise ValueError: if box_width and/or entry_font_size is not a non-zero positive integer
     """
-    tk.Entry(frame, font=(font_style, font_size), width=box_width, name=widget_name).focus_set()
+    if type(box_width) is not int or box_width <= 0 or type(entry_font_size) is not int or entry_font_size <= 0:
+        raise ValueError(f"Box Width & Font Size must be a non-zero positive integer")
+    if type(entry_font_style) is not str or type(widget_id) is not str:
+        raise TypeError(f"Font Style & Label Name must a string.")
+    if True in [widget_id == widget.winfo_name() for widget in upper_frame.winfo_children()]:
+        raise KeyError(f"The widget name {widget_id} is taken in this {upper_frame} frame. Check for duplication.")
+    tk.Entry(upper_frame, font=(entry_font_style, entry_font_size), width=box_width, name=widget_id).focus_set()
 
 
 def create_click_button(frame, widget_name: str, message: str, button_width: int = DEFAULT_BUTTON_WIDTH,
