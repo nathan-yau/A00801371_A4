@@ -13,6 +13,8 @@ def load_into_game(all_interface_widgets: dict, game_info: dict):
     :param game_info:
     :return:
     """
+    if not os.path.exists(DEFAULT_SAVE_FOLDER):
+        os.mkdir(DEFAULT_SAVE_FOLDER)
     if 'character' in game_info.keys():
         create_control_layout(all_interface_widgets, game_info)
     elif messagebox.askyesno(title="Confirm?", message=f"Do you confirm to create a player - {game_info['Name']}?"):
