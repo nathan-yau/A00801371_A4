@@ -274,27 +274,81 @@ def create_action_buttons_frame(overall_gui_view: dict, game_info: dict) -> tk.F
     return middle_bottom_frame
 
 
-def create_options_frame(overall_game_gui, game_data):
-    right_frame = tk.Frame(overall_game_gui['Top Frame'], bd=1, relief='groove')
-    right_frame.grid(column=2, row=0, rowspan=2, sticky='nse')
-    right_frame.grid_columnconfigure(0, weight=1)
-    right_frame.grid_rowconfigure(0, weight=2)
-    right_frame.grid_rowconfigure(1, weight=1)
+def create_options_frame(overall_game_gui: dict, game_data: dict) -> tk.Frame:
+    """
+    Create a frame on the side of the GUI to display the buttons for player to trigger events.
 
-    def toggle_item_frame():
+    :param overall_game_gui: a dictionary that contain the description of the tkinter objects in string as keys
+                             and their associated frame or widget objects as value
+    :param game_data: a dictionary that contains the information of character as value of a key called "character" and
+                      the information of the game environment as value of a key called "environment"
+    :precondition: a tkinter root window must exist and contain at least one frame
+    :precondition: overall_game_gui must be a dictionary that contains the description of the tkinter objects in
+                   string as key and their associated frame or widget objects as value
+    :precondition: overall_game_gui must contain keys named as "Top Frame" and "Item Frame"
+    :precondition: the value of the key "Top Frame" in overall_game_frame dictionary must be an existing tkinter frame
+    :precondition: the value of the key "Item Frame" in overall_game_frame dictionary must be an existing tkinter frame
+    :precondition: game_data must be a dictionary that contains the information of character as value of a key
+                   called "character" and the information of the game environment as value of a key called "environment"
+    : postcondition: create a frame on the side of the GUI to display the buttons for player to trigger events
+    : raise TypeError: if interface_frames is not a dictionary
+    : raise KeyError: if interface_frames does not contain "Top Frame" and "Item Frame" as key
+    : raise AttributeError: if the value of the key "Top Frame" or "Item Frame" in interface_frame is not
+                            an existing tkinter frame
+    : return: a tkinter Frame that contains action buttons widgets in the middle of the GUI window
+    """
+    def create_side_buttons_grid() -> None:
+        """
+        Set up the grid in terms of column and row weights for a frame located on the right side of the GUI.
+
+        :postcondition: set up the grid in terms of column and row weights for a frame located ine the
+                       bottom middle of the GUI.
+        """
+        right_frame.grid(column=2, row=0, rowspan=2, sticky='nse')
+        right_frame.grid_columnconfigure(0, weight=1)
+        right_frame.grid_rowconfigure(0, weight=2)
+        right_frame.grid_rowconfigure(1, weight=1)
+
+    def toggle_item_frame() -> None:
+        """
+        Toggle the visibility of the item frame on GUI.
+
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: overall_game_gui must be a dictionary that contains the description of the tkinter objects in
+                       string as key and their associated frame or widget objects as value
+        :precondition: overall_game_gui must contain a key named as 'Item Frame'
+        :raise TypeError: if interface_frames is not a dictionary
+        :raise KeyError: if interface_frames does not contain 'Item Frame' as key
+        """
         if overall_game_gui['Item Frame'].winfo_viewable():
             overall_game_gui['Item Frame'].grid_forget()
         else:
             overall_game_gui['Item Frame'].grid(column=1, row=0, sticky='nsew')
 
-    side_dict = {'ITEMS': toggle_item_frame,
-                 'SAVE': partial(create_save_file, -1, game_data),
-                 'EXIT': interface_setting.closing_event}
-    for index, (key, value) in enumerate(side_dict.items()):
-        button_name = key.lower().replace(" ", "_")
-        create_click_button(frame=right_frame, widget_name=button_name, message=key, bg='#FFDC00')
-        attach_button_function_call(button_name=right_frame.children[button_name], callable_function=value)
-        right_frame.children[button_name].grid(row=index, sticky='nsew')
+    def create_side_buttons() -> None:
+        """
+        Create three buttons (items, save and exit) on the right side of the frame in a graphical user interface (GUI).
+
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: widget name used in create_click_button() must not currently exist in the specific frame
+        :postcondition: create three buttons (items, save and exit) on the right side
+                        of the frame in a graphical user interface (GUI)
+        :raise KeyError: if the proposed widget names in create_click_button() already exists in the specific frame
+                         if the widget names cannot be found in the specific frame after creation
+        """
+        side_dict = {'ITEMS': toggle_item_frame,
+                     'SAVE': partial(create_save_file, -1, game_data),
+                     'EXIT': partial(interface_setting.closing_event, overall_game_gui['GUI'])}
+        for index, (key, value) in enumerate(side_dict.items()):
+            button_name = key.lower().replace(" ", "_")
+            create_click_button(belonging_frame=right_frame, widget_name_id=button_name, message=key, bg='#FFDC00')
+            attach_button_function_call(button_name=right_frame.children[button_name], callable_function=value)
+            right_frame.children[button_name].grid(row=index, sticky='nsew')
+
+    right_frame = tk.Frame(overall_game_gui['Top Frame'], bd=1, relief='groove')
+    side_frame_list = (create_side_buttons_grid, create_side_buttons)
+    [sid_widget() for sid_widget in side_frame_list]
     return right_frame
 
 
