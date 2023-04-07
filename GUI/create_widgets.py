@@ -70,15 +70,16 @@ def create_text_label(frame_obj, text_label_name: str, message: str, font_style:
     :precondition: text_label_name must be a string that represents a unique name of the label
     :precondition: message must be a string
     :precondition: font_style must represent an existing window built-in font style. Default as DEFAULT_FONT
-    :precondition: DEFAULT_FONT must exist in the __init__.py in GUI package
+    :precondition: DEFAULT_FONT must exist be defined
     :precondition: font_size must represent an integer that represents a font size. Default as DEFAULT_FONT_SIZE
-    :precondition: DEFAULT_FONT_SIZE must exist in the __init__.py in GUI package
+    :precondition: DEFAULT_FONT_SIZE must be defined
     :postcondition: create a tkinter label that contains image represented by the provided path in a tkinter frame
+    :raise NameError: if DEFAULT_FONT and/or DEFAULT_FONT_SIZE is not defined
     :raise _tkinter.TclError: if the key of **additional_attribute is not a valid option for tkinter Label function
+    :raise AttributeError: if frame_obj is not a tkinter frame
     :raise TypeError: if font_style, text_label_name and/or message is not a string
     :raise KeyError: if text_label_name already exists in the specific frame
     :raise ValueError: if font_size is not a non-zero positive integer
-    :raise AttributeError: if frame_obj is not a tkinter frame
     """
     if type(font_style) is not str or type(text_label_name) is not str or type(message) is not str:
         raise TypeError(f"Font Style & Label Name & Message must a string.")
