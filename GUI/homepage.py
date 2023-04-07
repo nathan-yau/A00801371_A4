@@ -102,44 +102,67 @@ def create_bottom_frame():
     """
     Create a frame located at the bottom of the GUI to provide current date, time and game information for the player.
 
+    :precondition: a tkinter root window must exist
     :postcondition: creates a frame at the bottom of the GUI to display the current date, time,
                     and game information for the player
-
     :return: a tkinter object that contains all three widgets located at the bottom frame of the GUI
+    :raise KeyError: if the proposed widget name in create_image_label() already exists in the specific frame
+                     if the widget name cannot be found in the specific frame after creation
     """
     def create_date_label():
         """
-        Create a label with current date
+        Create a label with current date at the bottom of the GUI.
 
-        :postcondition: create a label with current date
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: widget name used in create_text_label() must not currently exist in the specific frame
+        :postcondition: create a label with current date at the bottom of the GUI
+        :raise KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
+                         if the widget name cannot be found in the specific frame after creation
         """
-        create_text_label(frame=bottom_frame, widget_name='date_label', message=datetime.now().strftime("%d %B %Y"))
+        current_date = datetime.now().strftime("%d %B %Y")
+        create_text_label(frame_obj=bottom_frame, text_label_name='date_label', message=current_date)
         bottom_frame.children['date_label'].pack(side='left', padx=10)
 
     def create_time_label():
         """
-        Create a label with current time
+        Create a label with current time at the bottom of the GUI.
 
-        :postcondition: create a label with current time
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: widget name used in create_text_label() must not currently exist in the specific frame
+        :postcondition: create a label with current time at the bottom of the GUI
+        :raise KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
+                         if the widget name cannot be found in the specific frame after creation
         """
-        create_text_label(frame=bottom_frame, widget_name='time_label', message=datetime.now().strftime("%H:%M:%S"))
+        current_time = datetime.now().strftime("%H:%M:%S")
+        create_text_label(frame_obj=bottom_frame, text_label_name='time_label', message=current_time)
         bottom_frame.children['time_label'].pack(side='right', padx=20)
 
-    def create_game_info_label():
+    def create_game_info_label() -> None:
         """
-        Create a label with useful game information for player
+        Create a label with useful game information for player at the bottom of the GUI.
 
-        :postcondition: create a label with useful game information for player
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: widget name used in create_text_label() must not currently exist in the specific frame
+        :postcondition: create a label with useful game information for player at the bottom of the GUI
+        :raise KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
+                         if the widget name cannot be found in the specific frame after creation
         """
-        create_text_label(frame=bottom_frame, widget_name='event_bar',
+        create_text_label(frame_obj=bottom_frame, text_label_name='event_bar',
                           message="Welcome to Oasis of the Lost Adventure !")
         bottom_frame.children['event_bar'].pack(side='left', padx=30)
 
-    def update_time():
+    def update_time() -> None:
         """
-        Update the date and clock widgets with the current datetime every 200ms
+        Update the date and clock widgets at the bottom of the GUI. with the current datetime every 200ms
 
-        :postcondition: update the date and clock widgets with the current datetime every 200ms
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: labels with names "date_label" and "time_label" must exist in the frame
+        :postcondition: update the date and clock widgets at the bottom of the GUI with the current datetime every 200ms
+        :raise KeyError: if the widget name cannot be found in the specific frame
         """
         bottom_frame.children['date_label'].config(text=datetime.now().strftime("%d %B %Y"))
         bottom_frame.children['time_label'].config(text=datetime.now().strftime("%H:%M:%S"))
@@ -147,11 +170,8 @@ def create_bottom_frame():
 
     bottom_frame = tk.Frame(bd=1, relief='sunken', height=5)
     bottom_frame.grid(row=1, sticky='we')
-    create_date_label()
-    create_time_label()
-    create_game_info_label()
-    update_time()
-    print([stack[3] for stack in inspect.stack()])
+    bottom_widget_list = (create_date_label, create_time_label, create_game_info_label, update_time)
+    [bottom_widget() for bottom_widget in bottom_widget_list]
     return bottom_frame.children['event_bar']
 
 
