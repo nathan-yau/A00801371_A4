@@ -3,7 +3,7 @@ from GUI.create_widgets import update_image_label
 from combat.combat_enemy import enemy_status
 
 
-def toggle_battle_buttons(button_frame_views: str, action: str):
+def toggle_battle_buttons(button_frame_views, action: str):
     if action not in ["enable", "disable"]:
         raise ValueError("action parameter must be 'enable' or 'disable'")
     movement_state = "normal"
