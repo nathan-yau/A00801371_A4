@@ -98,39 +98,86 @@ def create_status_frame(overall_game_frame: dict, player_data: dict) -> tk.Frame
     return left_frame
 
 
-def create_script_frame(overall_interface_frame, game_info):
-    middle_top_frame = tk.Frame(overall_interface_frame['Top Frame'], bd=1, relief='groove')
+def create_script_frame(overall_interface_frame: dict) -> tk.Frame:
+    """
+    Create a frame in the middle of the GUI to display game script based on the player's location and events.
 
-    def create_middle_grid():
+    :param overall_interface_frame: a dictionary that contain the description of the tkinter objects in string as keys
+                                    and their associated frame or widget objects as value
+    :precondition: a tkinter root window must exist and contain at least one frame
+    :precondition: overall_interface_frame must be a dictionary that contains the description of the tkinter objects in
+                   string as key and their associated frame or widget objects as value
+    :precondition: overall_interface_frame must contain a key named as 'Top Frame'
+    :precondition: the value of the key "Top Frame" in overall_game_frame dictionary must be an existing tkinter frame
+    :postcondition: create a tkinter Frame that contains a game script in the middle of the GUI window
+    :raise TypeError: if interface_frames is not a dictionary
+    :raise KeyError: if interface_frames does not contain "Top Frame" as key
+    :raise AttributeError: if the value of the key "Top Frame" in interface_frame is not an existing tkinter frame
+    :return: a tkinter Frame that contains game script widgets in the middle of the GUI window
+    """
+
+    def create_middle_grid() -> None:
+        """
+        Set up the grid in terms of column and row weights for a frame located in the middle side of the GUI.
+
+        :postcondition: set up the grid in terms of column and row weights for a frame located ine the
+                        middle of the GUI.
+        """
         middle_top_frame.grid(column=1, row=0, sticky='nsew')
-        middle_top_frame.grid_columnconfigure(0, weight=3)
-        middle_top_frame.grid_columnconfigure(1, weight=0)
-        middle_top_frame.grid_rowconfigure(0, weight=0)
-        middle_top_frame.grid_rowconfigure(1, weight=1)
-        # for index, cell in enumerate([(1, 1), (1, 0)]):
-        #     column, row = cell
-        #     middle_top_frame.grid_columnconfigure(index, weight=column)
-        #     middle_top_frame.grid_rowconfigure(index, weight=row)
-        #     print(index, column, row)
+        weight_tuple = ((3, 0), (0, 1))
+        for index, weight in enumerate(weight_tuple):
+            middle_top_frame.grid_columnconfigure(index, weight=weight[0])
+            middle_top_frame.grid_rowconfigure(index, weight=weight[1])
 
-    def create_picture_display_frame():
-        create_image_label(frame=middle_top_frame, widget_name="image_box", image_path=GAME_LOCATION_IMAGE_PATH.format("default"))
+    def create_picture_display_frame() -> None:
+        """
+        Create image label for displaying the location or event image in the middle frame of the GUI.
+
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: widget name used in create_image_label() must not currently exist in the specific frame
+        :postcondition: create image label for displaying the location or event image in the middle frame of the GUI
+        :raise KeyError: if the proposed widget name already exists in the specific frame
+                         if the widget name cannot be found in the specific frame after creation
+        """
+        create_image_label(frame=middle_top_frame, widget_name="image_box",
+                           image_path=GAME_LOCATION_IMAGE_PATH.format("default"))
         middle_top_frame.children['image_box'].grid(row=0, column=1, sticky='nswe')
 
-    def create_enemy_info_display_frame():
-        create_text_label(frame=middle_top_frame, widget_name="enemy_info", message=f"",
+    def create_enemy_info_display_frame() -> None:
+        """
+        Create text label for displaying the status of enemy in the middle frame of the GUI.
+
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: widget name used in create_image_label() must not currently exist in the specific frame
+        :postcondition: create image label for displaying the location or event image in the middle frame of the GUI
+        :raise KeyError: if the proposed widget name already exists in the specific frame
+                         if the widget name cannot be found in the specific frame after creation
+        """
+        create_text_label(frame_obj=middle_top_frame, text_label_name="enemy_info", message=f"",
                           font_size=10, relief="groove", justify="left")
         middle_top_frame.children['enemy_info'].grid(row=0, column=0, sticky='nswe')
 
-    def create_script_display_frame():
-        create_text_label(frame=middle_top_frame, widget_name="script_display", message=f"Welcome to Oasis",
+    def create_script_display_frame() -> None:
+        """
+        Create text label for displaying the game plot in the middle frame of the GUI.
+
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: widget name used in create_image_label() must not currently exist in the specific frame
+        :postcondition: create image label for displaying the location or event image in the middle frame of the GUI
+        :raise KeyError: if the proposed widget name already exists in the specific frame
+                         if the widget name cannot be found in the specific frame after creation
+        """
+        create_text_label(frame_obj=middle_top_frame, text_label_name="script_display", message=f"Welcome to Oasis",
                           font_size=8, pady=10, relief="groove")
         middle_top_frame.children['script_display'].grid(row=1, column=0, columnspan=2, sticky='nswe')
 
-    create_middle_grid()
-    create_picture_display_frame()
-    create_enemy_info_display_frame()
-    create_script_display_frame()
+    middle_top_frame = tk.Frame(overall_interface_frame['Top Frame'], bd=1, relief='groove')
+    middle_top_frame_list = (create_middle_grid, create_picture_display_frame, create_enemy_info_display_frame,
+                             create_script_display_frame)
+    [middle_top_widget() for middle_top_widget in middle_top_frame_list]
     return middle_top_frame
 
 
