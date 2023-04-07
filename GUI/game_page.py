@@ -181,43 +181,94 @@ def create_script_frame(overall_interface_frame: dict) -> tk.Frame:
     return middle_top_frame
 
 
-def create_action_buttons_frame(overall_gui_view, game_info):
-    middle_bottom_frame = tk.Frame(overall_gui_view['Top Frame'], bd=1, relief='groove')
-    middle_bottom_frame.grid(column=1, row=1, sticky='nsew')
-    middle_bottom_frame.grid_columnconfigure(0, weight=1)
-    middle_bottom_frame.grid_columnconfigure(1, weight=1)
+def create_action_buttons_frame(overall_gui_view: dict, game_info: dict) -> tk.Frame:
+    """
+    Create a frame in the bottom middle of the GUI to display the action buttons for player to trigger events.
+
+    :param overall_gui_view: a dictionary that contain the description of the tkinter objects in string as keys
+                             and their associated frame or widget objects as value
+    :param game_info: a dictionary that contains the information of character as value of a key called "character" and
+                      the information of the game environment as value of a key called "environment"
+    :precondition: a tkinter root window must exist and contain at least one frame
+    :precondition: overall_interface_frame must be a dictionary that contains the description of the tkinter objects in
+                   string as key and their associated frame or widget objects as value
+    :precondition: overall_interface_frame must contain a key named as 'Top Frame'
+    :precondition: the value of the key "Top Frame" in overall_game_frame dictionary must be an existing tkinter frame
+    :precondition: game_info must be a dictionary that contains the information of character as value of a key
+                   called "character" and the information of the game environment as value of a key called "environment"
+    :postcondition: create a tkinter Frame that contains a game script in the middle of the GUI window
+    :raise TypeError: if interface_frames is not a dictionary
+    :raise KeyError: if interface_frames does not contain "Top Frame" as key
+    :raise AttributeError: if the value of the key "Top Frame" in interface_frame is not an existing tkinter frame
+    :return: a tkinter Frame that contains action buttons widgets in the middle of the GUI window
+    """
+
+    def create_buttons_grid() -> None:
+        """
+        Set up the grid in terms of column and row weights for a frame located in the bottom middle side of the GUI.
+
+        :postcondition: set up the grid in terms of column and row weights for a frame located ine the
+                        bottom middle of the GUI.
+        """
+        middle_bottom_frame.grid(column=1, row=1, sticky='nsew')
+        middle_bottom_frame.grid_columnconfigure(0, weight=1)
+        middle_bottom_frame.grid_columnconfigure(1, weight=1)
 
     def create_action_buttons():
-        create_text_label(frame=middle_bottom_frame, widget_name="actions_label", message=f"Actions", relief="groove")
+        """
+        Create four buttons (search, physical attack, magic attack and run) in the bottom middle of the frame in a
+        graphical user interface (GUI).
+
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: widget name used in create_click_button() must not currently exist in the specific frame
+        :postcondition: create four buttons (search, physical attack, magic attack and run) in the bottom middle
+                        of the frame in a graphical user interface (GUI)
+        :raise KeyError: if the proposed widget names in create_click_button() already exists in the specific frame
+                         if the widget names cannot be found in the specific frame after creation
+        """
+        create_text_label(frame_obj=middle_bottom_frame, text_label_name="actions_label", message=f"Actions",
+                          relief="groove")
         middle_bottom_frame.children['actions_label'].grid(row=1, column=0, columnspan=3, sticky='nsew')
 
-        action_buttons = {'Search': None,
-                          'Physical Attack': None,
-                          'Magic Attack': None,
-                          'Run': None}
+        action_buttons = {'Search': partial(search, overall_gui_view, game_info), 'Physical Attack': None,
+                          'Magic Attack': None, 'Run': None}
         for index, (key, value) in enumerate(action_buttons.items()):
             button_name = key.lower().replace(" ", "_")
-            create_click_button(frame=middle_bottom_frame, widget_name=button_name, message=key)
-            # attach_button_function_call(button_name=middle_bottom_frame.children[button_name],
-            #                             callable_function=value)
+            create_click_button(belonging_frame=middle_bottom_frame, widget_name_id=button_name, message=key)
+            attach_button_function_call(button_name=middle_bottom_frame.children[button_name], callable_function=value)
             middle_bottom_frame.children[button_name].grid(row=index % 2+2, column=index//2, sticky='nsew')
             if key != "Search":
                 middle_bottom_frame.children[button_name].config(state="disabled")
 
     def create_direction_buttons():
-        create_text_label(frame=middle_bottom_frame, widget_name="direct_label", message=f"Direction", relief="groove")
+        """
+        Create four buttons (move left, move up, move down, move right) in the bottom middle of the frame in a
+        graphical user interface (GUI).
+
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: widget name used in create_click_button() must not currently exist in the specific frame
+        :postcondition: create four buttons (move left, move up, move down, move right) in the bottom middle
+                        of the frame in a graphical user interface (GUI)
+        :raise KeyError: if the proposed widget names in create_click_button() already exists in the specific frame
+                         if the widget names cannot be found in the specific frame after creation
+        """
+        create_text_label(frame_obj=middle_bottom_frame, text_label_name="direct_label", message=f"Direction",
+                          relief="groove")
         middle_bottom_frame.children['direct_label'].grid(row=4, column=0, columnspan=3, sticky='nsew')
 
         direction_buttons = ['MOVE LEFT (A)', 'MOVE RIGHT (D)', 'MOVE UP (W)', 'MOVE DOWN (S)']
         for index, key in enumerate(direction_buttons):
             button_name = key.lower().replace(" ", "_")[:-4]
-            create_click_button(frame=middle_bottom_frame, widget_name=button_name, message=key)
+            create_click_button(belonging_frame=middle_bottom_frame, widget_name_id=button_name, message=key)
             attach_button_function_call(button_name=middle_bottom_frame.children[button_name],
                                         callable_function=partial(gameplay, overall_gui_view, game_info, key[-2]))
-            middle_bottom_frame.children[button_name].grid(row=index % 2+5, column= index//2, sticky='nsew')
+            middle_bottom_frame.children[button_name].grid(row=index % 2+5, column=index//2, sticky='nsew')
 
-    create_action_buttons()
-    create_direction_buttons()
+    middle_bottom_frame = tk.Frame(overall_gui_view['Top Frame'], bd=1, relief='groove')
+    middle_bottom_list = (create_buttons_grid, create_action_buttons, create_direction_buttons)
+    [widget() for widget in middle_bottom_list]
     middle_bottom_frame.bind("<KeyPress>", partial(gameplay, overall_gui_view, game_info))
     middle_bottom_frame.focus_set()
     return middle_bottom_frame
