@@ -31,17 +31,27 @@ def create_image_label(frame, widget_name: str, image_path: str):
     created_image.image = projected_image
 
 
-def update_image_label(frame, widget_name: str, image_path: str):
+def update_image_label(frame_object, label_name: str, image_directory: str):
     """
+    Update the image of a tkinter label represented by the provided path in a tkinter frame.
 
-    :param frame:
-    :param widget_name:
-    :param image_path:
-    :return:
+    :param frame_object: a tkinter frame that contains the label represented by widget_name
+    :param label_name: a string that represents the name of an existing label in frame
+    :param image_directory: a string that represents an existing image in the specific directory
+    :precondition: frame_object must be an existing tkinter frame that contains the label represented by widget_name
+    :precondition: label_name must be a string that represents a unique name of the label
+    :precondition: image_directory must be a string that is a file path
+    :precondition: image_directory must represent an existing image in the specific directory
+    :postcondition: update the image of  a tkinter label represented by the provided path in a tkinter frame.
+    :raise RuntimeError: if tkinter root window has not been defined
+    :raise _tkinter.TclError: if frame_object is not a tkinter frame or does not exist in the tkinter root window
+    :raise KeyError: if label_name does not exist in the specific frame
+    :raise TypeError: if label_name or/and image_directory is not a string type
+    :raise FileNotFoundError: if the directory represented by image_directory does not exist
     """
-    projected_image = tk.PhotoImage(file=image_path)
-    frame.children[widget_name].config(image=projected_image)
-    frame.children[widget_name].image = projected_image
+    projected_image = tk.PhotoImage(file=image_directory)
+    frame_object.children[label_name].config(image=projected_image)
+    frame_object.children[label_name].image = projected_image
 
 
 def create_text_label(frame, widget_name: str, message: str, font_style: str = DEFAULT_FONT,
