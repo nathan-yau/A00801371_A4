@@ -37,12 +37,18 @@ def activate_battle_button(interface_views, game_info, opponent, var):
 
 
 def attack(attack_type, player_info, all_widgets_dict, foe, var):
-    if attack_type == "magic":
+    if attack_type == "magic" and player_info['Current MP'] > 0:
         player_attack = int((player_info['Magic Power']*0.6 - foe['Magic Resistance']*1.5) * (1+random.randint(0, 40)/100))
+        player_info['Current MP'] -= min(random.randint(2, 8), player_info['Current MP'])
+    elif attack_type == "magic" and player_info['Current MP'] <= 0:
+        player_attack = 0
     else:
         player_attack = int((player_info['Strength'] * 0.6 - foe['Dexterity'] * 1.5) * (1 + random.randint(0, 40) / 100))
 
     foe_attack = int((foe['Strength'] * 1.5 - player_info['Dexterity'] * 1.0) * (1 + random.randint(10, 100) / 100))
+
+    if random.randint(0, 5) == 1:
+        player_info['Status'] = "Poisoned"
 
     if random.randint(0, 1) == 0:
         foe['HP'] -= max(1, player_attack)
