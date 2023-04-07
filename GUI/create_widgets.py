@@ -19,10 +19,10 @@ def create_image_label(frame, widget_name: str, image_path: str):
     :raise AttributeError: if frame is not a tkinter frame
     :raise KeyError: if widget_name already exists in the specific frame
     :raise TypeError: if widget_name or/and image_path is not a string type
-    :raise FileNotFoundError: if the directory represented by image_path does not exist
+    :raise _tkinter.TclError: if the directory represented by image_path does not exist
     """
-    if type(widget_name) is not str:
-        raise TypeError(f"Label Name & Message must a string.")
+    if type(widget_name) is not str or type(image_path) is not str:
+        raise TypeError(f"Label Name & Image Path must a string.")
     if True in [widget_name == widget.winfo_name() for widget in frame.winfo_children()]:
         raise KeyError(f"The widget name {widget_name} is taken in this {frame} frame. Check for duplication.")
     projected_image = tk.PhotoImage(file=image_path)
