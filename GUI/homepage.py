@@ -175,30 +175,85 @@ def create_bottom_frame():
     return bottom_frame.children['event_bar']
 
 
-def create_homepage():
+def create_homepage() -> dict:
     """
-    Create and configure a GUI with size, menu bar, frames and widgets for a game
+    Create and configure a GUI with size, menu bar, two frames and nine widgets for welcome page of a game.
 
-    :postcondition: create and configure a GUI with size, menu bar, frames and widgets for a game
+    :postcondition: create and configure a GUI with size, menu bar, frames and widgets for welcome page of a game
+    :raise NamError: if MAX_LEN_NAME, MIN_LEN_NAME, GAME_NAME, GAME_ICON and/or GUI_WINDOW_SIZE are not defined
+    :raise _tkinter.TclError: if GAME_ICON is not an image path that represents an existing image or the image
+                              does not exist in the path it represents
+                              if GUI_WINDOW_SIZE must be a geometry specifier as string in the format like "100x120"
     """
-    def gui_setup():
+    def gui_setup() -> None:
+        """
+        Configure a GUI with the window size and menu bar.
+
+        :precondition: a tkinter root window must be defined
+        :precondition: GAME_NAME, GAME_ICON and GUI_WINDOW_SIZE must be defined
+        :precondition: GAME_ICON must be an image path that represents an existing image
+        :precondition: GUI_WINDOW_SIZE must be a geometry specifier as string in the format like "100x120"
+                       where 100 represents the width and 120 represents the height of the GUI
+        :postcondition: configure a GUI with the window size and menu bar
+        :raise NamError: if GAME_NAME, GAME_ICON and/or GUI_WINDOW_SIZE are not defined
+        :raise _tkinter.TclError: if GAME_ICON is not an image path that represents an existing image or the image
+                                  does not exist in the path it represents
+                                  if GUI_WINDOW_SIZE must be a geometry specifier as string in the format like "100x120"
+
+        """
         gui_default_setting(game_window=gui_frames['GUI'], game_title=GAME_NAME,
                             icon_path=GAME_ICON, window_size=GUI_WINDOW_SIZE)
         gui_menubar(gui_frames)
 
-    def new_game_button():
+    def attach_function_to_new_game_button() -> None:
+        """
+        Attach a callable function to button called new_game.
+
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: a button called new_game must currently exist in the specific frame
+        :precondition: function being attached to the button must be a callable function or None type
+        :postcondition: attach a callable function to button called new_game
+        :raise KeyError: if the button is not found in the frame
+                         if the key of the frame cannot be found in the dictionary gui_frames
+        :raise TypeError: if callable_function is not a callable function or None type
+        """
         attach_button_function_call(button_name=gui_frames['Top Frame'].children['new_game'],
                                     callable_function=valid_player_name)
 
-    def load_game_button():
+    def attach_function_to_load_game_button() -> None:
+        """
+        Attach a callable function to button called load_game.
+
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: a button called load_game must currently exist in the specific frame
+        :precondition: function being attached to the button must be a callable function
+        :postcondition: attach a callable function to button called new_game
+        :raise KeyError: if the button is not found in the frame
+                         if the key of the frame cannot be found in the dictionary gui_frames
+        :raise TypeError: if gui_frames is not a dictionary
+                          if callable_function is not a callable function or None type
+        """
         attach_button_function_call(button_name=gui_frames['Top Frame'].children['load_game'],
                                     callable_function=partial(load_file, gui_frames))
 
-    def valid_player_name():
+    def valid_player_name() -> None:
         """
         Make sure player's name is not an empty string or greater than 10 letters.
 
+        :precondition: a tkinter root window must exist and contain at least one frame
+        :precondition: frame must be an existing tkinter frame in the tkinter root window
+        :precondition: an entry box called "plater_name" must exist in the tkinter frame
+        :precondition: MAX_LEN_NAME and MIN_LEN_NAME must be defined
+        :precondition: MAX_LEN_NAME and MIN_LEN_NAME must be integers
+        :precondition: gui_frames must be a dictionary
         :postcondition: check if the player's name is length of 1 to 10
+        :raise NameError: if MAX_LEN_NAME and/or MIN_LEN_NAME are not defined
+        :raise TypeError: if gui_frames is not a dictionary
+        :raise KeyError: if "Top Frame" key is not found under gui_frames dictionary
+                         if player_name entry nox is not found in the frame stored in the gui_frames dictionary
+                         with a key "Top Frame"
         """
         name = gui_frames['Top Frame'].children['player_name'].get()
         confirmation = "Do you confirm to create a new game?"
@@ -209,10 +264,8 @@ def create_homepage():
             messagebox.showinfo(title="Warning!", message=warning)
 
     gui_frames = {"GUI": tk.Tk(), "Top Frame": create_top_frame(), "Event Bar": create_bottom_frame()}
-    gui_setup()
-    new_game_button()
-    load_game_button()
-    print([stack[3] for stack in inspect.stack()])
+    gui_level_list = (gui_setup, attach_function_to_new_game_button, attach_function_to_load_game_button)
+    [gui_function() for gui_function in gui_level_list]
     return gui_frames
 
 
