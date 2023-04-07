@@ -379,20 +379,46 @@ def create_item_frame(views_frame: dict, player_data: dict) -> tk.Frame:
     return item_frame
 
 
+def create_control_layout(overall_gui_widgets: dict, game_data: dict) -> None:
+    """
+    Recreate a frame located at the top of the GUI with new five inner frames to show the game information and buttons
+    for player to trigger events.
 
-def create_control_layout(overall_gui_widgets, game_data: dict):
-    def rearrange_game_panel_grid():
+    :param overall_gui_widgets: a dictionary that contain the description of the tkinter objects in string as keys
+                                and their associated frame or widget objects as value
+    :param game_data: a dictionary that contains the information of character as value of a key called "character" and
+                      the information of the game environment as value of a key called "environment"
+    :precondition: a tkinter root window must exist and contain at least one frame
+    :precondition: overall_game_gui must be a dictionary that contains the description of the tkinter objects in
+                   string as key and their associated frame or widget objects as value
+    :precondition: overall_game_gui must contain keys named as "Top Frame" and "Event Bar"
+    :precondition: the value of the key "Top Frame" in overall_game_frame dictionary must be an existing tkinter frame
+    :precondition: the value of the key "Event Bar" in overall_game_frame dictionary must be an existing tkinter label
+    :precondition: game_data must be a dictionary that contains the information of character as value of a key
+                   called "character" and the information of the game environment as value of a key called "environment"
+    :postcondition: recreate a frame located at the top of the GUI with new five inner frames to show the
+                    game information and buttons for player to trigger events
+    :raise TypeError: if interface_frames is not a dictionary
+    :raise KeyError: if interface_frames does not contain "Top Frame" and "Event Bar" as key
+    :raise AttributeError: if the value of the key "Top Frame" or "Event Bar" in interface_frame is not
+                          an existing tkinter frame
+    """
+    def rearrange_game_panel_grid() -> None:
+        """
+        Rearrange the grid in terms of column and row weights for a frame located at the top of the GUI.
+
+        :postcondition: rearrange the grid in terms of column and row weights for a frame located at the top of the GUI
+        """
         player_view_weight = ((1, 0), (0, 1), (0, 0))
-        for index in range(3):
-            overall_gui_widgets['Top Frame'].grid_rowconfigure(index, weight=player_view_weight[index][0])
-            overall_gui_widgets['Top Frame'].grid_columnconfigure(index, weight=player_view_weight[index][1])
+        for index, weight_tuple in enumerate(player_view_weight):
+            overall_gui_widgets['Top Frame'].grid_rowconfigure(index, weight=weight_tuple[0])
+            overall_gui_widgets['Top Frame'].grid_columnconfigure(index, weight=weight_tuple[1])
 
-    for widget in overall_gui_widgets['Top Frame'].winfo_children():
-        widget.destroy()
+    [widget.destroy() for widget in overall_gui_widgets['Top Frame'].winfo_children()]
     rearrange_game_panel_grid()
     overall_gui_widgets['Event Bar'].config(text=f"Login as {game_data['character']['Name']}")
     overall_gui_widgets.update({'Status Frame': create_status_frame(overall_gui_widgets, game_data['character']),
-                                'Script Frame': create_script_frame(overall_gui_widgets, game_data),
+                                'Script Frame': create_script_frame(overall_gui_widgets),
                                 'Buttons Frame': create_action_buttons_frame(overall_gui_widgets, game_data),
                                 'Item Frame': create_item_frame(overall_gui_widgets, game_data['character']),
                                 'Side Bar Frame': create_options_frame(overall_gui_widgets, game_data)})
