@@ -54,18 +54,40 @@ def update_image_label(frame_object, label_name: str, image_directory: str):
     frame_object.children[label_name].image = projected_image
 
 
-def create_text_label(frame, widget_name: str, message: str, font_style: str = DEFAULT_FONT,
+def create_text_label(frame_obj, text_label_name: str, message: str, font_style: str = DEFAULT_FONT,
                       font_size: int = DEFAULT_FONT_SIZE, **additional_attribute):
     """
+    Create a tkinter label that contains image represented by the provided path in a tkinter frame.
 
-    :param frame:
-    :param widget_name:
-    :param message:
-    :param font_style:
-    :param font_size:
-    :return:
+    :param frame_obj: a tkinter frame that allows for adding label widget
+    :param text_label_name: a string that represents the name of the creating text label
+    :param message: a string that represents the desired text to display on the label
+    :param font_style: a string that represents a windows built-in font style. Default as DEFAULT_FONT
+    :param font_size: an integer that represents a font size. Default as DEFAULT_FONT_SIZE
+    :param additional_attribute: an arbitrary KW Args that represents a key-value pair tk.Label function accepts
+    :precondition: frame_obj must be an existing tkinter frame object created for containing labels
+    :precondition: text_label_name must be a string that represents a unique name of the label
+    :precondition: message must be a string
+    :precondition: font_style must represent an existing window built-in font style. Default as DEFAULT_FONT
+    :precondition: DEFAULT_FONT must exist in the __init__.py in GUI package
+    :precondition: font_size must represent an integer that represents a font size. Default as DEFAULT_FONT_SIZE
+    :precondition: DEFAULT_FONT_SIZE must exist in the __init__.py in GUI package
+    :postcondition: create a tkinter label that contains image represented by the provided path in a tkinter frame
+    :raise RuntimeError: if tkinter root window has not been defined
+    :raise _tkinter.TclError: if frame is not a tkinter frame or does not exist in the tkinter root window
+                              if the key of **additional_attribute is not a valid option for tkinter Label function
+                              if font_style is not a string
+    :raise TypeError: if font_style, text_label_name and/or message is not a string
+    :raise KeyError: if text_label_name already exists in the specific frame
+    :raise ValueError: if font_size is not a non-zero positive integer
     """
-    tk.Label(frame, text=message, font=(font_style, font_size), name=widget_name, **additional_attribute)
+    if type(font_style) is not str or type(text_label_name) is not str or type(message) is not str:
+        raise TypeError(f"Font Style & Label Name & Message must a string.")
+    if type(font_size) is not int or font_size <= 0:
+        raise ValueError(f"Font Size must be a non-zero positive integer.")
+    if True in [text_label_name == widget.winfo_name() for widget in frame_obj.winfo_children()]:
+        raise KeyError(f"The widget name {text_label_name} is taken in this {frame_obj} frame. Check for duplication.")
+    tk.Label(frame_obj, text=message, font=(font_style, font_size), name=text_label_name, **additional_attribute)
 
 
 def create_user_entry(frame, widget_name: str, box_width: int, font_style: str = DEFAULT_FONT,
