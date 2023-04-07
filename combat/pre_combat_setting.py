@@ -19,9 +19,7 @@ def toggle_battle_buttons(button_frame_views, action: str):
 
 
 def update_enemy_info(overall_frames_info, enemy, script):
+    image_name = enemy['Name'].lower().replace(" ", "_")
     overall_frames_info['Script Frame'].children['enemy_info'].config(text=f"{enemy_status(enemy)}")
-    update_image_label(overall_frames_info['Script Frame'], "image_box", GAME_ENEMY_IMAGE_PATH.format(enemy['Name']))
+    update_image_label(overall_frames_info['Script Frame'], "image_box", GAME_ENEMY_IMAGE_PATH.format(image_name))
     overall_frames_info['Script Frame'].children['script_display'].config(text=script)
-
-
-
