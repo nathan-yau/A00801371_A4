@@ -141,11 +141,11 @@ def create_click_button(belonging_frame, widget_name_id: str, message: str, butt
                    in a tkinter root window
     :precondition: widget_name_id must be a string that represents a unique name of the label
     :precondition: button_font_style must represent an existing window built-in font style. Default as DEFAULT_FONT
-    :precondition: DEFAULT_FONT must exist in the __init__.py in GUI package
+    :precondition: DEFAULT_FONT must be defined
     :precondition: button_font_size must represent an integer that represents a font size. Default as DEFAULT_FONT_SIZE
-    :precondition: DEFAULT_FONT_SIZE must exist in the __init__.py in GUI package
+    :precondition: DEFAULT_FONT_SIZE must be defined
     :postcondition: create a tkinter button for player to click in a tkinter frame
-    :raise RuntimeError: if tkinter root window has not been defined
+    :raise NameError: if DEFAULT_FONT and/or DEFAULT_FONT_SIZE is not defined
     :raise KeyError: if widget_name_id already exists in the specific frame
     :raise TypeError: if widget_name_id, button_font_style and/or message is not a string type
     :raise _tkinter.TclError: if the key of **extra_setting is not a valid option for tkinter click function
