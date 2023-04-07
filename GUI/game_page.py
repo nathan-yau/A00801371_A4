@@ -352,24 +352,32 @@ def create_options_frame(overall_game_gui: dict, game_data: dict) -> tk.Frame:
     return right_frame
 
 
-def create_item_frame(views_frame, player_data):
+def create_item_frame(views_frame: dict, player_data: dict) -> tk.Frame:
+    """
+    Create a frame on the side of the GUI to display the buttons for player to trigger events.
+
+    :param views_frame: a dictionary that contain the description of the tkinter objects in string as keys
+                        and their associated frame or widget objects as value
+    :param player_data: a dictionary that contains the description of the character's attributes as key and
+                        its corresponding data as values
+    :precondition: a tkinter root window must exist and contain at least one frame
+    :precondition: views_frame must be a dictionary that contains the description of the tkinter objects in
+                   string as key and their associated frame or widget objects as value
+    :precondition: views_frame must contain a key named as "Top Frame"
+    :precondition: the value of the key "Top Frame" in overall_game_frame dictionary must be an existing tkinter frame
+    :precondition: player_data must be a dictionary that contains the description of the character's attributes as
+                   key and its corresponding data as values
+    :postcondition: create a frame on the side of the GUI to display the buttons for player to trigger events
+    :raise TypeError: if interface_frames is not a dictionary
+    :raise KeyError: if interface_frames does not contain "Top Frame" and "Item Frame" as key
+    :raise AttributeError: if the value of the key "Top Frame" or "Item Frame" in interface_frame is not
+                          an existing tkinter frame
+    :return: a tkinter Frame that contains action buttons widgets in the middle of the GUI window
+    """
     item_frame = tk.Frame(views_frame['Top Frame'], name="item_frame", relief='groove')
-    for index, (key, value) in enumerate(player_data["Items"].items()):
-        button_name = key.lower().replace(" ", "_")
-        item_frame.grid_rowconfigure(index, weight=1)
-
-        create_image_label(frame=item_frame, widget_name=f"{button_name}_image",
-                           image_path=GAME_ITEM_IMAGE_PATH.format(key))
-        item_frame.children[f"{button_name}_image"].grid(row=index, column=0, sticky='e', padx=(35, 0))
-
-        create_text_label(frame=item_frame, widget_name=f"{button_name}_label", message=f"{key} x {value}", font_size=8)
-        item_frame.children[f"{button_name}_label"].grid(row=index, column=1, sticky='nsew', padx=(35, 0))
-        if key not in ["Sanctum Key", "Raw Pig", "Oasis Explorer"]:
-            create_click_button(frame=item_frame, widget_name=f"{button_name}_button", message="USE")
-            item_frame.children[f"{button_name}_button"].grid(row=index, column=2, sticky='e', padx=(35, 0), ipadx=20)
+    create_items_display(item_frame, player_data, views_frame)
     return item_frame
-    # display_message.children['item_frame'].children['heal_potions'].config(
-    #     command=partial(using_health_potion, player_info, status_column, display_message))
+
 
 
 def create_control_layout(overall_gui_widgets, game_data: dict):
@@ -388,7 +396,6 @@ def create_control_layout(overall_gui_widgets, game_data: dict):
                                 'Buttons Frame': create_action_buttons_frame(overall_gui_widgets, game_data),
                                 'Item Frame': create_item_frame(overall_gui_widgets, game_data['character']),
                                 'Side Bar Frame': create_options_frame(overall_gui_widgets, game_data)})
-    print([stack[3] for stack in inspect.stack()])
 
 
 def main():
