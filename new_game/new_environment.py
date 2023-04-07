@@ -3,11 +3,11 @@ import itertools
 
 
 def make_environment_attributes(columns, rows) -> dict:
-    special_events = [('BOSS', 'FINAL-BOSS'), ('BOSS', 'MID-BOSS')]
-    special_places = [(1, 0), (4, 2)]
-    resource_list = [('ITEM', 'HEALING POTIONS'), ('ITEM', 'STATUS POTIONS'), ('ITEM', 'ATTRIBUTE POTION'),
-                     ('ITEM', 'STATUS POTIONS'), ('ITEM', 'HEALING POTIONS'), ('ITEM', 'ATTRIBUTE POTION'),
-                     ('ITEM', 'ATTRIBUTE POTION')]
+    special_events = [('BOSS', 'General Havoc'), ('BOSS', 'Sage Thorne'), ('ITEM', 'The Amulet of Knowledge')]
+    special_places = [(1, 0), (4, 2), (4, 0)]
+    resource_list = [('ITEM', 'Healing Potion'), ('ITEM', 'Status Potion'), ('ITEM', 'Attribute Potion'),
+                     ('ITEM', 'Status Potion'), ('ITEM', 'Healing Potion'), ('ITEM', 'Attribute Potion'),
+                     ('ITEM', 'Attribute Potion')]
 
     def create_items_locations():
         for item in resource_list:
