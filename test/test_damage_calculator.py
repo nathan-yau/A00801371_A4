@@ -5,6 +5,18 @@ from combat.combat_actions import damage_calculator
 
 class DamageCalculatorTest(TestCase):
 
+    def test_when_attacker_is_not_dict(self):
+        player_info = "Magic Power"
+        foe_info = {"Magic Resistance": 1, "Dexterity": 1}
+        with self.assertRaises(TypeError):
+            damage_calculator("magic", player_info, foe_info)
+
+    def test_when_defender_is_not_dict(self):
+        player_info = {"Magic Power": 200, "Strength": 200, "Current MP": 0}
+        foe_info = "Magic Resistance"
+        with self.assertRaises(TypeError):
+            damage_calculator("magic", player_info, foe_info)
+
     def test_when_attack_type_is_not_string(self):
         zero_player_info = {"Magic Power": 200, "Strength": 200, "Current MP": 0}
         zero_foe_info = {"Magic Resistance": 1, "Dexterity": 1}
