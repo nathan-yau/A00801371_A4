@@ -4,6 +4,17 @@ from combat.combat_actions import status_condition
 
 
 class Test(TestCase):
+
+    def test_when_player_info_is_not_dict(self):
+        zero_player_info = "Hello"
+        with self.assertRaises(TypeError):
+            status_condition(zero_player_info)
+
+    def test_when_player_info_is_empty_dict(self):
+        zero_player_info = {}
+        with self.assertRaises(KeyError):
+            status_condition(zero_player_info)
+
     def test_when_status_key_not_found_in_player_info(self):
         zero_player_info = {"Current MP": 0}
         with self.assertRaises(KeyError):
