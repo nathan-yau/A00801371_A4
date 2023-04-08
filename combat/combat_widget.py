@@ -67,7 +67,7 @@ def activate_battle_button(interface_views: dict, player_info: dict, opponent: d
     :raise KeyError: if the buttons cannot be found in the frame
                      if the key of the frame cannot be found in the gui_dict
     :raise TypeError: if callable_function is not a callable function or None type
-                      if interface_views is not a dictionary
+                      if interface_views, player_info and/or opponent is not a dictionary
     """
     attach_button_function_call(button_name=interface_views['Buttons Frame'].children['physical_attack'],
                                 callable_function=partial(attack, 'physical', player_info, interface_views,
