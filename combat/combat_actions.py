@@ -25,6 +25,7 @@ def damage_calculator(attack_type: str, attacker: dict, defender: dict) -> int:
     :raise TypeError: if the value of the keys ['Magic Power'], ['Strength'] and ['Current MP']
                       inside attacker is not number
                       if the value of the keys ['Magic Resistance'], ['Dexterity'] inside defender is not number
+                      if attacker or defender is not dictionary
     :raise ValueError: if attack_type is a not string that containing either 'magic' or 'physical'
     """
     if type(attack_type) is not str or attack_type not in ["magic", "physical"]:
@@ -49,6 +50,7 @@ def status_condition(player_info: dict) -> None:
     :precondition: player_info must be a dictionary containing key named as ['Status']
     :postcondition: set the player's status to "Poisoned" with a probability of 1/6, or unchanged in other condition
     :raise KeyError: if the key ['Status'] cannot be found inside player_info
+    :raise TypeError: if player_info is not a dictionary
     """
     player_info['Status'] = "Poisoned" if random.randint(0, 5) == 1 else player_info['Status']
 
@@ -90,7 +92,8 @@ def attack(attack_type: str, player_info: dict, all_widgets_dict: dict, foe: dic
     :raise TypeError: if the value of the keys ['Magic Resistance', ['Dexterity'], ['Magic Power'], ['Strength'],
                       and ['Current MP'] inside attacker inside game_player_info and/or foe is not number
                       if the value of the keys ['Current HP'] inside game_player_info is not number
-                      f the value of the keys ['HP'] inside foe is not number
+                      if the value of the keys ['HP'] inside foe is not number
+                      if game_player_info and/or foe is not a dictionary
     :raise ValueError: if attack_type is a not string that containing either 'magic' or 'physical'
     :raise AttributeError: if the value of the key ['Event Bar'] inside all_widgets_dict is not a tkinter label
                            if the value of the key ['Script Frame'] inside all_widgets_dict is not a tkinter frame
@@ -145,6 +148,7 @@ def run_away(game_player_info: dict, all_widgets_dict: dict, foe: dict) -> None:
                      if the keys ['Event Bar'] and ['Script Frame'] cannot be found inside all_widgets_dict
                      if the keys ['Name'] cannot be found inside foe
     :raise TypeError: if the value of the key ['Current HP'] inside game_player_info is not a numeric value
+                      if game_player_info and/or foe is not a dictionary
     :raise AttributeError: if the value of the key ['Event Bar'] inside all_widgets_dict is not a tkinter label
                            if the value of the key ['Script Frame'] inside all_widgets_dict is not a tkinter frame
     """
