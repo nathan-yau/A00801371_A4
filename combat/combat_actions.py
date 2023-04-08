@@ -53,7 +53,7 @@ def status_condition(player_info: dict) -> None:
     player_info['Status'] = "Poisoned" if random.randint(0, 5) == 1 else player_info['Status']
 
 
-def attack(attack_type, player_info, all_widgets_dict, foe):
+def attack(attack_type: str, player_info: dict, all_widgets_dict: dict, foe: dict) -> None:
     """
     Update the label on event bar after reducing the player and the foe's health points
 
@@ -123,7 +123,7 @@ def random_run_away_probability():
     return random.randint(0, 2) == 0
 
 
-def run_away(game_player_info, all_widgets_dict, foe):
+def run_away(game_player_info: dict, all_widgets_dict: dict, foe: dict) -> None:
     """
     Update the GUI displays and player's HP based on the success of the player's attempt to run away from the foe.
 
