@@ -41,7 +41,7 @@ def toggle_battle_buttons(button_frame_views: tk.Frame, action: str) -> None:
     [button_frame_views.children[button].config(state=battle_state) for button in enable_button]
 
 
-def activate_battle_button(interface_views, player_info, opponent):
+def activate_battle_button(interface_views: dict, player_info: dict, opponent: dict) -> None:
     """
     Attach callable functions to buttons for battle (physical_attacked, magic_attack and run)
 
