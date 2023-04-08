@@ -41,7 +41,7 @@ def damage_calculator(attack_type: str, attacker: dict, defender: dict) -> int:
         return max(1, int(basic_physical_damage * random.uniform(1.5, 1.9)))
 
 
-def status_condition(player_info):
+def status_condition(player_info: dict) -> None:
     """
     Randomly set the player's status to "Poisoned" with a probability of 1/6, otherwise it keeps the current status
 
