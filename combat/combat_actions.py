@@ -2,7 +2,7 @@ import random
 from combat.player_info import check_if_alive
 
 
-def damage_calculator(attack_type, attacker, defender):
+def damage_calculator(attack_type: str, attacker: dict, defender: dict) -> int:
     """
     Calculate the damage inflicted by a given attacker on a defender based on the attack type and their stats.
 
