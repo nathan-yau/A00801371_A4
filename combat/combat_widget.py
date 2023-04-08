@@ -1,10 +1,33 @@
+import tkinter as tk
+
 from GUI.create_widgets import attach_button_function_call
 from functools import partial
 from combat.combat_actions import attack, run_away
 
 
-def toggle_battle_buttons(button_frame_views, action: str):
-    if action not in ["enable", "disable"]:
+def toggle_battle_buttons(button_frame_views: tk.Frame, action: str) -> None:
+    """
+    Toggle the active state of battle related buttons / keypress listeners in the GUI.
+
+    :param button_frame_views: a tkinter frame that contains buttons named as ['move_left'], ['move_right'],
+                               ['move_up'], ['move_down'], ['search'], ['physical_attack'], ['magic_attack'] and
+                               ['run'].
+    :param action: a string that is either "enable" or "disable"
+    :precondition: a tkinter root window must exist and contain at least one frame
+    :precondition: button_frame_views must be an existing tkinter frame in the tkinter root window
+    :precondition: button_frame_views must be a tkinter frame
+    :precondition: button_frame_views must contain buttons named as ['move_left'],
+                   ['move_right'], ['move_up'], ['move_down'], ['search'], ['physical_attack'],
+                   ['magic_attack'] and ['run']
+    :precondition: action must be a string that is either "enable" or "disable"
+    :postcondition: toggle the active state of battle related buttons / keypress listeners in the GUI.
+    :raise AttributeError: if button_frame_views is not a tkinter frame
+    :raise KeyError: if button_frame_views does not contain buttons named as ['move_left'],
+                     ['move_right'], ['move_up'], ['move_down'], ['search'], ['physical_attack'],
+                     ['magic_attack'] and ['run']
+    :raise ValueError: if action is not a string that is either "enable" or "disable"
+    """
+    if type(action) is not str or action not in ["enable", "disable"]:
         raise ValueError("action parameter must be 'enable' or 'disable'")
     movement_state = "normal"
     battle_state = "disabled"
