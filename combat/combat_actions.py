@@ -113,7 +113,7 @@ def attack(attack_type: str, player_info: dict, all_widgets_dict: dict, foe: dic
     all_widgets_dict['pause'].set(False)
 
 
-def random_run_away_probability():
+def random_run_away_probability() -> bool:
     """
     Return True with a probability of 1/3.
 
