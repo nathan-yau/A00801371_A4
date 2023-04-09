@@ -14,7 +14,7 @@ def create_save_file(save_slot: int, all_key_attributes: dict) -> None:
     :precondition: save_slot must be greater than or equal to -1
     :precondition: all_key_attributes must be a dictionary that conatins all player data and game environment data
     :postcondition: create a plan text file, which contains an encoded dictionary as string
-    :raise TypeError: if all_key_attributes is not a dictionary
+    :raises TypeError: if all_key_attributes is not a dictionary
     """
     if type(all_key_attributes) is not dict:
         raise TypeError("all_key_attributes must be dictionary")
