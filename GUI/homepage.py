@@ -132,7 +132,7 @@ def create_bottom_frame():
         :precondition: frame must be an existing tkinter frame in the tkinter root window
         :precondition: widget name used in create_text_label() must not currently exist in the specific frame
         :postcondition: create a label with current time at the bottom of the GUI
-        :raise KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
+        :raises KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
                          if the widget name cannot be found in the specific frame after creation
         """
         current_time = datetime.now().strftime("%H:%M:%S")
@@ -147,7 +147,7 @@ def create_bottom_frame():
         :precondition: frame must be an existing tkinter frame in the tkinter root window
         :precondition: widget name used in create_text_label() must not currently exist in the specific frame
         :postcondition: create a label with useful game information for player at the bottom of the GUI
-        :raise KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
+        :raises KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
                          if the widget name cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=bottom_frame, text_label_name='event_bar',
@@ -162,7 +162,7 @@ def create_bottom_frame():
         :precondition: frame must be an existing tkinter frame in the tkinter root window
         :precondition: labels with names "date_label" and "time_label" must exist in the frame
         :postcondition: update the date and clock widgets at the bottom of the GUI with the current datetime every 200ms
-        :raise KeyError: if the widget name cannot be found in the specific frame
+        :raises KeyError: if the widget name cannot be found in the specific frame
         """
         bottom_frame.children['date_label'].config(text=datetime.now().strftime("%d %B %Y"))
         bottom_frame.children['time_label'].config(text=datetime.now().strftime("%H:%M:%S"))
@@ -180,8 +180,8 @@ def create_homepage() -> dict:
     Create and configure a GUI with size, menu bar, two frames and nine widgets for welcome page of a game.
 
     :postcondition: create and configure a GUI with size, menu bar, frames and widgets for welcome page of a game
-    :raise NamError: if MAX_LEN_NAME, MIN_LEN_NAME, GAME_NAME, GAME_ICON and/or GUI_WINDOW_SIZE are not defined
-    :raise _tkinter.TclError: if GAME_ICON is not an image path that represents an existing image or the image
+    :raises NamError: if MAX_LEN_NAME, MIN_LEN_NAME, GAME_NAME, GAME_ICON and/or GUI_WINDOW_SIZE are not defined
+    :raises _tkinter.TclError: if GAME_ICON is not an image path that represents an existing image or the image
                               does not exist in the path it represents
                               if GUI_WINDOW_SIZE must be a geometry specifier as string in the format like "100x120"
     """
@@ -195,8 +195,8 @@ def create_homepage() -> dict:
         :precondition: GUI_WINDOW_SIZE must be a geometry specifier as string in the format like "100x120"
                        where 100 represents the width and 120 represents the height of the GUI
         :postcondition: configure a GUI with the window size and menu bar
-        :raise NamError: if GAME_NAME, GAME_ICON and/or GUI_WINDOW_SIZE are not defined
-        :raise _tkinter.TclError: if GAME_ICON is not an image path that represents an existing image or the image
+        :raises NamError: if GAME_NAME, GAME_ICON and/or GUI_WINDOW_SIZE are not defined
+        :raises _tkinter.TclError: if GAME_ICON is not an image path that represents an existing image or the image
                                   does not exist in the path it represents
                                   if GUI_WINDOW_SIZE must be a geometry specifier as string in the format like "100x120"
 
@@ -214,9 +214,9 @@ def create_homepage() -> dict:
         :precondition: a button called new_game must currently exist in the specific frame
         :precondition: function being attached to the button must be a callable function or None type
         :postcondition: attach a callable function to button called new_game
-        :raise KeyError: if the button is not found in the frame
+        :raises KeyError: if the button is not found in the frame
                          if the key of the frame cannot be found in the dictionary gui_frames
-        :raise TypeError: if callable_function is not a callable function or None type
+        :raises TypeError: if callable_function is not a callable function or None type
         """
         attach_button_function_call(button_name=gui_frames['Top Frame'].children['new_game'],
                                     callable_function=valid_player_name)
@@ -230,9 +230,9 @@ def create_homepage() -> dict:
         :precondition: a button called load_game must currently exist in the specific frame
         :precondition: function being attached to the button must be a callable function
         :postcondition: attach a callable function to button called new_game
-        :raise KeyError: if the button is not found in the frame
+        :raises KeyError: if the button is not found in the frame
                          if the key of the frame cannot be found in the dictionary gui_frames
-        :raise TypeError: if gui_frames is not a dictionary
+        :raises TypeError: if gui_frames is not a dictionary
                           if callable_function is not a callable function or None type
         """
         attach_button_function_call(button_name=gui_frames['Top Frame'].children['load_game'],
@@ -249,9 +249,9 @@ def create_homepage() -> dict:
         :precondition: MAX_LEN_NAME and MIN_LEN_NAME must be integers
         :precondition: gui_frames must be a dictionary
         :postcondition: check if the player's name is length of 1 to 10
-        :raise NameError: if MAX_LEN_NAME and/or MIN_LEN_NAME are not defined
-        :raise TypeError: if gui_frames is not a dictionary
-        :raise KeyError: if "Top Frame" key is not found under gui_frames dictionary
+        :raises NameError: if MAX_LEN_NAME and/or MIN_LEN_NAME are not defined
+        :raises TypeError: if gui_frames is not a dictionary
+        :raises KeyError: if "Top Frame" key is not found under gui_frames dictionary
                          if player_name entry nox is not found in the frame stored in the gui_frames dictionary
                          with a key "Top Frame"
         """
@@ -259,7 +259,7 @@ def create_homepage() -> dict:
         confirmation = "Do you confirm to create a new game?"
         warning = "Whoa, hold up there! \n\nPlayer name cannot be empty or more than 10 letters!"
         if MIN_LEN_NAME < len(name.strip()) <= MAX_LEN_NAME and messagebox.askyesno(message=confirmation):
-            new_player_page(name, gui_frames)
+            create_new_player_page(name, gui_frames)
         else:
             messagebox.showinfo(title="Warning!", message=warning)
 
