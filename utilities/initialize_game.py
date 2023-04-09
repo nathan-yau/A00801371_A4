@@ -1,4 +1,5 @@
 import os
+import tkinter as tk
 from tkinter import messagebox
 from GUI.game_page import create_control_layout
 from new_game.new_environment import make_environment_attributes
