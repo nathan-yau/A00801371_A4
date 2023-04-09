@@ -1,9 +1,10 @@
 from GUI.create_widgets import create_image_label, create_text_label, create_click_button
 from functools import partial
 from GUI import GAME_ITEM_IMAGE_PATH
+from events import items_event
 
 
-def create_items_display(item_frame, player_data: dict, overall_gui: dict):
+def create_items_display(item_frame, player_data: dict, overall_gui: dict) -> None:
     """
     Create display of the player's items on an existing frame with buttons for using them.
 
@@ -34,8 +35,8 @@ def create_items_display(item_frame, player_data: dict, overall_gui: dict):
         if key not in ["Sanctum Key", "The Amulet of Knowledge", "Oasis Explorer"]:
             create_click_button(belonging_frame=item_frame, widget_name_id=f"{button_name}_button", message="USE")
             item_frame.children[f"{button_name}_button"].grid(row=index, column=2, sticky='e', padx=(25, 0), ipadx=20)
-            item_frame.children[f"{button_name}_button"].config(command=partial(eval(button_name), overall_gui,
-                                                                                player_data))
+            item_frame.children[f"{button_name}_button"].config(command=partial(getattr(items_event, button_name),
+                                                                                overall_gui, player_data))
 
 
 def main():
