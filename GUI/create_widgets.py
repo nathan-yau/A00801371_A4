@@ -16,10 +16,10 @@ def create_image_label(frame, widget_name: str, image_path: str):
     :precondition: image_path must be a string that is a file path
     :precondition: image_path must represent an existing image in the specific directory
     :postcondition: create a tkinter label that contains image represented by the provided path in a tkinter frame
-    :raise AttributeError: if frame is not a tkinter frame
-    :raise KeyError: if widget_name already exists in the specific frame
-    :raise TypeError: if widget_name or/and image_path is not a string type
-    :raise _tkinter.TclError: if the directory represented by image_path does not exist
+    :raises AttributeError: if frame is not a tkinter frame
+    :raises KeyError: if widget_name already exists in the specific frame
+    :raises TypeError: if widget_name or/and image_path is not a string type
+    :raises _tkinter.TclError: if the directory represented by image_path does not exist
     """
     if type(widget_name) is not str or type(image_path) is not str:
         raise TypeError(f"Label Name & Image Path must a string.")
