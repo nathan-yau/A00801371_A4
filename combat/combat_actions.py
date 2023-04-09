@@ -99,13 +99,14 @@ def attack(attack_type: str, player_info: dict, all_widgets_dict: dict, foe: dic
                            if the value of the key ['Script Frame'] inside all_widgets_dict is not a tkinter frame
     """
     player_hit = damage_calculator(attack_type, player_info, foe)
-    foe_hit = damage_calculator(random.sample(["magic", "physical"], 1), foe, player_info)
+    foe_hit = damage_calculator(random.sample(["magic", "physical"], 1)[0], foe, player_info)
     status_condition(player_info)
 
     if random.randint(0, 1) == 0:
         foe['HP'] -= max(random.randint(1, 15), player_hit)
-        player_info['Current HP'] -= max(random.randint(1, 15), foe_hit)
-        check_if_alive(all_widgets_dict, player_info)
+        if foe['HP'] > 0:
+            player_info['Current HP'] -= max(random.randint(1, 15), foe_hit)
+            check_if_alive(all_widgets_dict, player_info)
         all_widgets_dict['Event Bar'].config(text=f"Physical Attack {foe['Name']}!")
     else:
         all_widgets_dict['Event Bar'].config(text=f"{foe['Name']} Attack First!")
@@ -157,7 +158,7 @@ def run_away(game_player_info: dict, all_widgets_dict: dict, foe: dict) -> None:
         all_widgets_dict['Script Frame'].children['script_display'].config(text="Run away", anchor="center")
         game_player_info['Escape'] = True
     else:
-        foe_attack = damage_calculator(random.sample(["magic", "physical"], 1), foe, game_player_info)
+        foe_attack = damage_calculator(random.sample(["magic", "physical"][0], 1), foe, game_player_info)
         game_player_info['Current HP'] -= max(random.randint(1, 15), foe_attack)
         check_if_alive(all_widgets_dict, game_player_info)
         all_widgets_dict['Event Bar'].config(text=f"Failed to escape!")
