@@ -18,9 +18,9 @@ def enemy_status(enemy_info: dict) -> str:
                     "Enemy Information"
     :return: an aligned string in multiple lines that contains the "Name", "EXP", and "HP" of an enemy with a title of
              "Enemy Information"
-    :raise KeyError: if enemy_info does not contain keys named as "Name", "EXP", and "HP" as the first
+    :raises KeyError: if enemy_info does not contain keys named as "Name", "EXP", and "HP" as the first
                      three keys in this order
-    :raise TypeError: if enemy_info is not a dictionary
+    :raises TypeError: if enemy_info is not a dictionary
 
     >>> character_dict = {"Name": "Nathan", "EXP": 100, "HP": 200, "MP": 404}
     >>> enemy_status(character_dict)
