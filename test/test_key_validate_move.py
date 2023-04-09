@@ -13,8 +13,6 @@ class Test(TestCase):
                             "01011400340044003200400049004400500041004400320034008300970110009901160117010900320075" \
                             "0101012100340093"
 
-    # key_file: str, next_move: dict, bag_info: dict)
-    # @patch('builtins.open', return_value=io.StringIO(encoded_required_item))
     def test_when_avatar_is_not_dict(self):
         with self.assertRaises(FileNotFoundError):
             character = {"X-coordinate": 1, "Y-coordinate": 1}
