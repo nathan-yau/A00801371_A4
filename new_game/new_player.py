@@ -1,9 +1,31 @@
 import random
 
 
-def create_character(name) -> dict:
+def status_reset(player_attribute):
     """
-    Create a dictionary that contains the starting coordinates and health points (HP) of a character.
+    Set a character's health point, magical point and status based on their attributes
+
+    :param player_attribute: a dictionary that contains the description of the character's attributes as
+                             key and its corresponding data as values
+    :precondition: player_attribute must be a dictionary that contains the description of the character's attributes as
+                   key and its corresponding data as values
+    :precondition: player_attribute must contain "Max HP", "Max MP", "Current HP", "Current MP" or "Status" as keys
+    :postcondition: set a character's health point, magical point and status based on their attributes
+    :raise TypeError: if player_attribute is not a dictionary
+    :raise KeyError: if player_attribute does not contain "Strength", "Intelligence", "Dexterity" and "Magix Power"
+                     as keys
+    >>> player = {'Strength': 32, 'Dexterity': 45, 'Intelligence': 46, 'Magic Power': 32}
+    >>> status_reset(player)
+    >>> player
+    {'Strength': 32, 'Dexterity': 45, 'Intelligence': 46, 'Magic Power': 32, 'Max HP': 80, 'Max MP': 80, \
+'Current HP': 80, 'Current MP': 80, 'Status': 'Healthy'}
+    """
+    player_attribute['Max HP'] = max(round(player_attribute['Strength'] + player_attribute['Intelligence'], -1), 60)
+    player_attribute['Max MP'] = max(round(player_attribute['Dexterity'] + player_attribute['Magic Power'], -1), 60)
+    player_attribute['Current HP'] = player_attribute['Max HP']
+    player_attribute['Current MP'] = player_attribute['Max MP']
+    player_attribute['Status'] = 'Healthy'
+
 
     :postcondition: create a dictionary that contains starting coordinates and health points (HP) of a character
     :return: a dictionary that contains the starting coordinates and health points (HP) of a character
