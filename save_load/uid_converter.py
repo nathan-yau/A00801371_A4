@@ -22,7 +22,7 @@ def decoder(save_uid: str) -> str:
     return ''.join(result)
 
 
-def encoder(phrase: str):
+def encoder(phrase: str) -> str:
     """
     Convert a Unicode character string into a set of equaivlaent Unicode numeric strings
 
