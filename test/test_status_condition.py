@@ -3,7 +3,7 @@ from unittest.mock import patch
 from combat.combat_actions import status_condition
 
 
-class Test(TestCase):
+class TestStatusCondition(TestCase):
 
     def test_when_player_info_is_not_dict(self):
         zero_player_info = "Hello"
