@@ -70,10 +70,10 @@ def activate_battle_button(interface_views: dict, player_info: dict, opponent: d
     :precondition: buttons called "physical_attack", "magic_attack", "run" must currently exist in the specific frame
     :precondition: function being attached to the button must be a callable function or None type
     :postcondition: attach callable functions to buttons (physical_attacked, magic_attack and run)
-    :raise KeyError: if the buttons cannot be found in the frame
-                     if the key of the frame cannot be found in the gui_dict
-    :raise TypeError: if callable_function is not a callable function or None type
-                      if interface_views, player_info and/or opponent is not a dictionary
+    :raises KeyError: if the buttons cannot be found in the frame
+                      if the key of the frame cannot be found in the gui_dict
+    :raises TypeError: if callable_function is not a callable function or None type
+                       if interface_views, player_info and/or opponent is not a dictionary
     """
     attach_button_function_call(button_name=interface_views['Buttons Frame'].children['physical_attack'],
                                 callable_function=partial(attack, 'physical', player_info, interface_views,
