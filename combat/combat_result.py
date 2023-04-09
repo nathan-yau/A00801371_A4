@@ -65,7 +65,7 @@ def win_fight(overall_gui_info: dict, game_info: dict, progress_switch: dict) ->
     :raises KeyError: if overall_gui_info does not contain key ['Script Frame']
                       if ['Script Frame'] does not have a widget named as ['enemy info']
                       if progress_switch does not contain keys ['opponent']
-    :raises TypeError: if overall_gui_info, progress_switch and/or game_info is not a dictionar
+    :raises TypeError: if overall_gui_info, progress_switch and/or game_info is not a dictionary
     """
     if type(progress_switch) is not dict or type(overall_gui_info) is not dict or type(game_info) is not dict:
         raise TypeError("progress_switch, overall_gui_info and game_info must be dictionary")
