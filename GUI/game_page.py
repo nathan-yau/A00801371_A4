@@ -8,7 +8,7 @@ from events.action_manager import gameplay
 
 from save_load.save_game_file import create_save_file
 from GUI_update.status_frame import update_status_message
-from events.serach_event import search, create_items_display
+from events.items_event import search, create_items_display
 
 
 def create_status_frame(overall_game_frame: dict, player_data: dict) -> tk.Frame:
@@ -67,7 +67,7 @@ def create_status_frame(overall_game_frame: dict, player_data: dict) -> tk.Frame
         left_frame.children['status_label'].grid(row=2, sticky='nsew')
 
         create_text_label(frame_obj=left_frame, text_label_name="character_status", font_size=12,
-                          message=update_status_message(player_data), anchor="sw", justify="left")
+                          message=update_status_message(player_data, 4, -7), anchor="sw", justify="left")
         left_frame.children['character_status'].grid(row=3, sticky='n')
 
     def create_map_widget() -> None:
@@ -339,7 +339,8 @@ def create_options_frame(overall_game_gui: dict, game_data: dict) -> tk.Frame:
         """
         side_dict = {'ITEMS': toggle_item_frame,
                      'SAVE': partial(create_save_file, -1, game_data),
-                     'EXIT': partial(interface_setting.closing_event, overall_game_gui['GUI'])}
+                     'EXIT': partial(interface_setting.closing_event,
+                                     overall_game_gui['GUI'], overall_game_gui['pause'])}
         for index, (key, value) in enumerate(side_dict.items()):
             button_name = key.lower().replace(" ", "_")
             create_click_button(belonging_frame=right_frame, widget_name_id=button_name, message=key, bg='#FFDC00')
