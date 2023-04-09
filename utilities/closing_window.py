@@ -6,7 +6,7 @@ def closing_event(game_window, pause: tk.BooleanVar) -> None:
     Close out all tkinter windows upon the player's confirmation on exiting the program.
 
     :param game_window: a tkinter root window
-    :param pause: a tkinter boolean value used for indicating whether the game is currently paused or not.
+    :param pause: a tkinter boolean value used for indicating whether the game is currently paused or not
     :precondition: game_window must be a tkinter root window
     :postcondition: close out all tkinter windows upon the player's confirmation on exiting the program.
     :raises AttributeError: if game_window is not a tkinter root window
