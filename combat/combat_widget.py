@@ -65,9 +65,9 @@ def activate_battle_button(interface_views: dict, player_info: dict, opponent: d
                    its corresponding data as values
     :precondition: a tkinter root window must exist and contain at least one frame
     :precondition: frame must be an existing tkinter frame in the tkinter root window
-    :precondition: gui_dict must be a dictionary that contain the description of the tkinter objects in
+    :precondition: interface_views must be a dictionary that contain the description of the tkinter objects in
                    string as key and their associated frame or widget objects as value
-    :precondition: gui_dict must contain a key named as "Buttons Frame"
+    :precondition: interface_views must contain a key named as "Buttons Frame"
     :precondition: the value of the key "Buttons Frame" in interface_frame dictionary must be an existing frame
     :precondition: buttons called "physical_attack", "magic_attack", "run" must currently exist in the specific frame
     :precondition: function being attached to the button must be a callable function or None type
