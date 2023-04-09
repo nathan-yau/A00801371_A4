@@ -101,6 +101,35 @@ def drop_item(gui_widgets_all: dict, player_character: dict, picked_foe: dict) -
 
 
 def exp_calculator(gui_widgets_all, game_info, picked_foe):
+    """
+    Display the experience point gained from the defeated foe and the updated EXP point of the player on GUI
+
+    :param gui_widgets_all: a dictionary containing key named as ['Item Frame'] whose value is a tkinter Frame
+    :param game_info: a dictionary that contains the information of character as value of a key called "character"
+    :param picked_foe: a dictionary containing keys named as ['Name'] and ['EXP'], which has an
+                       associated value of string and an integer
+    :precondition: gui_widgets_all must be a dictionary containing key named as ['Script Frame'],
+                   each of which has an associated tkinter Frame
+    :precondition: ['Script Frame'] key from gui_widgets_all must have an associated tkinter frame as value
+    :precondition: the frame represented by gui_widgets_all['Script Frame'] must contain ['character_status'] and
+                   ['script_display']
+    :precondition: player_character must be a dictionary containing keys named as ['character']
+    :precondition: ['character"] key from player_character must be a dictionary that contains ['NEXT LV (EXP)'] as key
+                   and an integer as value
+    :precondition: picked_foe must be a dictionary containing keys named as ['EXP'] and ['Name']
+    :precondition: ['EXP'] key from picked_foe must be an integer
+    :precondition: ['Name'] key from picked_foe must be a string
+    :postcondition: display the experience point gained from the defeated foe and
+                    the updated EXP point of the player on GUI
+    :raise KeyError: if the keys ['Script Frame'] cannot be found inside gui_widgets_all
+                     if the key ["character"] cannot be found inside player_character
+                     if the key ['NEXT LV (EXP)'] cannot be found inside player_character["character"]
+                     if the keys ['EXP'] and ['Name'] cannot be found inside picked_foe
+    :raise TypeError: if gui_widgets_all, player_character and/or picked_foe is not a dictionary
+                      if key ["EXP"] from picked_foe is not an integer
+                      if key ["character"] inside player_character is not a dictionary
+                      if key ['NEXT LV (EXP)'] inside player_character["character"] is not an integer
+    """
     if random.randint(1, 20) == 1:
         EXP = int(picked_foe['EXP'] * 1.5)
         message = f'Wow! Defeating it granted you an unexpected surge of {EXP} experience points.'
@@ -110,7 +139,7 @@ def exp_calculator(gui_widgets_all, game_info, picked_foe):
     game_info['character']['NEXT LV (EXP)'] -= EXP
     gui_widgets_all['Script Frame'].children['script_display'].config(text=message, font=(DEFAULT_FONT, 8))
     gui_widgets_all['Status Frame'].children['character_status'].config(
-        text=update_status_message(game_info['character'], 4, -6))
+        text=update_status_message(game_info['character'], 4, -7))
     level_up(gui_widgets_all, game_info['character'])
 
 
