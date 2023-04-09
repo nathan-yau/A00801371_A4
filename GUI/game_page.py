@@ -3,7 +3,7 @@ from functools import partial
 
 from GUI.create_widgets import create_click_button, create_text_label, create_image_label, attach_button_function_call
 from GUI import GAME_MAP_PATH, GAME_LOCATION_IMAGE_PATH
-from GUI import interface_setting
+from utilities.closing_window import closing_event
 from events.action_manager import gameplay
 
 from save_load.save_game_file import create_save_file
@@ -28,11 +28,11 @@ def create_status_frame(overall_game_frame: dict, player_data: dict) -> tk.Frame
                    key and its corresponding data as values
     :precondition: player_data must contain keys named as "Name", "X-coordinate" and "Y-coordinate"
     :postcondition: create a tkinter Frame that contains status and map widgets on the top of the GUI window
-    :raise TypeError: if interface_frames is not a dictionary
-                      if player_data is not a dictionary
-    :raise KeyError: if interface_frames does not contain "Top Frame" as key
-                     if player_data does not contain "Name", "X-coordinate" and "Y-coordinate" as key
-    :raise AttributeError: if the value of the key "Top Frame" in interface_frame is not an existing tkinter frame
+    :raises TypeError: if interface_frames is not a dictionary
+                       if player_data is not a dictionary
+    :raises KeyError: if interface_frames does not contain "Top Frame" as key
+                      if player_data does not contain "Name", "X-coordinate" and "Y-coordinate" as key
+    :raises AttributeError: if the value of the key "Top Frame" in interface_frame is not an existing tkinter frame
     :return: a tkinter Frame that contains status and map widgets on the top of the GUI window
     """
     def left_frame_grid_setting() -> None:
@@ -57,7 +57,7 @@ def create_status_frame(overall_game_frame: dict, player_data: dict) -> tk.Frame
         :precondition: player_data must be a dictionary that contains the description of the character's attributes as
                        key and its corresponding data as values
         :precondition: player_data must contain keys named as "Name"
-        :raise KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
+        :raises KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
                          if the widget name cannot be found in the specific frame after creation
                          if player_data does not contain "Name" as key
         """
@@ -81,9 +81,9 @@ def create_status_frame(overall_game_frame: dict, player_data: dict) -> tk.Frame
                        key and its corresponding data as values
         :precondition: player_data must contain keys named as "X-coordinate" and "Y-coordinate"
         :postcondition: create image label for displaying the game map on the left side frame of the GUI
-        :raise KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
-                         if the widget name cannot be found in the specific frame after creation
-                         if player_data does not contain "X-coordinate" and "Y-coordinate" as keys
+        :raises KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
+                          if the widget name cannot be found in the specific frame after creation
+                          if player_data does not contain "X-coordinate" and "Y-coordinate" as keys
         """
         coordinate = str(player_data["X-coordinate"]) + str(player_data["Y-coordinate"])
         create_text_label(frame_obj=left_frame, text_label_name="map_label", message=f"Current Oasis Map",
@@ -110,9 +110,9 @@ def create_script_frame(overall_interface_frame: dict) -> tk.Frame:
     :precondition: overall_interface_frame must contain a key named as 'Top Frame'
     :precondition: the value of the key "Top Frame" in overall_game_frame dictionary must be an existing tkinter frame
     :postcondition: create a tkinter Frame that contains a game script in the middle of the GUI window
-    :raise TypeError: if interface_frames is not a dictionary
-    :raise KeyError: if interface_frames does not contain "Top Frame" as key
-    :raise AttributeError: if the value of the key "Top Frame" in interface_frame is not an existing tkinter frame
+    :raises TypeError: if interface_frames is not a dictionary
+    :raises KeyError: if interface_frames does not contain "Top Frame" as key
+    :raises AttributeError: if the value of the key "Top Frame" in interface_frame is not an existing tkinter frame
     :return: a tkinter Frame that contains game script widgets in the middle of the GUI window
     """
 
@@ -137,7 +137,7 @@ def create_script_frame(overall_interface_frame: dict) -> tk.Frame:
         :precondition: frame must be an existing tkinter frame in the tkinter root window
         :precondition: widget name used in create_image_label() must not currently exist in the specific frame
         :postcondition: create image label for displaying the location or event image in the middle frame of the GUI
-        :raise KeyError: if the proposed widget name already exists in the specific frame
+        :raises KeyError: if the proposed widget name already exists in the specific frame
                          if the widget name cannot be found in the specific frame after creation
         """
         create_image_label(frame=middle_top_frame, widget_name="image_box",
@@ -152,7 +152,7 @@ def create_script_frame(overall_interface_frame: dict) -> tk.Frame:
         :precondition: frame must be an existing tkinter frame in the tkinter root window
         :precondition: widget name used in create_image_label() must not currently exist in the specific frame
         :postcondition: create image label for displaying the location or event image in the middle frame of the GUI
-        :raise KeyError: if the proposed widget name already exists in the specific frame
+        :raises KeyError: if the proposed widget name already exists in the specific frame
                          if the widget name cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=middle_top_frame, text_label_name="enemy_info", message=f"",
@@ -167,7 +167,7 @@ def create_script_frame(overall_interface_frame: dict) -> tk.Frame:
         :precondition: frame must be an existing tkinter frame in the tkinter root window
         :precondition: widget name used in create_image_label() must not currently exist in the specific frame
         :postcondition: create image label for displaying the location or event image in the middle frame of the GUI
-        :raise KeyError: if the proposed widget name already exists in the specific frame
+        :raises KeyError: if the proposed widget name already exists in the specific frame
                          if the widget name cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=middle_top_frame, text_label_name="script_display", message=f"Welcome to Oasis",
@@ -197,9 +197,9 @@ def create_action_buttons_frame(overall_gui_view: dict, game_info: dict) -> tk.F
     :precondition: game_info must be a dictionary that contains the information of character as value of a key
                    called "character" and the information of the game environment as value of a key called "environment"
     :postcondition: create a tkinter Frame that contains a game script in the middle of the GUI window
-    :raise TypeError: if interface_frames is not a dictionary
-    :raise KeyError: if interface_frames does not contain "Top Frame" as key
-    :raise AttributeError: if the value of the key "Top Frame" in interface_frame is not an existing tkinter frame
+    :raises TypeError: if interface_frames is not a dictionary
+    :raises KeyError: if interface_frames does not contain "Top Frame" as key
+    :raises AttributeError: if the value of the key "Top Frame" in interface_frame is not an existing tkinter frame
     :return: a tkinter Frame that contains action buttons widgets in the middle of the GUI window
     """
 
@@ -224,8 +224,8 @@ def create_action_buttons_frame(overall_gui_view: dict, game_info: dict) -> tk.F
         :precondition: widget name used in create_click_button() must not currently exist in the specific frame
         :postcondition: create four buttons (search, physical attack, magic attack and run) in the bottom middle
                         of the frame in a graphical user interface (GUI)
-        :raise KeyError: if the proposed widget names in create_click_button() already exists in the specific frame
-                         if the widget names cannot be found in the specific frame after creation
+        :raises KeyError: if the proposed widget names in create_click_button() already exists in the specific frame
+                          if the widget names cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=middle_bottom_frame, text_label_name="actions_label", message=f"Actions",
                           relief="groove")
@@ -251,8 +251,8 @@ def create_action_buttons_frame(overall_gui_view: dict, game_info: dict) -> tk.F
         :precondition: widget name used in create_click_button() must not currently exist in the specific frame
         :postcondition: create four buttons (move left, move up, move down, move right) in the bottom middle
                         of the frame in a graphical user interface (GUI)
-        :raise KeyError: if the proposed widget names in create_click_button() already exists in the specific frame
-                         if the widget names cannot be found in the specific frame after creation
+        :raises KeyError: if the proposed widget names in create_click_button() already exists in the specific frame
+                          if the widget names cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=middle_bottom_frame, text_label_name="direct_label", message=f"Direction",
                           relief="groove")
@@ -291,10 +291,10 @@ def create_options_frame(overall_game_gui: dict, game_data: dict) -> tk.Frame:
     :precondition: game_data must be a dictionary that contains the information of character as value of a key
                    called "character" and the information of the game environment as value of a key called "environment"
     : postcondition: create a frame on the side of the GUI to display the buttons for player to trigger events
-    : raise TypeError: if interface_frames is not a dictionary
-    : raise KeyError: if interface_frames does not contain "Top Frame" and "Item Frame" as key
-    : raise AttributeError: if the value of the key "Top Frame" or "Item Frame" in interface_frame is not
-                            an existing tkinter frame
+    : raises TypeError: if interface_frames is not a dictionary
+    : raises KeyError: if interface_frames does not contain "Top Frame" and "Item Frame" as key
+    : raises AttributeError: if the value of the key "Top Frame" or "Item Frame" in interface_frame is not
+                             an existing tkinter frame
     : return: a tkinter Frame that contains action buttons widgets in the middle of the GUI window
     """
     def create_side_buttons_grid() -> None:
@@ -317,8 +317,8 @@ def create_options_frame(overall_game_gui: dict, game_data: dict) -> tk.Frame:
         :precondition: overall_game_gui must be a dictionary that contains the description of the tkinter objects in
                        string as key and their associated frame or widget objects as value
         :precondition: overall_game_gui must contain a key named as 'Item Frame'
-        :raise TypeError: if interface_frames is not a dictionary
-        :raise KeyError: if interface_frames does not contain 'Item Frame' as key
+        :raises TypeError: if interface_frames is not a dictionary
+        :raises KeyError: if interface_frames does not contain 'Item Frame' as key
         """
         if overall_game_gui['Item Frame'].winfo_viewable():
             overall_game_gui['Item Frame'].grid_forget()
@@ -334,12 +334,12 @@ def create_options_frame(overall_game_gui: dict, game_data: dict) -> tk.Frame:
         :precondition: widget name used in create_click_button() must not currently exist in the specific frame
         :postcondition: create three buttons (items, save and exit) on the right side
                         of the frame in a graphical user interface (GUI)
-        :raise KeyError: if the proposed widget names in create_click_button() already exists in the specific frame
+        :raises KeyError: if the proposed widget names in create_click_button() already exists in the specific frame
                          if the widget names cannot be found in the specific frame after creation
         """
         side_dict = {'ITEMS': toggle_item_frame,
                      'SAVE': partial(create_save_file, -1, game_data),
-                     'EXIT': partial(interface_setting.closing_event,
+                     'EXIT': partial(closing_event,
                                      overall_game_gui['GUI'], overall_game_gui['pause'])}
         for index, (key, value) in enumerate(side_dict.items()):
             button_name = key.lower().replace(" ", "_")
@@ -369,10 +369,10 @@ def create_item_frame(views_frame: dict, player_data: dict) -> tk.Frame:
     :precondition: player_data must be a dictionary that contains the description of the character's attributes as
                    key and its corresponding data as values
     :postcondition: create a frame on the side of the GUI to display the buttons for player to trigger events
-    :raise TypeError: if interface_frames is not a dictionary
-    :raise KeyError: if interface_frames does not contain "Top Frame" and "Item Frame" as key
-    :raise AttributeError: if the value of the key "Top Frame" or "Item Frame" in interface_frame is not
-                          an existing tkinter frame
+    :raises TypeError: if interface_frames is not a dictionary
+    :raises KeyError: if interface_frames does not contain "Top Frame" and "Item Frame" as key
+    :raises AttributeError: if the value of the key "Top Frame" or "Item Frame" in interface_frame is not
+                           an existing tkinter frame
     :return: a tkinter Frame that contains action buttons widgets in the middle of the GUI window
     """
     item_frame = tk.Frame(views_frame['Top Frame'], name="item_frame", relief='groove')
@@ -399,10 +399,10 @@ def create_control_layout(overall_gui_widgets: dict, game_data: dict) -> None:
                    called "character" and the information of the game environment as value of a key called "environment"
     :postcondition: recreate a frame located at the top of the GUI with new five inner frames to show the
                     game information and buttons for player to trigger events
-    :raise TypeError: if interface_frames is not a dictionary
-    :raise KeyError: if interface_frames does not contain "Top Frame" and "Event Bar" as key
-    :raise AttributeError: if the value of the key "Top Frame" or "Event Bar" in interface_frame is not
-                          an existing tkinter frame
+    :raises TypeError: if interface_frames is not a dictionary
+    :raises KeyError: if interface_frames does not contain "Top Frame" and "Event Bar" as key
+    :raises AttributeError: if the value of the key "Top Frame" or "Event Bar" in interface_frame is not
+                            an existing tkinter frame
     """
     def rearrange_game_panel_grid() -> None:
         """
