@@ -31,7 +31,7 @@ class MakeEnvironmentAttributesTest(TestCase):
             make_environment_attributes(2, "1", "FileDoNotExist.txt")
 
     def test_creating_board_with_non_string_as_game_data(self):
-        with self.assertRaises(OSError):
+        with self.assertRaises(TypeError):
             make_environment_attributes(2, 2, 1234)
 
     @patch('builtins.open', return_value=io.StringIO('01230039011501120101009901050097010800950101011801010110011601150'
@@ -72,3 +72,8 @@ class MakeEnvironmentAttributesTest(TestCase):
                     (4, 0): ('RANDOM', ''), (4, 1): ('RANDOM', ''), (4, 2): ('RANDOM', ''),
                     (4, 3): ('RANDOM', ''), (4, 4): ('RANDOM', '')}
         self.assertEqual(expected, actual)
+
+
+class Test(TestCase):
+    def test_make_environment_attributes(self):
+        self.fail()
