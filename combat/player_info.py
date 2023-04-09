@@ -159,7 +159,7 @@ def check_if_alive(gui_dict, player_info):
     :precondition: the value of the key "Buttons Frame" in interface_frame dictionary must be an existing frame
     :precondition: the value of the key "Side Bar Frame" in interface_frame dictionary must be an existing frame
     :postcondition: check if the heath points of player is less than or equal to 0
-    :raise KeyError: if player_info does not have a key named as "Current HP"
+    :raises KeyError: if player_info does not have a key named as "Current HP"
                      if gui_dict does not have keys named as "Buttons Frame" and "Side Bar Frame"
                      if "items" and "save" do not exist in the sider bar frame indicated by gui_dict
     """
