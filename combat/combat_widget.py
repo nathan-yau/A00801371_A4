@@ -5,24 +5,31 @@ from functools import partial
 from combat.combat_actions import attack, run_away
 
 
-def toggle_battle_buttons(button_frame_views: tk.Frame, action: str) -> None:
+def toggle_battle_buttons(overall_gui: dict, action: str) -> None:
     """
     Toggle the active state of battle related buttons / keypress listeners in the GUI.
 
-    :param button_frame_views: a tkinter frame that contains buttons named as ['move_left'], ['move_right'],
-                               ['move_up'], ['move_down'], ['search'], ['physical_attack'], ['magic_attack'] and
-                               ['run'].
+    :param overall_gui: a dictionary that contain the description of the tkinter objects in string as key and
+                        their associated frame or widget objects as value
     :param action: a string that is either "enable" or "disable"
     :precondition: a tkinter root window must exist and contain at least one frame
-    :precondition: button_frame_views must be an existing tkinter frame in the tkinter root window
-    :precondition: button_frame_views must be a tkinter frame
-    :precondition: button_frame_views must contain buttons named as ['move_left'],
+    :precondition: overall_gui must be a dictionary that contain the description of the tkinter objects in
+                   string as key and their associated frame or widget objects as value
+    :precondition: overall_gui must contain a key named as "Buttons Frame" and "Side Bar Frame"
+    :precondition: "Buttons Frame" must be an existing tkinter frame in the tkinter root window
+    :precondition: "Buttons Frame" must be a tkinter frame
+    :precondition: "Buttons Frame" must contain buttons named as ['move_left'],
                    ['move_right'], ['move_up'], ['move_down'], ['search'], ['physical_attack'],
                    ['magic_attack'] and ['run']
+    :precondition: "Side Bar Frame" must be an existing tkinter frame in the tkinter root window
+    :precondition: "Side Bar Frame" must be a tkinter frame
+    :precondition: "Side Bar Frame" must contain button named as ['save']
     :precondition: action must be a string that is either "enable" or "disable"
     :postcondition: toggle the active state of battle related buttons / keypress listeners in the GUI.
-    :raise AttributeError: if button_frame_views is not a tkinter frame
-    :raise KeyError: if button_frame_views does not contain buttons named as ['move_left'],
+    :raise TypeError: if overall_gui is not a dict
+    :raise KeyError: if overall_gui does not contain "Buttons Frame" or "Side Bar Frame"
+                     if "Side Bar Frame" does not contain buttons named as ['save']
+                     if "Buttons Frame" does not contain buttons named as ['move_left'],
                      ['move_right'], ['move_up'], ['move_down'], ['search'], ['physical_attack'],
                      ['magic_attack'] and ['run']
     :raise ValueError: if action is not a string that is either "enable" or "disable"
@@ -34,11 +41,12 @@ def toggle_battle_buttons(button_frame_views: tk.Frame, action: str) -> None:
     if action == "enable":
         movement_state = "disabled"
         battle_state = "normal"
-        button_frame_views.unbind("<KeyPress>")
+        overall_gui['Buttons Frame'].unbind("<KeyPress>")
     disable_button = ['move_left', 'move_right', 'move_up', 'move_down', 'search']
-    [button_frame_views.children[button].config(state=movement_state) for button in disable_button]
+    [overall_gui['Buttons Frame'].children[button].config(state=movement_state) for button in disable_button]
     enable_button = ['physical_attack', 'magic_attack', 'run']
-    [button_frame_views.children[button].config(state=battle_state) for button in enable_button]
+    [overall_gui['Buttons Frame'].children[button].config(state=battle_state) for button in enable_button]
+    overall_gui['Side Bar Frame'].children['save'].config(state=movement_state)
 
 
 def activate_battle_button(interface_views: dict, player_info: dict, opponent: dict) -> None:
