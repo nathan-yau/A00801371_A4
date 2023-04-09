@@ -20,13 +20,13 @@ def damage_calculator(attack_type: str, attacker: dict, defender: dict) -> int:
     :postcondition: calculate the damage inflicted by a given attacker on a defender
                     based on the attack type and their stats
     :return: a positive integer or zero representing the damage caused by an attacker to a defender
-    :raise KeyError: if the keys ['Magic Power'], ['Strength'] and ['Current MP'] cannot be found inside attacker
-                     if the keys ['Magic Resistance'], ['Dexterity'] cannot be found inside defender
-    :raise TypeError: if the value of the keys ['Magic Power'], ['Strength'] and ['Current MP']
-                      inside attacker is not number
-                      if the value of the keys ['Magic Resistance'], ['Dexterity'] inside defender is not number
-                      if attacker or defender is not dictionary
-    :raise ValueError: if attack_type is a not string that containing either 'magic' or 'physical'
+    :raises KeyError: if the keys ['Magic Power'], ['Strength'] and ['Current MP'] cannot be found inside attacker
+                      if the keys ['Magic Resistance'], ['Dexterity'] cannot be found inside defender
+    :raises TypeError: if the value of the keys ['Magic Power'], ['Strength'] and ['Current MP']
+                       inside attacker is not number
+                       if the value of the keys ['Magic Resistance'], ['Dexterity'] inside defender is not number
+                       if attacker or defender is not dictionary
+    :raises ValueError: if attack_type is a not string that containing either 'magic' or 'physical'
     """
     if type(attack_type) is not str or attack_type not in ["magic", "physical"]:
         raise ValueError("Attack Type must be a string that is either 'magic' or 'physical'")
