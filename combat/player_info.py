@@ -169,3 +169,13 @@ def check_if_alive(gui_dict, player_info):
         gui_dict['Side Bar Frame'].children['items'].config(state="disabled")
         gui_dict['Side Bar Frame'].children['save'].config(state="disabled")
         gui_dict['pause'].set(False)
+
+
+def main():
+    """
+    Drive the program.
+    """
+
+
+if __name__ == "__main__":
+    main()

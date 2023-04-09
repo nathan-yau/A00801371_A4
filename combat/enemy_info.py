@@ -73,3 +73,13 @@ def update_enemy_info(overall_frames_info: dict, enemy: dict, script: str) -> No
     overall_frames_info['Script Frame'].children['enemy_info'].config(text=f"{enemy_status(enemy)}")
     update_image_label(overall_frames_info['Script Frame'], "image_box", GAME_ENEMY_IMAGE_PATH.format(image_name))
     overall_frames_info['Script Frame'].children['script_display'].config(text=script)
+
+
+def main():
+    """
+    Drive the program.
+    """
+
+
+if __name__ == "__main__":
+    main()

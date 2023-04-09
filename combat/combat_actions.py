@@ -163,3 +163,13 @@ def run_away(game_player_info: dict, all_widgets_dict: dict, foe: dict) -> None:
         check_if_alive(all_widgets_dict, game_player_info)
         all_widgets_dict['Event Bar'].config(text=f"Failed to escape!")
     all_widgets_dict['pause'].set(False)
+
+
+def main():
+    """
+    Drive the program.
+    """
+
+
+if __name__ == "__main__":
+    main()

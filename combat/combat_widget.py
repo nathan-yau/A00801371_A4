@@ -1,5 +1,3 @@
-import tkinter as tk
-
 from GUI.create_widgets import attach_button_function_call
 from functools import partial
 from combat.combat_actions import attack, run_away
@@ -84,3 +82,13 @@ def activate_battle_button(interface_views: dict, player_info: dict, opponent: d
                                 callable_function=partial(attack, 'magic', player_info, interface_views, opponent))
     attach_button_function_call(button_name=interface_views['Buttons Frame'].children['run'],
                                 callable_function=partial(run_away, player_info, interface_views, opponent))
+
+
+def main():
+    """
+    Drive the program.
+    """
+
+
+if __name__ == "__main__":
+    main()
