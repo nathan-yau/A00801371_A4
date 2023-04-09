@@ -132,7 +132,7 @@ def run_away(game_player_info: dict, all_widgets_dict: dict, foe: dict) -> None:
     Update the GUI displays and player's HP based on the success of the player's attempt to run away from the foe.
 
     :param game_player_info: a dictionary containing keys named as ['Escape'] and ['Current HP'],
-                     each of which has an associated Boolean, or numeric value
+                             each of which has an associated Boolean, or numeric value
     :param all_widgets_dict: a dictionary containing keys named as ['Event Bar'] and ['Script Frame'],
                      each of which has an associated tkinter Frame or Label
     :param foe: a dictionary containing keys named as ['Name'], which has an associated value of string literal
@@ -145,13 +145,13 @@ def run_away(game_player_info: dict, all_widgets_dict: dict, foe: dict) -> None:
     :precondition: foe must be a dictionary containing keys named as ['Name']
     :postcondition: update the GUI displays and player's HP based on the success of the player's
                     attempt to run away from the foe.
-    :raise KeyError: if the keys ['Escape'] and ['Current HP'] cannot be found inside game_player_info
-                     if the keys ['Event Bar'] and ['Script Frame'] cannot be found inside all_widgets_dict
-                     if the keys ['Name'] cannot be found inside foe
-    :raise TypeError: if the value of the key ['Current HP'] inside game_player_info is not a numeric value
-                      if game_player_info and/or foe is not a dictionary
-    :raise AttributeError: if the value of the key ['Event Bar'] inside all_widgets_dict is not a tkinter label
-                           if the value of the key ['Script Frame'] inside all_widgets_dict is not a tkinter frame
+    :raises KeyError: if the keys ['Escape'] and ['Current HP'] cannot be found inside game_player_info
+                      if the keys ['Event Bar'] and ['Script Frame'] cannot be found inside all_widgets_dict
+                      if the keys ['Name'] cannot be found inside foe
+    :raises TypeError: if the value of the key ['Current HP'] inside game_player_info is not a numeric value
+                       if game_player_info and/or foe is not a dictionary
+    :raises AttributeError: if the value of the key ['Event Bar'] inside all_widgets_dict is not a tkinter label
+                            if the value of the key ['Script Frame'] inside all_widgets_dict is not a tkinter frame
     """
     if random_run_away_probability():
         all_widgets_dict['Event Bar'].config(text=f"Run away from {foe['Name']}")
