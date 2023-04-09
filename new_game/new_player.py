@@ -43,11 +43,11 @@ def create_character(name: str) -> dict:
     keys = ["Name", "Level", "NEXT LV (EXP)", "Status", "X-coordinate", "Y-coordinate", "Items", "Escape",
             "Current HP", "Current MP", "Max HP", "Max MP", "Strength", "Dexterity", "Intelligence", "Magic Power",
             "Magic Resistance"]
-    values = [name, 1, int(60*(random.uniform(1.5, 1.9))), "Healthy", 4, 4, {"Sanctum Key": 1}, False, 50, 50, 50, 50]
-    if type(name) is not str:
-        raise TypeError("Name of the character must be a string!")
-    while sum(values[11:]) < 210:
-        [values.append(random.randint(30, 50)) for _ in keys]
+    values = [name, 1, int(60*(random.uniform(1.5, 1.9))), "Healthy", 4, 4, {}, False, 50, 50, 50, 50]
+    number_of_random_attribute = len(values)
+    if type(name) is not str or len(name) == 0:
+        raise TypeError("Name of the character must be a non-empty string!")
+    [values.append(random.randint(30, 50)) for _ in keys[number_of_random_attribute:]]
     attributes = dict(zip(keys, values))
     status_reset(attributes)
     return attributes
