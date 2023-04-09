@@ -3,7 +3,7 @@ from unittest.mock import patch
 from combat.combat_actions import damage_calculator
 
 
-class DamageCalculatorTest(TestCase):
+class TestDamageCalculator(TestCase):
 
     def test_when_attacker_is_not_dict(self):
         player_info = "Magic Power"
