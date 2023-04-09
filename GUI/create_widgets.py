@@ -145,12 +145,12 @@ def create_click_button(belonging_frame, widget_name_id: str, message: str, butt
     :precondition: button_font_size must represent an integer that represents a font size. Default as DEFAULT_FONT_SIZE
     :precondition: DEFAULT_FONT_SIZE must be defined
     :postcondition: create a tkinter button for player to click in a tkinter frame
-    :raise NameError: if DEFAULT_FONT and/or DEFAULT_FONT_SIZE is not defined
-    :raise KeyError: if widget_name_id already exists in the specific frame
-    :raise TypeError: if widget_name_id, button_font_style and/or message is not a string type
-    :raise _tkinter.TclError: if the key of **extra_setting is not a valid option for tkinter click function
-    :raise ValueError: if button_width and/or button_font_size is not a non-zero positive integer
-    :raise AttributeError: if belonging_frame is not a tkinter frame
+    :raises NameError: if DEFAULT_FONT and/or DEFAULT_FONT_SIZE is not defined
+    :raises KeyError: if widget_name_id already exists in the specific frame
+    :raises TypeError: if widget_name_id, button_font_style and/or message is not a string type
+    :raises _tkinter.TclError: if the key of **extra_setting is not a valid option for tkinter click function
+    :raises ValueError: if button_width and/or button_font_size is not a non-zero positive integer
+    :raises AttributeError: if belonging_frame is not a tkinter frame
     """
     if type(button_font_size) is not int or button_font_size <= 0 or type(button_width) is not int or button_width <= 0:
         raise ValueError(f"Font Size & Button Width must be a non-zero positive integer.")
