@@ -161,3 +161,13 @@ def create_new_player_page(name: str, interface_frames: dict) -> None:
 
     interface_frames['Event Bar'].config(text="Creating New User - " + name)
     create_attribute_buttons(display_attribute())
+
+
+def main():
+    """
+    Drive the program.
+    """
+
+
+if __name__ == "__main__":
+    main()

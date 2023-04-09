@@ -73,3 +73,13 @@ def gui_menubar(overall_gui: dict) -> None:
 
     create_file_menu()
     overall_gui['GUI'].config(menu=menu_bar)
+
+
+def main():
+    """
+    Drive the program.
+    """
+
+
+if __name__ == "__main__":
+    main()

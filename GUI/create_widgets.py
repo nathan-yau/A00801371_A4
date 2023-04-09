@@ -177,3 +177,13 @@ def attach_button_function_call(button_name, callable_function):
     if not callable(callable_function) and None:
         raise TypeError("callable_function must be a callable function!")
     button_name.config(command=callable_function)
+
+
+def main():
+    """
+    Drive the program.
+    """
+
+
+if __name__ == "__main__":
+    main()
