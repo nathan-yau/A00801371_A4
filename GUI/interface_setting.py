@@ -1,6 +1,7 @@
 import tkinter as tk
 from functools import partial
 from save_load.load_game_file import load_file
+from utilities.closing_window import closing_event
 
 
 def gui_default_setting(game_window, game_title: str, icon_path: str, window_size: str, pause: bool) -> None:
@@ -19,8 +20,8 @@ def gui_default_setting(game_window, game_title: str, icon_path: str, window_siz
     :precondition: window_size must be a geometry specifier as string in the format like "100x120"
                    where 100 represents the width and 120 represents the height of the GUI
     :postcondition: create default window and grid setting for a tkinter GUI
-    :raise AttributeError: if game_window is not a tkinter root window
-    :raise _tkinter.TclError: if icon_path is not an image path that represents an existing image or the image
+    :raises AttributeError: if game_window is not a tkinter root window
+    :raises _tkinter.TclError: if icon_path is not an image path that represents an existing image or the image
                               does not exist in the path it represents
                               if window_size must be a geometry specifier as string in the format like "100x120"
     """
@@ -32,23 +33,6 @@ def gui_default_setting(game_window, game_title: str, icon_path: str, window_siz
     game_window.iconphoto(False, icon)
     game_window.geometry(window_size)
     game_window.protocol("WM_DELETE_WINDOW", partial(closing_event, game_window, pause))
-
-
-def closing_event(game_window, pause) -> None:
-    """
-    Close out all tkinter windows upon the player's confirmation on exiting the program.
-
-    :param game_window: a tkinter root window
-    :precondition: game_window must be a tkinter root window
-    :postcondition: close out all tkinter windows upon the player's confirmation on exiting the program.
-    :raise AttributeError: if game_window is not a tkinter root window
-    """
-    if tk.messagebox.askyesno(title="Confirm?", message="Do you confirm to close this awesome game?"):
-        if pause.get():
-            tk.messagebox.showwarning(title="Confirm?", message="Can't exit game during battle")
-        else:
-            game_window.destroy()
-            quit()
 
 
 def gui_menubar(overall_gui: dict) -> None:
@@ -63,7 +47,7 @@ def gui_menubar(overall_gui: dict) -> None:
     :precondition: overall_gui must contain a key named as 'GUI'
     :precondition: the value of "GUI" in overall_gui dictionary must be an existing tkinter root window
     :postcondition: attach a newly created file menu dropdown tab with its options to the menu bar of the given GUI
-    :raise AttributeError: if the value of "GUI" in overall_gui dictionary is not a tkinter root window
+    :raises AttributeError: if the value of "GUI" in overall_gui dictionary is not a tkinter root window
     """
     menu_bar = tk.Menu(name="menu_bar")
 
@@ -73,7 +57,7 @@ def gui_menubar(overall_gui: dict) -> None:
 
         :precondition: game_window a tkinter root window
         :postcondition: close out all tkinter windows upon the player's confirmation on exiting the program
-        :raise AttributeError: if game_window is not a tkinter root window
+        :raises AttributeError: if game_window is not a tkinter root window
         """
         file_menu = tk.Menu(menu_bar, tearoff=False, name="file_menu")
         menu_bar.add_cascade(menu=file_menu, label="File")
