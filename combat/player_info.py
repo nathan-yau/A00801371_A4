@@ -121,11 +121,11 @@ def exp_calculator(gui_widgets_all, game_info, picked_foe):
     :precondition: ['Name'] key from picked_foe must be a string
     :postcondition: display the experience point gained from the defeated foe and
                     the updated EXP point of the player on GUI
-    :raise KeyError: if the keys ['Script Frame'] cannot be found inside gui_widgets_all
+    :raises KeyError: if the keys ['Script Frame'] cannot be found inside gui_widgets_all
                      if the key ["character"] cannot be found inside player_character
                      if the key ['NEXT LV (EXP)'] cannot be found inside player_character["character"]
                      if the keys ['EXP'] and ['Name'] cannot be found inside picked_foe
-    :raise TypeError: if gui_widgets_all, player_character and/or picked_foe is not a dictionary
+    :raises TypeError: if gui_widgets_all, player_character and/or picked_foe is not a dictionary
                       if key ["EXP"] from picked_foe is not an integer
                       if key ["character"] inside player_character is not a dictionary
                       if key ['NEXT LV (EXP)'] inside player_character["character"] is not an integer
