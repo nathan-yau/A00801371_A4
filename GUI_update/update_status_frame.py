@@ -14,8 +14,8 @@ def update_status_message(player_info: dict, start_skip: int, end_skip: int) -> 
                     value into an aligned string in multiples lines after excepting name and coordinates of the player
     :return: an aligned string in multiples lines after excepting name and coordinates of the player
     :raises TypeError: if start_skip and/or end_skip is not an integer
-    :raises KeyError: if player_info does not contain keys named as "Name", "Current HP" and "Current HP"
-    :raises AttributeError: if player_info is not a dictionary
+                       if player_info is not a dictionary
+    :raises KeyError: if player_info does not contain keys named as "Current HP" and "Current HP"
 
     >>> character_dict = {"Name": "Nathan", "Current HP": 100, "Current MP": 200, "Strength": 100}
     >>> update_status_message(character_dict, -1, 4)
@@ -23,18 +23,18 @@ def update_status_message(player_info: dict, start_skip: int, end_skip: int) -> 
     >>> update_status_message(character_dict, 2, 2)
     'Current HP               100\\nCurrent MP               200\\nStrength                 100'
     """
+    if type(player_info) is not dict:
+        raise TypeError("player_info is not a dictionary")
     character_status = ""
     keys_to_skip = set(list(player_info.keys())[start_skip:end_skip])
     for key, value in player_info.items():
         if key in keys_to_skip or key == "Name":
             continue
         if key == "Max HP":
-            current_hp = max(player_info["Current HP"], 0)
-            value = f"{current_hp}/{value}"
+            value = f"{max(player_info['Current HP'], 0)}/{value}"
             key = "Current HP"
-        elif key == "Max MP":
-            current_mp = max(player_info["Current MP"],   0)
-            value = f"{current_mp}/{value}"
+        if key == "Max MP":
+            value = f"{ max(player_info['Current MP'],   0)}/{value}"
             key = "Current MP"
         character_status += f"{key:<16}{value:>12}\n"
     return character_status.rstrip()
