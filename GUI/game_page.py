@@ -214,7 +214,7 @@ def create_action_buttons_frame(overall_gui_view: dict, game_info: dict) -> tk.F
         middle_bottom_frame.grid_columnconfigure(0, weight=1)
         middle_bottom_frame.grid_columnconfigure(1, weight=1)
 
-    def create_action_buttons():
+    def create_action_buttons() -> None:
         """
         Create four buttons (search, physical attack, magic attack and run) in the bottom middle of the frame in a
         graphical user interface (GUI).
