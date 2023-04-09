@@ -29,14 +29,14 @@ def status_reset(player_attribute):
 
 def create_character(name: str) -> dict:
     """
-    Create a dictionary that contains the starting coordinates, health points (HP), name and other attributes
+    Create a dictionary that contains the starting coordinates at (4, 4), health points (HP), name and other attributes
     of a character.
 
-    :param name: a string that represents the character's name
+    :param name: a non-empty string that represents the character's name
     :precondition: name must be a string that represents the character's name
     :postcondition: create a dictionary that contains initial attributes and name of a character
     :return: a dictionary that contains initial attributes and name of a character
-    :raise TypeError: if name is not a string
+    :raises TypeError: if name is not a string
     """
     keys = ["Name", "Level", "NEXT LV (EXP)", "Status", "X-coordinate", "Y-coordinate", "Items", "Escape",
             "Current HP", "Current MP", "Max HP", "Max MP", "Strength", "Dexterity", "Intelligence", "Magic Power",
