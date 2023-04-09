@@ -3,7 +3,7 @@ from unittest.mock import patch
 from combat.player_info import level_up
 
 
-class Test(TestCase):
+class TestLevelUp(TestCase):
 
     @patch("combat.player_info.level_up_widget_update")
     def test_type_error_with_player_info_being_non_dict_object(self, _):
