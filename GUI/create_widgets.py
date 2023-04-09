@@ -43,10 +43,10 @@ def update_image_label(frame_object, label_name: str, image_directory: str):
     :precondition: image_directory must be a string that is a file path
     :precondition: image_directory must represent an existing image in the specific directory
     :postcondition: update the image of  a tkinter label represented by the provided path in a tkinter frame.
-    :raise AttributeError: if frame_object is not a tkinter frame
-    :raise KeyError: if label_name does not exist in the specific frame
-    :raise TypeError: if label_name or/and image_directory is not a string type
-    :raise _tkinter.TclError: if the directory represented by image_directory does not exist
+    :raises AttributeError: if frame_object is not a tkinter frame
+    :raises KeyError: if label_name does not exist in the specific frame
+    :raises TypeError: if label_name or/and image_directory is not a string type
+    :raises _tkinter.TclError: if the directory represented by image_directory does not exist
     """
     if type(label_name) is not str:
         raise TypeError(f"Label Name must a string.")
