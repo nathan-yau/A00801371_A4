@@ -6,8 +6,7 @@ def decoder(save_uid: str) -> str:
     :precondition: phrase must be a string that is the length of multipler of four
     :postcondition: convert a string of joined Unicode numeric strings to a string of equivalent Unicode characters
     :return: a converted Unicode character string from an equivalent string of joined Unicode numeric strings
-    :riase ValueError: if save_uid is not a set of Unicode numeric characters
-                        with length of a multiple of four
+    :riase ValueError: if save_uid is not a set of Unicode numeric characters with length of a multiple of four
 
     >>> decoder("00970098")
     'ab'
@@ -15,7 +14,7 @@ def decoder(save_uid: str) -> str:
     'ac'
     """
     result = []
-    if not save_uid.isdigit() or len(save_uid) % 4 != 0:
+    if type(save_uid) is not str or not save_uid.isdigit() or len(save_uid) % 4 != 0:
         raise ValueError("save_uid must be a string of Unicode numeric characters "
                          "with a length that is a multiple of four!")
     for index in range(0, int(len(save_uid)), 4):
