@@ -1,7 +1,7 @@
 import random
 
 
-def status_reset(player_attribute):
+def status_reset(player_attribute: dict) -> None:
     """
     Set a character's health point, magical point and status based on their attributes
 
