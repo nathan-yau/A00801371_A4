@@ -63,11 +63,11 @@ def update_enemy_info(overall_frames_info: dict, enemy: dict, script: str) -> No
     :precondition: script must be a string
     :postcondition: update the enemy related widgets (image and text labels) on the GUI based on the
                     enemy's information and given script string
-    :raise KeyError: if enemy does not contain keys named as "Name", "EXP", and "HP" as the first
-                     three keys in this order
-                     if frame represented by the key ['Script Frame'] in overall_frames_info does not contain labels,
-                     ['enemy_info'] and ['script_display']
-    :raise TypeError: if overall_frames_info, enemy and/or script is not a dictionary
+    :raises KeyError: if enemy does not contain keys named as "Name", "EXP", and "HP" as the first
+                      three keys in this order
+                      if frame represented by the key ['Script Frame'] in overall_frames_info does not contain labels,
+                      ['enemy_info'] and ['script_display']
+    :raises TypeError: if overall_frames_info, enemy and/or script is not a dictionary
     """
     image_name = enemy['Name'].lower().replace(" ", "_")
     overall_frames_info['Script Frame'].children['enemy_info'].config(text=f"{enemy_status(enemy)}")
