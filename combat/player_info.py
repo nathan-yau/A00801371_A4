@@ -26,10 +26,10 @@ def level_up(overall_gui_frame: dict, player_info: dict) -> None:
                    and ["Magic Power"] keys from player_info must have an associated numeric value
     :postcondition: reflect the player's new information on GUI after increasing the player's level and attributes
                     if their experience points are high enough for next levels
-    :raise KeyError: if the keys ['Script Frame'] cannot be found inside all_widgets_dict
+    :raises KeyError: if the keys ['Script Frame'] cannot be found inside all_widgets_dict
                      if the keys ["Strength"], ["Dexterity"], ["Intelligence"], ["Magic Resistance"] and ["Magic Power"]
                      inside game_player_info cannot be found
-    :raise TypeError: if the value of the keys ['Level'], ['NEXT LV (EXP)'], ["Strength"], ["Dexterity"],
+    :raises TypeError: if the value of the keys ['Level'], ['NEXT LV (EXP)'], ["Strength"], ["Dexterity"],
                       ["Intelligence"], ["Magic Resistance"] and ["Magic Power"] inside foe is not number
                       if game_player_info is not a dictionary
     """
