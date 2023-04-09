@@ -241,7 +241,7 @@ def create_action_buttons_frame(overall_gui_view: dict, game_info: dict) -> tk.F
             if key != "Search":
                 middle_bottom_frame.children[button_name].config(state="disabled")
 
-    def create_direction_buttons():
+    def create_direction_buttons() -> None:
         """
         Create four buttons (move left, move up, move down, move right) in the bottom middle of the frame in a
         graphical user interface (GUI).
