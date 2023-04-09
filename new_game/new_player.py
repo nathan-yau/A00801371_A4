@@ -27,24 +27,27 @@ def status_reset(player_attribute):
     player_attribute['Status'] = 'Healthy'
 
 
-    :postcondition: create a dictionary that contains starting coordinates and health points (HP) of a character
-    :return: a dictionary that contains the starting coordinates and health points (HP) of a character
+def create_character(name: str) -> dict:
     """
+    Create a dictionary that contains the starting coordinates, health points (HP), name and other attributes
+    of a character.
 
-    keys = ["Name", "Level", "NEXT LV (EXP)", "Status", "X-coordinate", "Y-coordinate", "Items",
-            "Current HP", "Current MP", "Max HP", "Max MP",
-            "Strength", "Dexterity", "Intelligence", "Magic Power"]
-    values = [name, 1, int(60*(random.uniform(1.5, 1.9))), "Healthy", 4, 4, {'Sanctum Key': 1, 'Healing Potion': 2,
-                                                                          'Status Potion': 2, 'Attribute Potion': 2,
-                                                                    'The Amulet of Knowledge': 1,
-                                                                    'Oasis Explorer': 1}, 50, 50, 50, 50]
-    while sum(values[11:]) < 160:
+    :param name: a string that represents the character's name
+    :precondition: name must be a string that represents the character's name
+    :postcondition: create a dictionary that contains initial attributes and name of a character
+    :return: a dictionary that contains initial attributes and name of a character
+    :raise TypeError: if name is not a string
+    """
+    keys = ["Name", "Level", "NEXT LV (EXP)", "Status", "X-coordinate", "Y-coordinate", "Items", "Escape",
+            "Current HP", "Current MP", "Max HP", "Max MP", "Strength", "Dexterity", "Intelligence", "Magic Power",
+            "Magic Resistance"]
+    values = [name, 1, int(60*(random.uniform(1.5, 1.9))), "Healthy", 4, 4, {"Sanctum Key": 1}, False, 50, 50, 50, 50]
+    if type(name) is not str:
+        raise TypeError("Name of the character must be a string!")
+    while sum(values[11:]) < 210:
         [values.append(random.randint(30, 50)) for _ in keys]
     attributes = dict(zip(keys, values))
-    attributes['Max HP'] = max(round(attributes['Strength'] + attributes['Intelligence'], -1), 60)
-    attributes['Max MP'] = max(round(attributes['Dexterity'] + attributes['Magic Power'], -1), 60)
-    attributes['Current HP'] = attributes['Max HP']
-    attributes['Current MP'] = attributes['Max MP']
+    status_reset(attributes)
     return attributes
 
 
