@@ -109,11 +109,11 @@ def create_user_entry(upper_frame, widget_id: str, box_width: int, entry_font_st
     :precondition: entry_font_size must represent an integer that represents a font size. Default as DEFAULT_FONT_SIZE
     :precondition: DEFAULT_FONT_SIZE must be defined
     :postcondition: create a tkinter entry for player's input in a tkinter frame
-    :raise NameError: if DEFAULT_FONT and/or DEFAULT_FONT_SIZE is not defined
-    :raise KeyError: if widget_id already exists in the specific frame
-    :raise TypeError: if widget_id and/or entry_font_style is not a string type
-    :raise ValueError: if box_width and/or entry_font_size is not a non-zero positive integer
-    :raise AttributeError: if upper_frame is not a tkinter frame
+    :raises NameError: if DEFAULT_FONT and/or DEFAULT_FONT_SIZE is not defined
+    :raises KeyError: if widget_id already exists in the specific frame
+    :raises TypeError: if widget_id and/or entry_font_style is not a string type
+    :raises ValueError: if box_width and/or entry_font_size is not a non-zero positive integer
+    :raises AttributeError: if upper_frame is not a tkinter frame
     """
     if type(box_width) is not int or box_width <= 0 or type(entry_font_size) is not int or entry_font_size <= 0:
         raise ValueError(f"Box Width & Font Size must be a non-zero positive integer")
