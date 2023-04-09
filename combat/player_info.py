@@ -83,14 +83,14 @@ def drop_item(gui_widgets_all: dict, player_character: dict, picked_foe: dict) -
                    equal to 100 as its value.
     :postcondition: updates the GUI display if an item dropped from a foe's inventory to the player's bag
                     based on a random probability assigned to the foe
-    :raise KeyError: if the keys ['Item Frame'] cannot be found inside gui_widgets_all
-                     if the key ["Items"] cannot be found inside player_character
+    :raises KeyError: if the keys ['Item Frame'] cannot be found inside gui_widgets_all
+                      if the key ["Items"] cannot be found inside player_character
                      if the keys ['Items'] and ['Probability'] cannot be found inside picked_foe
-    :raise TypeError: if gui_widgets_all, player_character and/or picked_foe is not a dictionary
-                      if key ["Items"] from picked_foe is not a list
-    :raise AttributeError: if key ["Items] from player_character is not a dictionary
-    :raise ValueError:  if picked_foe['Probability'] is not a non-zero positive integer less than or
-                        equal to 100
+    :raises TypeError: if gui_widgets_all, player_character and/or picked_foe is not a dictionary
+                       if key ["Items"] from picked_foe is not a list
+    :raises AttributeError: if key ["Items] from player_character is not a dictionary
+    :raises ValueError:  if picked_foe['Probability'] is not a non-zero positive integer less than or
+                         equal to 100
     """
     if type(picked_foe['Probability']) is not int or 0 >= picked_foe['Probability'] or 100 < picked_foe['Probability']:
         raise ValueError("Probability must be a non-zero positive integer less than or  equal to 100.")
