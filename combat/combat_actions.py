@@ -84,19 +84,19 @@ def attack(attack_type: str, player_info: dict, all_widgets_dict: dict, foe: dic
     :precondition: ['Event Bar'] key from all_widgets_dict must have an associated tkinter label as value
     :precondition: ['Script Frame'] key from all_widgets_dict must have an associated tkinter frame as value
     :postcondition: update the label on event bar after reducing the player and the foe's health points
-    :raise KeyError: if the keys ['Event Bar'] and/or ['Script Frame'] cannot be found inside all_widgets_dict
-                     if the keys ['Name'] and/or ['HP'] cannot be found inside foe
-                     if the key ['Current HP'] cannot be found inside game_player_info
-                     if the keys ['Magic Resistance', ['Dexterity'], ['Magic Power'], ['Strength'] and ['Current MP']
-                     inside game_player_info and/or foe cannot be found
-    :raise TypeError: if the value of the keys ['Magic Resistance', ['Dexterity'], ['Magic Power'], ['Strength'],
-                      and ['Current MP'] inside attacker inside game_player_info and/or foe is not number
-                      if the value of the keys ['Current HP'] inside game_player_info is not number
-                      if the value of the keys ['HP'] inside foe is not number
-                      if game_player_info and/or foe is not a dictionary
-    :raise ValueError: if attack_type is a not string that containing either 'magic' or 'physical'
-    :raise AttributeError: if the value of the key ['Event Bar'] inside all_widgets_dict is not a tkinter label
-                           if the value of the key ['Script Frame'] inside all_widgets_dict is not a tkinter frame
+    :raises KeyError: if the keys ['Event Bar'] and/or ['Script Frame'] cannot be found inside all_widgets_dict
+                      if the keys ['Name'] and/or ['HP'] cannot be found inside foe
+                      if the key ['Current HP'] cannot be found inside game_player_info
+                      if the keys ['Magic Resistance', ['Dexterity'], ['Magic Power'], ['Strength'] and ['Current MP']
+                      inside game_player_info and/or foe cannot be found
+    :raises TypeError: if the value of the keys ['Magic Resistance', ['Dexterity'], ['Magic Power'], ['Strength'],
+                       and ['Current MP'] inside attacker inside game_player_info and/or foe is not number
+                       if the value of the keys ['Current HP'] inside game_player_info is not number
+                       if the value of the keys ['HP'] inside foe is not number
+                       if game_player_info and/or foe is not a dictionary
+    :raises ValueError: if attack_type is a not string that containing either 'magic' or 'physical'
+    :raises AttributeError: if the value of the key ['Event Bar'] inside all_widgets_dict is not a tkinter label
+                            if the value of the key ['Script Frame'] inside all_widgets_dict is not a tkinter frame
     """
     player_hit = damage_calculator(attack_type, player_info, foe)
     foe_hit = damage_calculator(random.sample(["magic", "physical"], 1)[0], foe, player_info)
