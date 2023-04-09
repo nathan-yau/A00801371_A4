@@ -1,4 +1,3 @@
-import os
 from tkinter import messagebox, filedialog
 from save_load.uid_converter import encoder
 from save_load import DEFAULT_SAVE_FOLDER
@@ -12,7 +11,7 @@ def create_save_file(save_slot: int, all_key_attributes: dict) -> None:
                           or -1 to indicate for open file window for selection
     :parameter all_key_attributes: a dictionary that contains all player data and game environment data
     :precondition: save_slot must be greater than or equal to -1
-    :precondition: all_key_attributes must be a dictionary that conatins all player data and game environment data
+    :precondition: all_key_attributes must be a dictionary that contains all player data and game environment data
     :postcondition: create a plan text file, which contains an encoded dictionary as string
     :raises TypeError: if all_key_attributes is not a dictionary
     """
