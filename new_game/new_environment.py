@@ -65,7 +65,7 @@ def make_environment_attributes(columns: int, rows: int, game_data: str = NEW_GA
         """
         for room in list(itertools.product(range(columns), range(rows))):
             if room not in resource_dict['special_places']:
-                resource_dict['special_events'].append(('RANDOM', ''))
+                resource_dict['special_events'].append(('Random', ''))
                 resource_dict['special_places'].append(room)
 
     if type(columns) is not int or type(rows) is not int or columns < 2 or rows < 2:
