@@ -32,19 +32,21 @@ def encoder(phrase: str):
     :postcondition: convert a string of Unicode characters into a string of joined Unicode numeric strings
     :return: a set of joined unicode numeric string converted from its unicode character form, which each character is
              represented by exactlt 4 digits
-    :raise TypeError: if phrase is not string
-    :raise ValueError: if phrase is an empty string
+    :raises TypeError: if phrase is not string
+    :raises ValueError: if phrase is an empty string
+                        if phrase contains Unicode characters with code points greater than 4 digits!
 
     >>> encoder("{123}")
     '01230049005000510125'
     >>> encoder("[ABC]")
     '00910065006600670093'
-
     """
     translated_message = []
     if len(phrase) == 0:
         raise ValueError("phrase must not be an empty string!")
     for index, letter in enumerate(phrase):
+        if len(str(ord(letter))) > 4:
+            raise ValueError("phrase contains Unicode characters with code points greater than 4 digits!")
         translated_message.append(str(ord(letter)).zfill(4))
     return ''.join(translated_message)
 
