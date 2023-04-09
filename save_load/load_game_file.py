@@ -5,7 +5,7 @@ from save_load.uid_converter import decoder
 from save_load import DEFAULT_SAVE_FOLDER
 
 
-def load_file(game_frames):
+def load_file(game_frames: dict) -> None:
     """
     Process a selected plain text file after converting the context from string to dictionary that
     represents the player data and game data.
@@ -13,8 +13,14 @@ def load_file(game_frames):
     :parameter game_frames: a dictionary that contains Tkinter frames as value and their corresponding names as keys
     :precondition: game_frames must be a dictionary that contains Tkinter frames and their corresponding names as keys
     :postcondition: load an encoded save file upon user's confirmation
-
+    :raise FileNotFoundError: if the selected file cannot be found
+    :raise TypeError: if game_frames is not a dictionary
+    :raise KeyError: if loaded_info does not contain a key named as "character"
+                      if the inner dictionary of loaded_info["character"] does not contain keys named as "Name" and
+                      "Level"
     """
+    if type(game_frames) is not dict:
+        raise TypeError("game_frames must be a dictionary!")
     filename = filedialog.askopenfilename(title="Select a File", initialdir=DEFAULT_SAVE_FOLDER,
                                           filetypes=(("SAVE File", "*.save"), ("SAVE File", " ")))
     if filename:
