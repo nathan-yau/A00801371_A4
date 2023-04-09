@@ -171,8 +171,8 @@ def attach_button_function_call(button_name, callable_function):
     :precondition: button_name must be an existing tkinter button object
     :precondition: callable_function must be a callable function or None type
     :postcondition: attach or detach a callable function to a button
-    :raise TypeError: if callable_function is not a callable function or None type
-    :raise AttributeError: if button_name is not a tkinter button
+    :raises TypeError: if callable_function is not a callable function or None type
+    :raises AttributeError: if button_name is not a tkinter button
     """
     if not callable(callable_function) and None:
         raise TypeError("callable_function must be a callable function!")
