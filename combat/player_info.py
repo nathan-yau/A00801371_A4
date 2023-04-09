@@ -168,3 +168,4 @@ def check_if_alive(gui_dict, player_info):
         [widget.config(state="disabled") for widget in button_frame_widgets if isinstance(widget, tk.Button)]
         gui_dict['Side Bar Frame'].children['items'].config(state="disabled")
         gui_dict['Side Bar Frame'].children['save'].config(state="disabled")
+        gui_dict['pause'].set(False)
