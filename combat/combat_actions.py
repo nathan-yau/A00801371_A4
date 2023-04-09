@@ -49,8 +49,8 @@ def status_condition(player_info: dict) -> None:
     :param player_info: a dictionary containing key named as ['Status']
     :precondition: player_info must be a dictionary containing key named as ['Status']
     :postcondition: set the player's status to "Poisoned" with a probability of 1/6, or unchanged in other condition
-    :raise KeyError: if the key ['Status'] cannot be found inside player_info
-    :raise TypeError: if player_info is not a dictionary
+    :raises KeyError: if the key ['Status'] cannot be found inside player_info
+    :raises TypeError: if player_info is not a dictionary
     """
     player_info['Status'] = "Poisoned" if random.randint(0, 5) == 1 else player_info['Status']
 
