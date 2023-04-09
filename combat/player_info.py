@@ -1,31 +1,100 @@
 import random
+import tkinter as tk
 from GUI import DEFAULT_FONT
 from GUI_update.status_frame import update_status_message
 from new_game.new_player import status_reset
 from events.items_event import create_items_display
 
 
-def level_up(overall_gui_frame, player_info):
+def level_up(overall_gui_frame: dict, player_info: dict) -> None:
     """
+    Reflect the player's new information on GUI after increasing the player's level and attributes
+    if their experience points are high enough for next levels.
 
+    :param overall_gui_frame: a dictionary containing key named as ['Script Frame'] whose value is a tkinter Frame
+    :param player_info: a dictionary containing keys named as ['NEXT LV (EXP)'], ['Level'],
+                        ["Strength"], ["Dexterity"], ["Intelligence"], ["Magic Resistance"] and ["Magic Power"],
+                        each of which has an associated numeric value
+    :precondition: overall_gui_frame must be a dictionary containing key named as ['Script Frame'],
+                   each of which has an associated tkinter Frame
+    :precondition: ['Script Frame'] key from overall_gui_frame must have an associated tkinter frame as value
+    :precondition: ['Script Frame'] key from overall_gui_frame must contain labels named as ['character_status']
+                   and ['script_display']
+    :precondition: player_info must be a dictionary containing keys named as ['NEXT LV (EXP)'], ['Level'],
+                   ["Strength"], ["Dexterity"], ["Intelligence"], ["Magic Resistance"] and ["Magic Power"]
+    :precondition: ['NEXT LV (EXP)'], ['Level'], ["Strength"], ["Dexterity"], ["Intelligence"], ["Magic Resistance"]
+                   and ["Magic Power"] keys from player_info must have an associated numeric value
+    :postcondition: reflect the player's new information on GUI after increasing the player's level and attributes
+                    if their experience points are high enough for next levels
+    :raise KeyError: if the keys ['Script Frame'] cannot be found inside all_widgets_dict
+                     if the keys ["Strength"], ["Dexterity"], ["Intelligence"], ["Magic Resistance"] and ["Magic Power"]
+                     inside game_player_info cannot be found
+    :raise TypeError: if the value of the keys ['Level'], ['NEXT LV (EXP)'], ["Strength"], ["Dexterity"],
+                      ["Intelligence"], ["Magic Resistance"] and ["Magic Power"] inside foe is not number
+                      if game_player_info is not a dictionary
     """
     while player_info['NEXT LV (EXP)'] <= 0:
         player_info['Level'] += 1
         player_info['NEXT LV (EXP)'] += int(player_info['Level']*60*(random.uniform(1.5, 1.9)))
-        for attribute in ["Strength", "Dexterity", "Intelligence", "Magic Power"]:
+        for attribute in ["Strength", "Dexterity", "Intelligence", "Magic Power", "Magic Resistance"]:
             player_info[attribute] += random.randint(5, 15)
         status_reset(player_info)
-        overall_gui_frame['Status Frame'].children['character_status'].config(
-            text=update_status_message(player_info, 4, -6))
-        overall_gui_frame['Script Frame'].children['script_display'].config(
-            text=f"Achieved Level {player_info['Level']}!")
+        level_up_widget_update(overall_gui_frame, player_info)
 
 
-def drop_item(gui_widgets_all, player_character, picked_foe):
+def level_up_widget_update(overall_gui_frame, player_info):
     """
+    Update GUI to reflect the player's information upon level up.
 
+    :param overall_gui_frame: a dictionary containing key named as ['Script Frame'] whose value is a tkinter Frame
+    :param player_info: a dictionary containing keys named as ['Level'], which has an associated numeric value
+    :precondition: overall_gui_frame must be a dictionary containing key named as ['Script Frame'],
+                   each of which has an associated tkinter Frame
+    :precondition: ['Script Frame'] key from overall_gui_frame must have an associated tkinter frame as value
+    :precondition: ['Script Frame'] key from overall_gui_frame must contain labels named as ['character_status']
+                   and ['script_display']
+    :precondition: player_info must be a dictionary containing key named as ['Level']
+    :postcondition: update GUI to reflect the player's information upon level up.
     """
-    if random.randint(1,100) <= picked_foe['PROBABILITY']:
+    overall_gui_frame['Status Frame'].children['character_status'].config(
+        text=update_status_message(player_info, 4, -7))
+    overall_gui_frame['Script Frame'].children['script_display'].config(
+        text=f"Achieved Level {player_info['Level']}!")
+
+
+def drop_item(gui_widgets_all: dict, player_character: dict, picked_foe: dict) -> None:
+    """
+    Updates the GUI display if an item dropped from a foe's inventory to the player's bag
+    based on a random probability assigned to the foe.
+
+    :param gui_widgets_all: a dictionary containing key named as ['Item Frame'] whose value is a tkinter Frame
+    :param player_character: a dictionary containing keys named as ["Items"], which has an associated dictionary
+    :param picked_foe: a dictionary containing keys named as ['Items'] and ['Probability'], which has an
+                       associated value of list and a positive non-zero integer less than or equal to 100
+    :precondition: gui_widgets_all must be a dictionary containing key named as ['Item Frame'],
+                   each of which has an associated tkinter Frame
+    :precondition: ['Item Frame'] key from gui_widgets_all must have an associated tkinter frame as value
+    :precondition: player_character must be a dictionary containing keys named as ['Items']
+    :precondition: ['Items"] key from player_character must have a dictionary of name of item as keys and
+                   integer number as its value
+    :precondition: picked_foe must be a dictionary containing keys named as ['Items']
+    :precondition: ['Items"] key from picked_foe must have a list as its value
+    :precondition: ['Probability"] key from picked_foe must have an associated non-zero positive integer less than or
+                   equal to 100 as its value.
+    :postcondition: updates the GUI display if an item dropped from a foe's inventory to the player's bag
+                    based on a random probability assigned to the foe
+    :raise KeyError: if the keys ['Item Frame'] cannot be found inside gui_widgets_all
+                     if the key ["Items"] cannot be found inside player_character
+                     if the keys ['Items'] and ['Probability'] cannot be found inside picked_foe
+    :raise TypeError: if gui_widgets_all, player_character and/or picked_foe is not a dictionary
+                      if key ["Items"] from picked_foe is not a list
+    :raise AttributeError: if key ["Items] from player_character is not a dictionary
+    :raise ValueError:  if picked_foe['Probability'] is not a non-zero positive integer less than or
+                        equal to 100
+    """
+    if type(picked_foe['Probability']) is not int or 0 >= picked_foe['Probability'] or 100 < picked_foe['Probability']:
+        raise ValueError("Probability must be a non-zero positive integer less than or  equal to 100.")
+    if random.randint(1, 100) <= picked_foe['Probability']:
         item_bag = player_character['Items']
         item_bag[picked_foe['Items'][0]] = item_bag.get(picked_foe['Items'][0], 0) + 1
         create_items_display(gui_widgets_all['Item Frame'], player_character, gui_widgets_all)
