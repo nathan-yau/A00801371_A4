@@ -47,7 +47,7 @@ class MakeEnvironmentAttributesTest(TestCase):
     def test_making_the_smallest_board(self, _, __):
         actual = make_environment_attributes(2, 2, "test_make_environment_attributes.py")
         expected = {(1, 0): ('BOSS', 'ABC'), (0, 1): ('ITEM', 'CDE'),
-                    (0, 0): ('ITEM', 'Healing Potion'), (1, 1): ('RANDOM', '')}
+                    (0, 0): ('ITEM', 'Healing Potion'), (1, 1): ('Random', '')}
         self.assertEqual(expected, actual)
 
     @patch('builtins.open', return_value=io.StringIO('01230039011501120101009901050097010800950101011801010110011601150'
@@ -63,14 +63,14 @@ class MakeEnvironmentAttributesTest(TestCase):
     def test_making_the_large_board(self, _, __):
         actual = make_environment_attributes(5, 5, "test_make_environment_attributes.py")
         expected = {(0, 0): ('ITEM', 'Healing Potion'), (0, 1): ('ITEM', 'CDE'),
-                    (0, 2): ('RANDOM', ''), (0, 3): ('RANDOM', ''), (0, 4): ('RANDOM', ''),
-                    (1, 0): ('BOSS', 'ABC'), (1, 1): ('RANDOM', ''), (1, 2): ('RANDOM', ''),
-                    (1, 3): ('RANDOM', ''), (1, 4): ('RANDOM', ''), (2, 0): ('RANDOM', ''),
-                    (2, 1): ('RANDOM', ''), (2, 2): ('RANDOM', ''), (2, 3): ('RANDOM', ''),
-                    (2, 4): ('RANDOM', ''), (3, 0): ('RANDOM', ''), (3, 1): ('RANDOM', ''),
-                    (3, 2): ('RANDOM', ''), (3, 3): ('RANDOM', ''), (3, 4): ('RANDOM', ''),
-                    (4, 0): ('RANDOM', ''), (4, 1): ('RANDOM', ''), (4, 2): ('RANDOM', ''),
-                    (4, 3): ('RANDOM', ''), (4, 4): ('RANDOM', '')}
+                    (0, 2): ('Random', ''), (0, 3): ('Random', ''), (0, 4): ('Random', ''),
+                    (1, 0): ('BOSS', 'ABC'), (1, 1): ('Random', ''), (1, 2): ('Random', ''),
+                    (1, 3): ('Random', ''), (1, 4): ('Random', ''), (2, 0): ('Random', ''),
+                    (2, 1): ('Random', ''), (2, 2): ('Random', ''), (2, 3): ('Random', ''),
+                    (2, 4): ('Random', ''), (3, 0): ('Random', ''), (3, 1): ('Random', ''),
+                    (3, 2): ('Random', ''), (3, 3): ('Random', ''), (3, 4): ('Random', ''),
+                    (4, 0): ('Random', ''), (4, 1): ('Random', ''), (4, 2): ('Random', ''),
+                    (4, 3): ('Random', ''), (4, 4): ('Random', '')}
         self.assertEqual(expected, actual)
 
 
