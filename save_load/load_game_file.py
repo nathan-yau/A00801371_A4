@@ -13,9 +13,9 @@ def load_file(game_frames: dict) -> None:
     :parameter game_frames: a dictionary that contains Tkinter frames as value and their corresponding names as keys
     :precondition: game_frames must be a dictionary that contains Tkinter frames and their corresponding names as keys
     :postcondition: load an encoded save file upon user's confirmation
-    :raise FileNotFoundError: if the selected file cannot be found
-    :raise TypeError: if game_frames is not a dictionary
-    :raise KeyError: if loaded_info does not contain a key named as "character"
+    :raises FileNotFoundError: if the selected file cannot be found
+    :raises TypeError: if game_frames is not a dictionary
+    :raises KeyError: if loaded_info does not contain a key named as "character"
                       if the inner dictionary of loaded_info["character"] does not contain keys named as "Name" and
                       "Level"
     """
