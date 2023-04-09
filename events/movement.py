@@ -41,7 +41,7 @@ def move_character(game_player: dict, path: int) -> None:
     game_player[direction] += int(value)
 
 
-def board_validate_move(next_move, environment):
+def board_validate_move(next_move: dict, environment: dict) -> bool:
     """
     Check whether the desired location represented by the dictionary is valid on the board layout.
 
@@ -76,7 +76,7 @@ def board_validate_move(next_move, environment):
     return tuple(next_move.values()) in list(environment.keys())
 
 
-def route_validate_move(boundary_file, avatar, heading):
+def route_validate_move(boundary_file: str, avatar: dict, heading: int) -> bool:
     """
     Check whether the desired travel direction is valid based on the player's location.
 
@@ -114,7 +114,7 @@ def route_validate_move(boundary_file, avatar, heading):
     return True
 
 
-def key_validate_move(key_file, next_move, bag_info):
+def key_validate_move(key_file: str, next_move: dict, bag_info: dict) -> bool:
     """
     Check whether the required item needed in order to travel to the desired direction is obtained by the player
 
@@ -150,7 +150,7 @@ def key_validate_move(key_file, next_move, bag_info):
     return True
 
 
-def player_movement(game_player, path):
+def player_movement(game_player: dict, path: int) -> bool:
     """
     Check whether the desired travel direction is allowed based the board layout, the player's location and the items
     player currently have
