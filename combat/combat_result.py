@@ -109,7 +109,7 @@ def mid_boss_killed(progress_switch: dict, environment_info: dict, overall_gui_i
     if progress_switch['opponent']['Name'] == "Sage Thorne" and progress_switch['result'] == "win":
         overall_gui_info['Script Frame'].children['script_display'].config(
             text=f"Huh! Here you go, the Sanctum Key! ")
-        environment_info[location] = ('RANDOM', '')
+        environment_info[location] = ('Random', '')
 
 
 def main():
