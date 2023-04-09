@@ -4,7 +4,7 @@ from save_load.load_game_file import load_file
 from utilities.closing_window import closing_event
 
 
-def gui_default_setting(game_window, game_title: str, icon_path: str, window_size: str, pause: bool) -> None:
+def gui_default_setting(game_window, game_title: str, icon_path: str, window_size: str, pause: tk.BooleanVar) -> None:
     """
     Create default window and grid setting for a tkinter GUI.
 
@@ -13,6 +13,7 @@ def gui_default_setting(game_window, game_title: str, icon_path: str, window_siz
     :param icon_path: an image path that represents an existing image
     :param window_size: a geometry specifier as string in the format like "100x120"
                         where 100 represents the width and 120 represents the height of the GUI
+    :param pause: a tkinter boolean value used for indicating whether the game is currently paused or not
     :precondition: a tkinter root window must exist
     :precondition: game_window must be the tkinter root window
     :precondition: game_title must be a string
