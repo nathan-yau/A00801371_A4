@@ -11,7 +11,7 @@ from GUI.new_player_page import new_player_page
 from save_load.load_game_file import load_file
 
 
-def create_top_frame():
+def create_top_frame() -> tk.Frame:
     """
     Create a frame at the top of a graphical user interface (GUI), containing a cover photo,
     a text field for player's name, a button to start a new game, and a button to load a saved game.
@@ -24,7 +24,7 @@ def create_top_frame():
                      if the widget name cannot be found in the specific frame after creation
     """
 
-    def create_cover_photo():
+    def create_cover_photo() -> None:
         """
         Create a label containing a cover photo in the top frame of a graphical user interface (GUI).
 
@@ -40,7 +40,7 @@ def create_top_frame():
         create_image_label(frame=main_frame, widget_name="cover_photo", image_path=GAME_COVER_PHOTO)
         main_frame.children['cover_photo'].grid(row=0, columnspan=4, sticky='we', padx=10)
 
-    def create_new_game_widgets():
+    def create_new_game_widgets() -> None:
         """
         Create a text field with label for player to enter their character's name in the top frame
         of a graphical user interface (GUI).
@@ -202,7 +202,7 @@ def create_homepage() -> dict:
 
         """
         gui_default_setting(game_window=gui_frames['GUI'], game_title=GAME_NAME,
-                            icon_path=GAME_ICON, window_size=GUI_WINDOW_SIZE)
+                            icon_path=GAME_ICON, window_size=GUI_WINDOW_SIZE, pause=gui_frames['pause'])
         gui_menubar(gui_frames)
 
     def attach_function_to_new_game_button() -> None:
@@ -263,7 +263,8 @@ def create_homepage() -> dict:
         else:
             messagebox.showinfo(title="Warning!", message=warning)
 
-    gui_frames = {"GUI": tk.Tk(), "Top Frame": create_top_frame(), "Event Bar": create_bottom_frame()}
+    gui_frames = {"GUI": tk.Tk(), "Top Frame": create_top_frame(), "Event Bar": create_bottom_frame(),
+                  "pause": tk.BooleanVar()}
     gui_level_list = (gui_setup, attach_function_to_new_game_button, attach_function_to_load_game_button)
     [gui_function() for gui_function in gui_level_list]
     return gui_frames
