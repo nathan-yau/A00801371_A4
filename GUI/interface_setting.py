@@ -3,7 +3,7 @@ from functools import partial
 from save_load.load_game_file import load_file
 
 
-def gui_default_setting(game_window, game_title: str, icon_path: str, window_size: str) -> None:
+def gui_default_setting(game_window, game_title: str, icon_path: str, window_size: str, pause: bool) -> None:
     """
     Create default window and grid setting for a tkinter GUI.
 
@@ -31,10 +31,10 @@ def gui_default_setting(game_window, game_title: str, icon_path: str, window_siz
     game_window.title(game_title)
     game_window.iconphoto(False, icon)
     game_window.geometry(window_size)
-    game_window.protocol("WM_DELETE_WINDOW", partial(closing_event, game_window))
+    game_window.protocol("WM_DELETE_WINDOW", partial(closing_event, game_window, pause))
 
 
-def closing_event(game_window) -> None:
+def closing_event(game_window, pause) -> None:
     """
     Close out all tkinter windows upon the player's confirmation on exiting the program.
 
@@ -44,8 +44,11 @@ def closing_event(game_window) -> None:
     :raise AttributeError: if game_window is not a tkinter root window
     """
     if tk.messagebox.askyesno(title="Confirm?", message="Do you confirm to close this awesome game?"):
-        game_window.destroy()
-        exit()
+        if pause.get():
+            tk.messagebox.showwarning(title="Confirm?", message="Can't exit game during battle")
+        else:
+            game_window.destroy()
+            quit()
 
 
 def gui_menubar(overall_gui: dict) -> None:
@@ -62,7 +65,7 @@ def gui_menubar(overall_gui: dict) -> None:
     :postcondition: attach a newly created file menu dropdown tab with its options to the menu bar of the given GUI
     :raise AttributeError: if the value of "GUI" in overall_gui dictionary is not a tkinter root window
     """
-    menu_bar = tk.Menu()
+    menu_bar = tk.Menu(name="menu_bar")
 
     def create_file_menu():
         """
@@ -72,11 +75,11 @@ def gui_menubar(overall_gui: dict) -> None:
         :postcondition: close out all tkinter windows upon the player's confirmation on exiting the program
         :raise AttributeError: if game_window is not a tkinter root window
         """
-        file_menu = tk.Menu(menu_bar, tearoff=False)
+        file_menu = tk.Menu(menu_bar, tearoff=False, name="file_menu")
         menu_bar.add_cascade(menu=file_menu, label="File")
 
         file_dict = {"Load Game": partial(load_file, overall_gui),
-                     "Seperator": None, "Exit Game": partial(closing_event, overall_gui['GUI'])}
+                     "Seperator": None, "Exit Game": partial(closing_event, overall_gui['GUI'], overall_gui['pause'])}
         for key, value in file_dict.items():
             if key == "Seperator":
                 file_menu.add_separator()
