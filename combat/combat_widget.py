@@ -24,13 +24,13 @@ def toggle_battle_buttons(overall_gui: dict, action: str) -> None:
     :precondition: "Side Bar Frame" must contain button named as ['save']
     :precondition: action must be a string that is either "enable" or "disable"
     :postcondition: toggle the active state of battle related buttons / keypress listeners in the GUI.
-    :raise TypeError: if overall_gui is not a dict
-    :raise KeyError: if overall_gui does not contain "Buttons Frame" or "Side Bar Frame"
-                     if "Side Bar Frame" does not contain buttons named as ['save']
-                     if "Buttons Frame" does not contain buttons named as ['move_left'],
-                     ['move_right'], ['move_up'], ['move_down'], ['search'], ['physical_attack'],
-                     ['magic_attack'] and ['run']
-    :raise ValueError: if action is not a string that is either "enable" or "disable"
+    :raises TypeError: if overall_gui is not a dict
+    :raises KeyError: if overall_gui does not contain "Buttons Frame" or "Side Bar Frame"
+                      if "Side Bar Frame" does not contain buttons named as ['save']
+                      if "Buttons Frame" does not contain buttons named as ['move_left'],
+                      ['move_right'], ['move_up'], ['move_down'], ['search'], ['physical_attack'],
+                      ['magic_attack'] and ['run']
+    :raises ValueError: if action is not a string that is either "enable" or "disable"
     """
     if type(action) is not str or action not in ["enable", "disable"]:
         raise ValueError("action parameter must be 'enable' or 'disable'")
