@@ -25,11 +25,26 @@ def decoder(save_uid: str) -> str:
 
 def encoder(phrase: str):
     """
+    Convert a Unicode character string into a set of equaivlaent Unicode numeric strings
 
-    :param phrase:
-    :return:
+    :param phrase: a non-empty string that contains Unicode characters with code points less than or equal to 4 digits
+    :precondition: phrase must be a non-empty string
+    :precondition: phrase must contain Unicode characters with code points less than or equal to 4 digits
+    :postcondition: convert a string of Unicode characters into a string of joined Unicode numeric strings
+    :return: a set of joined unicode numeric string converted from its unicode character form, which each character is
+             represented by exactlt 4 digits
+    :raise TypeError: if phrase is not string
+    :raise ValueError: if phrase is an empty string
+
+    >>> encoder("{123}")
+    '01230049005000510125'
+    >>> encoder("[ABC]")
+    '00910065006600670093'
+
     """
     translated_message = []
+    if len(phrase) == 0:
+        raise ValueError("phrase must not be an empty string!")
     for index, letter in enumerate(phrase):
         translated_message.append(str(ord(letter)).zfill(4))
     return ''.join(translated_message)
