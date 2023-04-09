@@ -9,10 +9,12 @@ def status_reset(player_attribute):
                              key and its corresponding data as values
     :precondition: player_attribute must be a dictionary that contains the description of the character's attributes as
                    key and its corresponding data as values
-    :precondition: player_attribute must contain "Max HP", "Max MP", "Current HP", "Current MP" or "Status" as keys
+    :precondition: player_attribute must contain "Strength", "Intelligence", "Dexterity" and "Magix Power" as keys
     :postcondition: set a character's health point, magical point and status based on their attributes
-    :raise TypeError: if player_attribute is not a dictionary
-    :raise KeyError: if player_attribute does not contain "Strength", "Intelligence", "Dexterity" and "Magix Power"
+    :raises TypeError: if player_attribute is not a dictionary
+                       if "Strength", "Intelligence", "Dexterity" and"Magix Power" are not paired up with
+                       numeric value in player_attribute
+    :raises KeyError: if player_attribute does not contain "Strength", "Intelligence", "Dexterity" and"Magix Power"
                      as keys
     >>> player = {'Strength': 32, 'Dexterity': 45, 'Intelligence': 46, 'Magic Power': 32}
     >>> status_reset(player)
