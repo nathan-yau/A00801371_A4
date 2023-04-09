@@ -6,7 +6,7 @@ def main():
     """
     Drive the program.
     """
-    playsound('./music/default.mp3', block=False)
+    # playsound('./music/default.mp3', block=False)
     game_gui = create_homepage()
     game_gui['GUI'].mainloop()
 
