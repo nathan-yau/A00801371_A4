@@ -7,7 +7,7 @@ from utilities.closing_window import closing_event
 from events.action_manager import gameplay
 
 from save_load.save_game_file import create_save_file
-from GUI_update.status_frame import update_status_message
+from GUI_update.update_status_frame import update_status_message
 from events.items_event import search, create_items_display
 
 
