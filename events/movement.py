@@ -104,22 +104,22 @@ def route_validate_move(boundary_file: str, avatar: dict, heading: int) -> bool:
     :raises ValueError: if path is not an non-zero integer less than or equal to 4
     """
     if type(heading) is not int or 0 >= heading or heading > 4:
-        raise ValueError("path must be a non-zero positive integer between 1 and 4 inclusive")
+        raise ValueError("path must be a non-zero positive integer between 1 and 4 inclusive.")
     with open(boundary_file) as file_object:
         load_save = file_object.read()
     boundary_info = eval(decoder(load_save))
+    if type(boundary_info) is not dict:
+        raise TypeError("the decoded message from boundary_file must represent a dictionary.")
     current_coordinate = (avatar["X-coordinate"], avatar["Y-coordinate"])
-    if current_coordinate in boundary_info[heading]:
-        return False
-    return True
+    return current_coordinate not in boundary_info[heading]
 
 
 def key_validate_move(key_file: str, next_move: dict, bag_info: dict) -> bool:
     """
     Check whether the required item needed in order to travel to the desired direction is obtained by the player
 
-    :param key_file: a path linked to a plan text file that contains encoded Unicode characters representing
-                     the required item needed for the desired location, which can be converted into
+    :param key_file: a string representing a path linked to a plan text file that contains encoded Unicode characters
+                     representing the required item needed for the desired location, which can be converted into
                      python dictionary format.
     :param next_move: a dictionary that contains integer values for keys "X-coordinate" and "Y-coordinate"
                       to represent the player's current coordinate
@@ -142,9 +142,13 @@ def key_validate_move(key_file: str, next_move: dict, bag_info: dict) -> bool:
                       if key_file does not contain an encoded python dictionary
     :raises FileNotFoundError: if file represented by key_file cannot be found
     """
+    if type(next_move) is not dict or type(bag_info) is not dict:
+        raise TypeError("next_move and bag_info must be dictionary.")
     with open(key_file) as file_object:
         load_save = file_object.read()
     key_info = eval(decoder(load_save))
+    if type(key_info) is not dict:
+        raise TypeError("the decoded message from key_file must represent a dictionary.")
     if tuple(next_move.values()) in list(key_info.keys()) and key_info[tuple(next_move.values())] not in bag_info:
         return False
     return True
