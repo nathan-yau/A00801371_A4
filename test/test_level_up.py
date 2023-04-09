@@ -1,11 +1,113 @@
 from unittest import TestCase
 from unittest.mock import patch
-
-import combat.player_info
 from combat.player_info import level_up
 
 
 class Test(TestCase):
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_type_error_with_player_info_being_non_dict_object(self, _):
+        with self.assertRaises(TypeError):
+            player = 12
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_key_error_with_no_level_key_in_game_player_info(self, _):
+        with self.assertRaises(KeyError):
+            player = {'NEXT LV (EXP)': -100, "Strength": 1, "Dexterity": 1, "Intelligence": 1,
+                      "Magic Resistance": 1, "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_key_error_with_no_next_lv_exp_key_in_game_player_info(self, _):
+        with self.assertRaises(KeyError):
+            player = {'Level': 1, "Strength": 1, "Dexterity": 1, "Intelligence": 1,
+                      "Magic Resistance": 1, "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_key_error_with_no_strength_in_game_player_info(self, _):
+        with self.assertRaises(KeyError):
+            player = {'Level': 1, "NEXT LV (EXP)": -100, "Dexterity": 1, "Intelligence": 1,
+                      "Magic Resistance": 1, "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_key_error_with_no_dexterity_in_game_player_info(self, _):
+        with self.assertRaises(KeyError):
+            player = {'Level': 1, "NEXT LV (EXP)": -100, "Strength": 1, "Intelligence": 1,
+                      "Magic Resistance": 1, "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_key_error_with_no_intelligence_in_game_player_info(self, _):
+        with self.assertRaises(KeyError):
+            player = {'Level': 1, "NEXT LV (EXP)": -100, "Strength": 1, "Dexterity": 1,
+                      "Magic Resistance": 1, "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_key_error_with_no_magic_resistance_in_game_player_info(self, _):
+        with self.assertRaises(KeyError):
+            player = {'Level': 1, "NEXT LV (EXP)": -100, "Strength": 1, "Dexterity": 1,
+                      "Intelligence": 1, "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_key_error_with_no_magic_power_in_game_player_info(self, _):
+        with self.assertRaises(KeyError):
+            player = {'Level': 1, "NEXT LV (EXP)": -100, "Strength": 1, "Dexterity": 1,
+                      "Intelligence": 1, "Magic Resistance": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_type_error_with_no_level_key_in_game_player_info(self, _):
+        with self.assertRaises(TypeError):
+            player = {'Level': "a", 'NEXT LV (EXP)': -100, "Strength": 1, "Dexterity": 1, "Intelligence": 1,
+                      "Magic Resistance": 1, "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_type_error_with_no_next_lv_exp_key_in_game_player_info(self, _):
+        with self.assertRaises(TypeError):
+            player = {'Level': 1, 'NEXT LV (EXP)': "a", "Strength": 1, "Dexterity": 1, "Intelligence": 1,
+                      "Magic Resistance": 1, "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_type_error_with_no_strength_in_game_player_info(self, _):
+        with self.assertRaises(TypeError):
+            player = {'Level': 1, 'NEXT LV (EXP)': -100, "Strength": "a", "Dexterity": 1, "Intelligence": 1,
+                      "Magic Resistance": 1, "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_type_error_with_no_dexterity_in_game_player_info(self, _):
+        with self.assertRaises(TypeError):
+            player = {'Level': 1, 'NEXT LV (EXP)': -100, "Strength": 1, "Dexterity": "a", "Intelligence": 1,
+                      "Magic Resistance": 1, "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_type_error_with_no_intelligence_in_game_player_info(self, _):
+        with self.assertRaises(TypeError):
+            player = {'Level': 1, 'NEXT LV (EXP)': -100, "Strength": 1, "Dexterity": 1, "Intelligence": "a",
+                      "Magic Resistance": 1, "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_type_error_with_no_magic_resistance_in_game_player_info(self, _):
+        with self.assertRaises(TypeError):
+            player = {'Level': 1, 'NEXT LV (EXP)': -100, "Strength": 1, "Dexterity": 1, "Intelligence": 1,
+                      "Magic Resistance": "a", "Magic Power": 1}
+            level_up({}, player)
+
+    @patch("combat.player_info.level_up_widget_update")
+    def test_type_error_with_no_magic_power_in_game_player_info(self, _):
+        with self.assertRaises(TypeError):
+            player = {'Level': 1, 'NEXT LV (EXP)': -100, "Strength": 1, "Dexterity": 1, "Intelligence": 1,
+                      "Magic Resistance": 1, "Magic Power": "a"}
+            level_up({}, player)
 
     @patch("combat.player_info.level_up_widget_update")
     @patch("random.uniform", return_value=1.5)
