@@ -47,11 +47,12 @@ def goal_achieve(progress_switch, environment_info, overall_gui_info):
     :precondition: environment_info must contain keys of tuple of coordinates
     :precondition: progress_switch must contain keys named as ['result'] and ['opponent']
     :precondition: the value of ['opponent'] must be a dictionary that contains key named as ["Name"]
+    :postcondition: update the GUI script display and creates an "End Game" button with a congratulatory message
+    if the player defeats the boss final in the game.
     :raises KeyError: if overall_gui_info does not contain key ['Script Frame']
                       if ['Script Frame'] does not have a widget named as ['script display']
                       if progress_switch does not contain keys ['result'] and ['opponent']
     :raises TypeError: if overall_gui_info, progress_switch and/or environment_info is not a dictionary
-                       if location is not a tuple
     """
     if progress_switch['opponent']['Name'] == "General Havoc" and progress_switch['result'] == "win":
         overall_gui_info['Script Frame'].children['script_display'].config(
