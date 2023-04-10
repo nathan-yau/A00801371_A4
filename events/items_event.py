@@ -22,6 +22,7 @@ def search(overall_widgets: dict, game_info: dict) -> None:
                    and ["Y-coordinate"]
     :precondition: the value of ['environment'] inside game_info must contain keys that is a tuple of coordinate (x, y)
                    and their predetermined events as a tuple associated with the coordinate keys
+    :postcondition: search the current coordinate for any predetermined items
     :raises KeyError: if overall_gui_info does not contain key ['Script Frame'] and ['Item Frame']
                       if ['Script Frame'] does not have a widget named as ['script display']
                       if game_info does not contain key ['character'] and ['environment']
@@ -59,6 +60,8 @@ def healing_potion(overall_gui_frame: dict, player_info: dict) -> None:
     :precondition: the value of ['Event Bar'] key must be a tkinter Text Label
     :precondition: the tkinter Frame of overall_gui_frame['Status Frame'] must contain a tkinter label named as
                    ['character_status']
+    :postcondition: update the player's info in terms of the effects of healing potion on HP and the
+                    display on item frame
     :raises KeyError: if overall_gui_info does not contain key['Script Frame'], ['Event Bar'], and ['Item Frame']
                       if ['Status Frame'] does not have a widget named as ['character_status']
                       if player_info does not contain key "Max HP", "Current HP", "Items"
@@ -77,7 +80,7 @@ def healing_potion(overall_gui_frame: dict, player_info: dict) -> None:
         overall_gui_frame['Event Bar'].config(text=f'Healing Potion cannot be used now!')
 
 
-def status_potion(overall_gui_frame, player_info):
+def status_potion(overall_gui_frame: dict, player_info: dict) -> None:
     """
     Update the player's info in terms of the effects of status potion on status and the display on item frame.
 
@@ -95,6 +98,8 @@ def status_potion(overall_gui_frame, player_info):
     :precondition: the value of ['Event Bar'] key must be a tkinter Text Label
     :precondition: the tkinter Frame of overall_gui_frame['Status Frame'] must contain a tkinter label named as
                    ['character_status']
+    :postcondition: update the player's info in terms of the effects of status potion on status and the
+                    display on item frame.
     :raises KeyError: if overall_gui_info does not contain key['Script Frame'], ['Event Bar'], and ['Item Frame']
                       if ['Status Frame'] does not have a widget named as ['character_status']
                       if player_info does not contain key "Status", "Items"
@@ -112,7 +117,7 @@ def status_potion(overall_gui_frame, player_info):
         overall_gui_frame['Event Bar'].config(text=f'Status Potion cannot be used now!')
 
 
-def attribute_potion(overall_gui_frame, player_info):
+def attribute_potion(overall_gui_frame: dict, player_info: dict) -> None:
     """
     Update the player's info in terms of the effects of attribute potion on the character's attribute
     and the display on item frame.
@@ -130,6 +135,8 @@ def attribute_potion(overall_gui_frame, player_info):
     :precondition: the value of ['Event Bar'] key must be a tkinter Text Label
     :precondition: the tkinter Frame of overall_gui_frame['Status Frame'] must contain a tkinter label named as
                    ['character_status']
+    :postcondition: update the player's info in terms of the effects of attribute potion on the character's attribute
+                    and the display on item frame.
     :raises KeyError: if overall_gui_info does not contain key['Script Frame'], ['Event Bar'], and ['Item Frame']
                       if ['Status Frame'] does not have a widget named as ['character_status']
                       if player_info does not contain key "Items"
