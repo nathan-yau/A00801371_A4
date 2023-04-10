@@ -1,4 +1,4 @@
-from events.movement import player_movement
+from events.movement import player_movement, default_script_for_location
 from events.event_checker import pick_available_foe, check_for_predetermined_events
 from events.game_ending import game_over, goal_achieve, easter_egg
 
@@ -19,10 +19,7 @@ from functools import partial
 
 def game(overall_gui_info, game_info, event):
     """
-
-    :param overall_gui_info:
-    :param game_info:
-    :param event:
+    Drive the game flow.
     """
     battle_round = 0
     saved_coordinate = (game_info['character']["X-coordinate"], game_info['character']["Y-coordinate"])
@@ -32,24 +29,24 @@ def game(overall_gui_info, game_info, event):
 
     if pass_value in shortcut_list:
         if player_movement(game_info, shortcut_list.index(pass_value) // 2 + 1, overall_gui_info):
-            map_widget_update(game_info['character'], overall_gui_info) # GUI
+            map_widget_update(game_info['character'], overall_gui_info)
             triggered_event = check_for_predetermined_events(game_info)
             progress_switch['move'] = (game_info['character']["X-coordinate"], game_info['character']["Y-coordinate"])
             progress_switch['event'] = triggered_event
             progress_switch['opponent'] = pick_available_foe(triggered_event, game_info)
-            overall_gui_info['Script Frame'].children['script_display'].config(text=f"Moved") # Customized Script needed
+            default_script_for_location(game_info['character'], overall_gui_info)
         else:
-            overall_gui_info['Event Bar'].config(text="Invalid Move!") # Invalid move function to print specific message
+            overall_gui_info['Event Bar'].config(text="Invalid Move!")
 
     if progress_switch['opponent']:
         update_enemy_info(overall_gui_info, progress_switch['opponent'],
-                          f"Encountered {progress_switch['opponent']['Name']}") # GUI
+                          f"Encountered {progress_switch['opponent']['Name']}")
         progress_switch['battle'] = True
 
-    if progress_switch['battle']: # GUI update section
-        toggle_battle_buttons(overall_gui_info, "enable") # GUI
-        activate_battle_button(overall_gui_info, game_info['character'], progress_switch['opponent'])  # GUI
-        overall_gui_info['Script Frame'].children['script_display'].config(text=f"Round 1") # GUI
+    if progress_switch['battle']:
+        toggle_battle_buttons(overall_gui_info, "enable")
+        activate_battle_button(overall_gui_info, game_info['character'], progress_switch['opponent'])
+        overall_gui_info['Script Frame'].children['script_display'].config(text=f"Round 1")
         overall_gui_info['pause'].set(True)
 
     while progress_switch['battle']:
@@ -58,16 +55,17 @@ def game(overall_gui_info, game_info, event):
         update_enemy_info(overall_gui_info, progress_switch['opponent'], f"Round {battle_round}\nTook the hit")
         overall_gui_info['Status Frame'].children['character_status'].config(
             text=update_status_message(game_info['character'], 4, -7))
-        if progress_switch['opponent']['HP'] <= 0 or game_info['character']['Current HP'] <= 0 or game_info['character']['Escape']:
+        if progress_switch['opponent']['HP'] <= 0 or \
+                game_info['character']['Current HP'] <= 0 or game_info['character']['Escape']:
             progress_switch['battle'] = False
 
-    if progress_switch['opponent'] and game_info['character']['Current HP'] <= 0:  # GUI
+    if progress_switch['opponent'] and game_info['character']['Current HP'] <= 0:
         game_over(overall_gui_info)
 
     if progress_switch['opponent'] and game_info['character']['Current HP'] > 0:
         overall_gui_info['Buttons Frame'].bind("<KeyPress>", partial(game, overall_gui_info, game_info))
 
-    if progress_switch['opponent'] and progress_switch['opponent']['HP'] <= 0 < game_info['character']['Current HP']:  # GUI
+    if progress_switch['opponent'] and progress_switch['opponent']['HP'] <= 0 < game_info['character']['Current HP']:
         win_fight(overall_gui_info, game_info, progress_switch)
         drop_item(overall_gui_info, game_info['character'], progress_switch['opponent'])
         progress_switch['result'] = "win"
@@ -88,7 +86,7 @@ def game(overall_gui_info, game_info, event):
         goal_achieve(progress_switch, game_info['environment'], overall_gui_info)
 
     if progress_switch['move'] == (0, 4):
-        easter_egg(overall_gui_info, game_info['character'])
+        easter_egg(overall_gui_info)
 
 
 def main():
@@ -99,5 +97,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
