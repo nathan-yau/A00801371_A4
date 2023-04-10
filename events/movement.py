@@ -199,7 +199,7 @@ def player_movement(game_player: dict, path: int, overall_gui_info: dict) -> boo
         return False
 
 
-def display_invalid_move_reason(failed_check: int, overall_gui_info: dict):
+def display_invalid_move_reason(failed_check: int, overall_gui_info: dict) -> None:
     """
     Update script display to indicate why the move is invalid
 
