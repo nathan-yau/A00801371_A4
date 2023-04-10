@@ -4,7 +4,7 @@ from functools import partial
 from GUI.create_widgets import create_click_button, create_text_label, create_image_label, attach_button_function_call
 from GUI import GAME_MAP_PATH, GAME_LOCATION_IMAGE_PATH
 from utilities.closing_window import closing_event
-from events.action_manager import gameplay
+from events.gameplay import game
 
 from save_load.save_game_file import create_save_file
 from GUI_update.update_status_frame import update_status_message
@@ -263,13 +263,13 @@ def create_action_buttons_frame(overall_gui_view: dict, game_info: dict) -> tk.F
             button_name = key.lower().replace(" ", "_")[:-4]
             create_click_button(belonging_frame=middle_bottom_frame, widget_name_id=button_name, message=key)
             attach_button_function_call(button_name=middle_bottom_frame.children[button_name],
-                                        callable_function=partial(gameplay, overall_gui_view, game_info, key[-2]))
+                                        callable_function=partial(game, overall_gui_view, game_info, key[-2]))
             middle_bottom_frame.children[button_name].grid(row=index % 2+5, column=index//2, sticky='nsew')
 
     middle_bottom_frame = tk.Frame(overall_gui_view['Top Frame'], bd=1, relief='groove')
     middle_bottom_list = (create_buttons_grid, create_action_buttons, create_direction_buttons)
     [widget() for widget in middle_bottom_list]
-    middle_bottom_frame.bind("<KeyPress>", partial(gameplay, overall_gui_view, game_info))
+    middle_bottom_frame.bind("<KeyPress>", partial(game, overall_gui_view, game_info))
     middle_bottom_frame.focus_set()
     return middle_bottom_frame
 
