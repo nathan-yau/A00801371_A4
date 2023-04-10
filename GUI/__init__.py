@@ -10,6 +10,7 @@ PLAYER_ICON_IMAGE_PATH = "./images/player_icon.png"
 NEW_GAME_DATA_PATH = "./data/new_game_layout.gamedata"
 GAME_WALL_DATA_PATH = "./data/boundary.gamedata"
 GAME_REQUIRED_ITEM_PATH = "./data/map_trigger_item.gamedata"
+GAME_FOE_DATA_PATH = "./data/foe.gamedata"
 GUI_WINDOW_SIZE = "820x600"
 DEFAULT_FONT = "Cascadia Code"
 DEFAULT_FONT_SIZE = 10
