@@ -2,7 +2,7 @@ import tkinter as tk
 from GUI import DEFAULT_FONT, DEFAULT_FONT_SIZE, DEFAULT_BUTTON_WIDTH
 
 
-def create_image_label(frame, widget_name: str, image_path: str):
+def create_image_label(frame, widget_name: str, image_path: str) -> None:
     """
     Create a tkinter label that contains image represented by the provided path in a tkinter frame.
 
@@ -30,7 +30,7 @@ def create_image_label(frame, widget_name: str, image_path: str):
     created_image.image = projected_image
 
 
-def update_image_label(frame_object, label_name: str, image_directory: str):
+def update_image_label(frame_object, label_name: str, image_directory: str) -> None:
     """
     Update the image of a tkinter label represented by the provided path in a tkinter frame.
 
@@ -56,7 +56,7 @@ def update_image_label(frame_object, label_name: str, image_directory: str):
 
 
 def create_text_label(frame_obj, text_label_name: str, message: str, font_style: str = DEFAULT_FONT,
-                      font_size: int = DEFAULT_FONT_SIZE, **additional_attribute):
+                      font_size: int = DEFAULT_FONT_SIZE, **additional_attribute) -> None:
     """
     Create a tkinter label that contains image represented by the provided path in a tkinter frame.
 
@@ -91,7 +91,7 @@ def create_text_label(frame_obj, text_label_name: str, message: str, font_style:
 
 
 def create_user_entry(upper_frame, widget_id: str, box_width: int, entry_font_style: str = DEFAULT_FONT,
-                      entry_font_size: int = DEFAULT_FONT_SIZE):
+                      entry_font_size: int = DEFAULT_FONT_SIZE) -> None:
     """
     Create a tkinter entry for player's input in a tkinter frame.
 
@@ -126,7 +126,7 @@ def create_user_entry(upper_frame, widget_id: str, box_width: int, entry_font_st
 
 def create_click_button(belonging_frame, widget_name_id: str, message: str, button_width: int = DEFAULT_BUTTON_WIDTH,
                         button_font_style: str = DEFAULT_FONT, button_font_size: int = DEFAULT_FONT_SIZE,
-                        **extra_setting):
+                        **extra_setting) -> None:
     """
     Create a tkinter button for player to click in a tkinter frame.
 
@@ -162,7 +162,7 @@ def create_click_button(belonging_frame, widget_name_id: str, message: str, butt
               width=button_width, name=widget_name_id, **extra_setting)
 
 
-def attach_button_function_call(button_name, callable_function):
+def attach_button_function_call(button_name, callable_function) -> None:
     """
     Attach or detach a function to a button.
 
