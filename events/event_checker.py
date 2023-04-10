@@ -36,27 +36,51 @@ def check_for_predetermined_events(game_player: dict) -> str:
     return "Random" if not predetermined_events else predetermined_events
 
 
-def pick_available_foe(happened_event, max_level_foe):
-    sample_monster = {
-        1: {'Name': 'Megalizard', 'EXP': 20, 'HP': 50, 'Items': ['Healing Potion'], 'PROBABILITY': 30, 'Strength': 23, 'Dexterity': 5,
-            'Intelligence': 20, 'Magic Resistance': 999},
-        2: {'Name': 'Skeletons ', 'EXP': 30, 'HP': 70, 'Items': ['Healing Potion'], 'PROBABILITY': 30, 'Strength': 25, 'Dexterity': 10,
-            'Intelligence': 25, 'Magic Resistance': 26},
-        3: {'Name': 'Venomweaver', 'EXP': 40, 'HP': 80, 'Items': ['Status Potion'], 'PROBABILITY': 30, 'Strength': 30, 'Dexterity': 30,
-            'Intelligence': 30, 'Magic Resistance': 40},
-        4: {'Name': 'Hydra', 'EXP': 80, 'HP': 100, 'Items': ['Healing Potion'], 'PROBABILITY': 30, 'Strength': 37, 'Dexterity': 50,
-            'Intelligence': 46, 'Magic Resistance': 999},
-        5: {'Name': 'Griffin', 'EXP': 100, 'HP': 120, 'Items': ['Attribute Potion'], 'PROBABILITY': 30, 'Strength': 37, 'Dexterity': 50,
-            'Intelligence': 46, 'Magic Resistance': 26}}
-    if happened_event == "RANDOM":
-        picked_foe = random.randint(1, min(max_level_foe, len(sample_monster)))
-        sample_monster[picked_foe]['EXP'] = int(random.uniform(1, 2) * sample_monster[picked_foe]['EXP'])
-        return sample_monster[picked_foe]
-    elif happened_event == "MID-BOSS":
-        return {'Name': 'MID-BOSS', 'EXP': 500, 'HP': 80, 'Items': ['Sanctum Key'], 'PROBABILITY': 100, 'Strength': 30, 'Dexterity': 30,
-                'Intelligence': 30, 'Magic Resistance': 40}
-    elif happened_event == "FINAL-BOSS":
-        return {'Name': 'FINAL-BOSS', 'EXP': 500, 'HP': 80, 'Items': ['Oasis Explorer'], 'PROBABILITY': 100, 'Strength': 30,
-                'Dexterity': 30, 'Intelligence': 30, 'Magic Resistance': 40}
+def pick_available_foe(happened_event: str, game_info: dict, foe_data: str = GAME_FOE_DATA_PATH) -> dict:
+    """
+    Picks a random foe from the game foe data based on the player current level, key items and locations.
+
+    :param happened_event: a string that indicate the specific event the player currently encounter
+    :param game_info: a dictionary that contains the information of character as value of a key called "character" and
+                        the information of the game environment as value of a key called "environment"
+    :param foe_data: a string that refers to the path of the encoded game date that contains foe information
+    :precondition: happened_event must be a string that indicate the specific event the player currently encounter
+    :precondition: game_player must be a dictionary that contains the information of character as value of a key
+                   called "character" and the information of the game environment as value of a key called "environment"
+    :precondition: the key ['character'] inside game_player should contain a dictionary having keys ['Level'] and
+                   ['Items']
+    :precondition: foe_data must be a string that refers to the path of the encoded game date that
+                   contains foe information
+    :precondition: the encoded game data from foe_data must be a dictionary that contains an integer or string as keys
+                   and a dictionary representing the foe's attributes and information.
+    :precondition: the dictionary representing the foe's attributes and information must contain "EXP"
+    :postcondition: picks a random foe from the game data based on the player current level, key items and locations
+    :raises KeyError: if ['character'] cannot be found inside game_player
+                      if ['Level'] and ['Items'] cannot be found inside game_player['character']
+                      if the foe information inside encoded dictionary does not have key ["EXP"]
+    :raises TypeError: if the decoded message is not a dictionary
+    """
+    with open(foe_data) as file_object:
+        foe_data = eval(file_object.read())
+    if type(foe_data) is not dict:
+        raise TypeError("the decoded message from boundary_file must represent a dictionary.")
+    if happened_event == "Random" and random.randint(1, 10) <= 3:
+        picked_foe = random.randint(1, min(game_info['character']['Level'], len(foe_data)))
+        foe_data[picked_foe]['EXP'] = int(random.uniform(1, 2) * foe_data[picked_foe]['EXP'])
+        return foe_data[picked_foe]
+    elif happened_event == "Sage Thorne" and 'The Amulet of Knowledge' in game_info['character']['Items']:
+        return foe_data[happened_event]
+    elif happened_event == "General Havoc" and 'Sanctum Key' in game_info['character']['Items']:
+        return foe_data[happened_event]
     else:
         return {}
+
+
+def main():
+    """
+    Drive the program.
+    """
+
+
+if __name__ == "__main__":
+    main()
