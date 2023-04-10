@@ -2,6 +2,7 @@ import tkinter as tk
 from datetime import datetime
 from functools import partial
 from tkinter import messagebox
+import pathlib
 
 from GUI import GAME_COVER_PHOTO, GAME_NAME, GAME_ICON, GUI_WINDOW_SIZE, MAX_LEN_NAME, MIN_LEN_NAME
 from GUI.interface_setting import gui_menubar, gui_default_setting
@@ -21,7 +22,7 @@ def create_top_frame() -> tk.Frame:
                     "NEW GAME" and "LOAD GAME" buttons, and a copyright label
     :return: a tkinter frame that contains three labels, two buttons and one entry located at the top frame of the GUI
     :raises KeyError: if the proposed widget name in create_image_label() already exists in the specific frame
-                     if the widget name cannot be found in the specific frame after creation
+                      if the widget name cannot be found in the specific frame after creation
     """
 
     def create_cover_photo() -> None:
@@ -35,9 +36,13 @@ def create_top_frame() -> tk.Frame:
         :raises _tkinter.TclError: if the image represented by image_directory does not exist
                                   if the image_directory does not represent an image
         :raises KeyError: if the proposed widget name in create_image_label() already exists in the specific frame
-                         if the widget name cannot be found in the specific frame after creation
+                          if the widget name cannot be found in the specific frame after creation
+        :raises FileNotFoundError: if GAME_COVER_PHOTO image cannot be found in the given path
         """
-        create_image_label(frame=main_frame, widget_name="cover_photo", image_path=GAME_COVER_PHOTO)
+        if pathlib.Path(GAME_COVER_PHOTO).is_file():
+            create_image_label(frame=main_frame, widget_name="cover_photo", image_path=GAME_COVER_PHOTO)
+        else:
+            raise FileNotFoundError("Cover image cannot be found! Please check the path!")
         main_frame.children['cover_photo'].grid(row=0, columnspan=4, sticky='we', padx=10)
 
     def create_new_game_widgets() -> None:
@@ -50,7 +55,7 @@ def create_top_frame() -> tk.Frame:
         :precondition: widget name used must not currently exist in the specific frame
         :postcondition: create a text field with label and button to enter and confirm the player's character name
         :raises KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
-                         if the widget name cannot be found in the specific frame after creation
+                          if the widget name cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=main_frame, text_label_name="name_label", message="Create Profile: ",
                           font_size=15)
@@ -62,7 +67,7 @@ def create_top_frame() -> tk.Frame:
         create_click_button(belonging_frame=main_frame, widget_name_id="new_game", message="NEW GAME")
         main_frame.children['new_game'].grid(row=1, column=2, sticky='we', pady=10)
 
-    def create_load_game_button():
+    def create_load_game_button() -> None:
         """
         Create a load game button in the top frame of a graphical user interface (GUI).
 
@@ -71,12 +76,12 @@ def create_top_frame() -> tk.Frame:
         :precondition: widget name used in create_click_button() must not currently exist in the specific frame
         :postcondition: create a load game button in the top frame of a graphical user interface (GUI)
         :raises KeyError: if the proposed widget name in create_click_button() already exists in the specific frame
-                         if the widget name cannot be found in the specific frame after creation
+                          if the widget name cannot be found in the specific frame after creation
         """
         create_click_button(belonging_frame=main_frame, widget_name_id="load_game", message="LOAD GAME")
         main_frame.children['load_game'].grid(row=1, column=3, sticky='we', padx=10, pady=10)
 
-    def create_copyright_label():
+    def create_copyright_label() -> None:
         """
         Create a copyright label in the top frame of a graphical user interface (GUI).
 
@@ -85,7 +90,7 @@ def create_top_frame() -> tk.Frame:
         :precondition: widget name used in create_text_label() must not currently exist in the specific frame
         :postcondition: create a copyright label in the top frame of a graphical user interface (GUI).
         :raises KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
-                         if the widget name cannot be found in the specific frame after creation
+                          if the widget name cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=main_frame, text_label_name="copyright_label", message="All rights reserved ©",
                           font_style="Yu Gothic UI Semibold", font_size=12)
@@ -98,18 +103,18 @@ def create_top_frame() -> tk.Frame:
     return main_frame
 
 
-def create_bottom_frame():
+def create_bottom_frame() -> tk.Label:
     """
     Create a frame located at the bottom of the GUI to provide current date, time and game information for the player.
 
     :precondition: a tkinter root window must exist
     :postcondition: creates a frame at the bottom of the GUI to display the current date, time,
                     and game information for the player
-    :return: a tkinter object that contains all three widgets located at the bottom frame of the GUI
+    :return: a tkinter object that contains the text label located at the bottom frame of the GUI
     :raises KeyError: if the proposed widget name in create_image_label() already exists in the specific frame
-                     if the widget name cannot be found in the specific frame after creation
+                      if the widget name cannot be found in the specific frame after creation
     """
-    def create_date_label():
+    def create_date_label() -> None:
         """
         Create a label with current date at the bottom of the GUI.
 
@@ -124,7 +129,7 @@ def create_bottom_frame():
         create_text_label(frame_obj=bottom_frame, text_label_name='date_label', message=current_date)
         bottom_frame.children['date_label'].pack(side='left', padx=10)
 
-    def create_time_label():
+    def create_time_label() -> None:
         """
         Create a label with current time at the bottom of the GUI.
 
@@ -133,7 +138,7 @@ def create_bottom_frame():
         :precondition: widget name used in create_text_label() must not currently exist in the specific frame
         :postcondition: create a label with current time at the bottom of the GUI
         :raises KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
-                         if the widget name cannot be found in the specific frame after creation
+                          if the widget name cannot be found in the specific frame after creation
         """
         current_time = datetime.now().strftime("%H:%M:%S")
         create_text_label(frame_obj=bottom_frame, text_label_name='time_label', message=current_time)
@@ -180,6 +185,7 @@ def create_homepage() -> dict:
     Create and configure a GUI with size, menu bar, two frames and nine widgets for welcome page of a game.
 
     :postcondition: create and configure a GUI with size, menu bar, frames and widgets for welcome page of a game
+    :return: a dictionary that contains all existing tkinter frames as values and their description as keys
     :raises NamError: if MAX_LEN_NAME, MIN_LEN_NAME, GAME_NAME, GAME_ICON and/or GUI_WINDOW_SIZE are not defined
     :raises _tkinter.TclError: if GAME_ICON is not an image path that represents an existing image or the image
                               does not exist in the path it represents
