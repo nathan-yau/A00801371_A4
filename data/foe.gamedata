@@ -1,0 +1,7 @@
+{1: {'Name': 'Megalizard', 'EXP': 20, 'HP': 50, 'Current MP': 9999, 'Items': ['Healing Potion'], 'Probability': 70, 'Strength': 10, 'Dexterity': 30, 'Intelligence': 25, 'Magic Resistance': 20, 'Magic Power':  25},
+2: {'Name': 'Skeletons', 'EXP': 40, 'HP': 70, 'Current MP': 9999, 'Items': ['Healing Potion'], 'Probability': 60, 'Strength': 50, 'Dexterity': 20, 'Intelligence': 25, 'Magic Resistance': 90, 'Magic Power': 25},
+3: {'Name': 'Venomweaver', 'EXP': 60, 'HP': 80, 'Current MP': 9999, 'Items': ['Status Potion'], 'Probability': 30, 'Strength': 20, 'Dexterity': 80, 'Intelligence': 30, 'Magic Resistance': 90, 'Magic Power': 20},
+4: {'Name': 'Hydra', 'EXP': 80, 'HP': 320, 'Current MP': 99999, 'Items': ['Healing Potion'], 'Probability': 70, 'Strength': 60, 'Dexterity': 10, 'Intelligence': 40, 'Magic Resistance': 10, 'Magic Power': 20},
+5: {'Name': 'Griffin', 'EXP': 100, 'HP': 300, 'Current MP': 9999, 'Items': ['Attribute Potion'], 'Probability': 30, 'Strength': 42, 'Dexterity': 40, 'Intelligence': 45, 'Magic Resistance': 70, 'Magic Power': 9},
+"Sage Thorne": {'Name': 'Sage Thorne', 'EXP': 500, 'HP': 300, 'Current MP': 9999, 'Items': ['Sanctum Key'], 'Probability': 100, 'Strength': 15, 'Dexterity': 40, 'Intelligence': 15, 'Magic Resistance': 10, 'Magic Power': 0},
+"General Havoc": {'Name': 'General Havoc', 'EXP': 500, 'HP': 250, 'Current MP': 9999, 'Items': ['Oasis Explorer'], 'Probability': 100, 'Strength': 40, 'Dexterity': 40, 'Intelligence': 40, 'Magic Resistance': 70, 'Magic Power': 40}}
