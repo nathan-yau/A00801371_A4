@@ -1,26 +1,39 @@
 import random
+from GUI import GAME_FOE_DATA_PATH
 
 
-def encounter_confirmation(event_name, game_info):
-    if event_name == "FINAL-BOSS":
-        return 'Sanctum Key' in game_info['character']['Items']
-    elif event_name == 'MID-BOSS':
-        return 'The Amulet of Knowledge' in game_info['character']['Items']
-    elif event_name == 'RANDOM':
-        return random.randint(1, 10) <= 3
-    else:
-        return False
+def check_for_predetermined_events(game_player: dict) -> str:
+    """
+    Checks if there are any predetermined events in the player's current coordinate.
 
+    :param game_player: a dictionary that contains the information of character as value of a key called "character" and
+                        the information of the game environment as value of a key called "environment"
+    :precondition: game_player must be a dictionary that contains the information of character as value of a key
+                   called "character" and the information of the game environment as value of a key called "environment"
+    :precondition: the key ['character'] inside game_player should contain a dictionary having keys ['X-coordinate'] and
+                   ['y-coordinate']
+    :precondition: the key ['environment'] inside game_player should contain a dictionary having a tuple of available
+                   coordinate for the game as the keys
+    :postcondition: checks if there are any predetermined events in the player's current coordinate
+    :return: a string that represents the type of event player is expected to encounter in this coordinate
+    :raises KeyError: if game_player does not have keys named as ["character"] and ["environment"]
+                      if game_player["character"] does not contain keys named as ["X-coordinate"] and ["Y-coordinate"]
+                      if player's current_coordinate is not one of the keys inside game_player['environment']
 
-def check_for_predetermined_events(game_player):
+    >>> player = {'character': {'X-coordinate': 1, 'Y-coordinate': 2}, 'environment': {(1, 2): ('BOSS', 'Nathan')}}
+    >>> check_for_predetermined_events(player)
+    'Nathan'
+
+    >>> player = {'character': {'X-coordinate': 1, 'Y-coordinate': 2}, 'environment': {(1, 2): ('Random', '')}}
+    >>> check_for_predetermined_events(player)
+    'Random'
+    """
     avatar = game_player['character']
     current_coordinate = (avatar["X-coordinate"], avatar["Y-coordinate"])
-    predetermined_events = game_player['environment'][current_coordinate][1]
-    if current_coordinate in game_player['environment']:
-        key_encounter = "RANDOM" if not predetermined_events else predetermined_events
-        return key_encounter
-    else:
+    if current_coordinate not in game_player['environment']:
         raise KeyError("Invalid datapoint! Reload last save to continue!")
+    predetermined_events = game_player['environment'][current_coordinate][1]
+    return "Random" if not predetermined_events else predetermined_events
 
 
 def pick_available_foe(happened_event, max_level_foe):
