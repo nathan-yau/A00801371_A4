@@ -162,7 +162,10 @@ def player_movement(game_player: dict, path: int, overall_gui_info: dict) -> boo
     :param game_player: a dictionary that contains the information of character as value of a key called "character" and
                         the information of the game environment as value of a key called "environment"
     :param path: an integer value between 1 and 4, inclusive, that represents the player's desired travel direction
+    :param overall_gui_info: a dictionary that contains the description of the tkinter objects in string as keys
+                             and their associated frame or widget objects as value
     :precondition: path must be an integer value between 1 and 4, inclusive
+    :precondition: overall_gui_info must be a dictionary
     :precondition: game_player must be a dictionary that contains the information of character as value of a key
                    called "character" and the information of the game environment as value of a key called "environment"
     :precondition: the key ['character'] inside game_player should contain a dictionary having keys ['X-coordinate],
@@ -209,11 +212,9 @@ def display_invalid_move_reason(failed_check: int, overall_gui_info: dict):
     :precondition: the value of ['Script Frame'] key must be a tkinter Frame
     :precondition: the tkinter Frame of overall_gui_info['Script Frame'] must contain a tkinter label named as
                    ['script display']
-    :postcondition:
     :raises KeyError: if overall_gui_info does not contain key ['Script Frame']
                       if ['Script Frame'] does not have a widget named as ['script display']
-                      if progress_switch does not contain keys ['result'] and ['opponent']
-    :raises TypeError: if overall_gui_info, progress_switch and/or environment_info is not a dictionary
+    :raises TypeError: if overall_gui_info is not a dictionary
     :raises ValueError: if failed_check is not an integer between 0 and 2
     """
     if type(failed_check) is not int or 0 > failed_check or failed_check > 2:
@@ -224,16 +225,33 @@ def display_invalid_move_reason(failed_check: int, overall_gui_info: dict):
     elif failed_check == 1:
         message = "Whoa, whoa, whoa! Hold up, adventurers! We've got a problem. \n" \
                   "There's a massive wall blocking our path. \n" \
-                  "Looks like we'll need to find another way around if we want to keep going."
+                  "Looks like we'll need to find another way around \n" \
+                  "if we want to keep going."
     else:
         message = "Stop right there, adventurers! \n" \
                   "If you proceed in that direction, you'll fall outside the world"
     overall_gui_info['Script Frame'].children['script_display'].config(text=f"{message}")
 
 
-def display_valid_move_description(character, overall_gui_info):
+def display_valid_move_description(character: dict, overall_gui_info: dict) -> None:
     """
+    Display the description of the current coordinate on GUI.
 
+    :param character: a dictionary containing keys named as ['X-coordinate'] and ['Y-coordinate'],
+                      each of which has a value representing the current coordinate of the player in the game map.
+    :param overall_gui_info: a dictionary that contains the description of the tkinter objects in string as keys
+                             and their associated frame or widget objects as value
+    :precondition: character must be a dictionary
+    :precondition: character must contain keys named as ['X-coordinate'] and ['Y-coordinate']
+    :precondition: the values of ['X-coordinate'] and ['Y-coordinate'] must be an integer value
+    :precondition: overall_gui_info must be a dictionary
+    :precondition: overall_gui_info must contain key named as ['Script Frame']
+    :precondition: the value of ['Script Frame'] key must be a tkinter Frame
+    :precondition: the tkinter Frame of overall_gui_info['Script Frame'] must contain a tkinter label named as
+                   ['script display']
+    :raises KeyError: if overall_gui_info does not contain key ['Script Frame']
+                      if ['Script Frame'] does not have a widget named as ['script display']
+    :raises TypeError: if overall_gui_info, or character is not a dictionary
     """
     with open('./data/script.gamedata') as file_object:
         foe_data = eval(file_object.read())
