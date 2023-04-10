@@ -135,7 +135,7 @@ def exp_calculator(gui_widgets_all, game_info, picked_foe):
     """
     if random.randint(1, 20) == 1:
         EXP = int(picked_foe['EXP'] * 1.5)
-        message = f'Wow! Defeating it granted you an unexpected surge of {EXP} experience points.'
+        message = f'Wow! Defeating it granted you an \nunexpected surge of {EXP} experience points.'
     else:
         EXP = picked_foe['EXP']
         message = f'Gained {EXP} experience points by defeating {picked_foe["Name"]}'
