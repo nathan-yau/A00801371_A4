@@ -1,5 +1,6 @@
 import tkinter as tk
 from functools import partial
+import pathlib
 
 from GUI.create_widgets import create_click_button, create_text_label, create_image_label, attach_button_function_call
 from GUI import GAME_MAP_PATH, GAME_LOCATION_IMAGE_PATH
@@ -84,12 +85,16 @@ def create_status_frame(overall_game_frame: dict, player_data: dict) -> tk.Frame
         :raises KeyError: if the proposed widget name in create_text_label() already exists in the specific frame
                           if the widget name cannot be found in the specific frame after creation
                           if player_data does not contain "X-coordinate" and "Y-coordinate" as keys
+        :raises FileNotFoundError: if game map image cannot be found
         """
         coordinate = str(player_data["X-coordinate"]) + str(player_data["Y-coordinate"])
         create_text_label(frame_obj=left_frame, text_label_name="map_label", message=f"Current Oasis Map",
                           pady=5, relief="groove", bg="#E89F71", font_size=12)
         left_frame.children['map_label'].grid(row=0, sticky='new')
-        create_image_label(frame=left_frame, widget_name="current_map", image_path=GAME_MAP_PATH.format(coordinate))
+        if pathlib.Path(GAME_MAP_PATH.format(coordinate)).is_file():
+            create_image_label(frame=left_frame, widget_name="current_map", image_path=GAME_MAP_PATH.format(coordinate))
+        else:
+            raise FileNotFoundError("Game map image cannot be found! Please check the path!")
         left_frame.children['current_map'].grid(row=1, sticky='nsew')
 
     left_frame = tk.Frame(overall_game_frame['Top Frame'], bd=1, relief='sunken', padx=0, pady=0)
