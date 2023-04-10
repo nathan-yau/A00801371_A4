@@ -98,6 +98,9 @@ def drop_item(gui_widgets_all: dict, player_character: dict, picked_foe: dict) -
         item_bag = player_character['Items']
         item_bag[picked_foe['Items'][0]] = item_bag.get(picked_foe['Items'][0], 0) + 1
         create_items_display(gui_widgets_all['Item Frame'], player_character, gui_widgets_all)
+        text = gui_widgets_all['Script Frame'].children['script_display'].cget('text')
+        gui_widgets_all['Script Frame'].children['script_display']. \
+            config(text=f"{text}\n You have found a {picked_foe['Items'][0]} ! ")
 
 
 def exp_calculator(gui_widgets_all, game_info, picked_foe):
