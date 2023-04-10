@@ -1,4 +1,4 @@
-from events.movement import player_movement, default_script_for_location
+from events.movement import player_movement, display_valid_move_description
 from events.event_checker import pick_available_foe, check_for_predetermined_events
 from events.game_ending import game_over, goal_achieve, easter_egg
 
@@ -34,25 +34,28 @@ def game(overall_gui_info, game_info, event):
             progress_switch['move'] = (game_info['character']["X-coordinate"], game_info['character']["Y-coordinate"])
             progress_switch['event'] = triggered_event
             progress_switch['opponent'] = pick_available_foe(triggered_event, game_info)
-            default_script_for_location(game_info['character'], overall_gui_info)
+            display_valid_move_description(game_info['character'], overall_gui_info)
         else:
             overall_gui_info['Event Bar'].config(text="Invalid Move!")
-
     if progress_switch['opponent']:
         update_enemy_info(overall_gui_info, progress_switch['opponent'],
-                          f"Encountered {progress_switch['opponent']['Name']}")
+                          f"Encountered {progress_switch['opponent']['Name']}\n\n"
+                          f"{progress_switch['opponent']['Slogan']}")
         progress_switch['battle'] = True
 
     if progress_switch['battle']:
         toggle_battle_buttons(overall_gui_info, "enable")
         activate_battle_button(overall_gui_info, game_info['character'], progress_switch['opponent'])
-        overall_gui_info['Script Frame'].children['script_display'].config(text=f"Round 1")
         overall_gui_info['pause'].set(True)
 
     while progress_switch['battle']:
         battle_round += 1
         overall_gui_info['GUI'].wait_variable(overall_gui_info['pause'])
-        update_enemy_info(overall_gui_info, progress_switch['opponent'], f"Round {battle_round}\nTook the hit")
+        message = "Took the hit!"
+        if game_info['character']['Status'] == "Poisoned":
+            game_info['character']['Current HP'] = int(game_info['character']['Current HP'] * 0.9)
+            message = "You feel the poison coursing through your veins. \n You take additional damage!!"
+        update_enemy_info(overall_gui_info, progress_switch['opponent'], f"Round {battle_round}\n{message}")
         overall_gui_info['Status Frame'].children['character_status'].config(
             text=update_status_message(game_info['character'], 4, -7))
         if progress_switch['opponent']['HP'] <= 0 or \
