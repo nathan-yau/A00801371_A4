@@ -3,6 +3,7 @@ from functools import partial
 from GUI import GAME_MAP_PATH
 from GUI.create_widgets import update_image_label, create_click_button, attach_button_function_call, create_text_label
 import tkinter as tk
+import pathlib
 
 
 def game_over(overall_gui_info: dict) -> None:
@@ -24,8 +25,11 @@ def game_over(overall_gui_info: dict) -> None:
     """
     overall_gui_info['Script Frame'].children['script_display'].config(
         text="Game Over!\nReload Save to continue!", compound="center", anchor="center")
-    update_image_label(frame_object=overall_gui_info['Status Frame'], label_name="current_map",
-                       image_directory=GAME_MAP_PATH.format("game_over"))
+    if pathlib.Path(GAME_MAP_PATH.format("game_over")).is_file():
+        update_image_label(frame_object=overall_gui_info['Status Frame'], label_name="current_map",
+                           image_directory=GAME_MAP_PATH.format("game_over"))
+    else:
+        raise FileNotFoundError("Game map image cannot be found! Please check the path!")
 
 
 def goal_achieve(progress_switch, environment_info, overall_gui_info):
