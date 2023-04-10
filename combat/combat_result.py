@@ -2,8 +2,6 @@ from GUI_update.update_map_widget import map_widget_update
 from combat.combat_widget import toggle_battle_buttons
 from combat.player_info import exp_calculator
 
-from GUI import DEFAULT_FONT
-
 
 def escape_from_fight(overall_gui_info: dict, game_info: dict, saved_coordinate: tuple) -> None:
     """
@@ -24,6 +22,7 @@ def escape_from_fight(overall_gui_info: dict, game_info: dict, saved_coordinate:
     :precondition: game_info must contain key named as ['character']
     :precondition: the value of ['character'] inside game_info must contain keys ["X-coordinate"] and ["Y-coordinate"]
     :precondition: saved_coordinate must contain keys of tuple of coordinates
+    :postcondition: update script, enemy info, player info and map widgets upon a successful escape from foe
     :raises KeyError: if overall_gui_info does not contain key ['Script Frame']
                       if ['Script Frame'] does not have a widget named as ['script display'] and ['enemy_info']
                       if game_info does not contain key ['character']
@@ -62,6 +61,8 @@ def win_fight(overall_gui_info: dict, game_info: dict, progress_switch: dict) ->
     :precondition: the tkinter Frame of overall_gui_info['Script Frame'] must contain a tkinter label named as
                    ['enemy_info']
     :precondition: progress_switch must contain keys named as ['opponent']
+    :postcondition: update the relevant buttons, player's info in terms of exp and levels,
+                    and enemy info after winning a flight with a foe
     :raises KeyError: if overall_gui_info does not contain key ['Script Frame']
                       if ['Script Frame'] does not have a widget named as ['enemy info']
                       if progress_switch does not contain keys ['opponent']
@@ -95,6 +96,7 @@ def mid_boss_killed(progress_switch: dict, environment_info: dict, overall_gui_i
     :precondition: the value of each key in environment_info should be a tuple of events inside that location
     :precondition: progress_switch must contain keys named as ['result'] and ['opponent']
     :precondition: the value of ['opponent'] must be a dictionary that contains key named as Name
+    :postcondition: update script, enemy info and map widgets upon winning a flight with a specific mid-progress boss
     :raises KeyError: if overall_gui_info does not contain key ['Script Frame']
                       if ['Script Frame'] does not have a widget named as ['script display']
                       if progress_switch does not contain keys ['result'] and ['opponent']
