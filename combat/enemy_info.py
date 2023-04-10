@@ -1,5 +1,6 @@
 from GUI import GAME_ENEMY_IMAGE_PATH
 from GUI.create_widgets import update_image_label
+import pathlib
 
 
 def enemy_status(enemy_info: dict) -> str:
@@ -68,10 +69,14 @@ def update_enemy_info(overall_frames_info: dict, enemy: dict, script: str) -> No
                       if frame represented by the key ['Script Frame'] in overall_frames_info does not contain labels,
                       ['enemy_info'] and ['script_display']
     :raises TypeError: if overall_frames_info, enemy and/or script is not a dictionary
+    :raises FileNotFoundError: if enemy image cannot be found
     """
     image_name = enemy['Name'].lower().replace(" ", "_")
     overall_frames_info['Script Frame'].children['enemy_info'].config(text=f"{enemy_status(enemy)}")
-    update_image_label(overall_frames_info['Script Frame'], "image_box", GAME_ENEMY_IMAGE_PATH.format(image_name))
+    if pathlib.Path(GAME_ENEMY_IMAGE_PATH.format(image_name)).is_file():
+        update_image_label(overall_frames_info['Script Frame'], "image_box", GAME_ENEMY_IMAGE_PATH.format(image_name))
+    else:
+        raise FileNotFoundError("Enemy image cannot be found! Please check the path!")
     overall_frames_info['Script Frame'].children['script_display'].config(text=script)
 
 
