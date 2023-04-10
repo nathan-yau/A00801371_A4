@@ -112,7 +112,8 @@ def attack(attack_type: str, player_info: dict, all_widgets_dict: dict, foe: dic
         all_widgets_dict['Event Bar'].config(text=f"{foe['Name']} Attack First!")
         player_info['Current HP'] -= max(random.randint(1, 15), foe_hit)
         check_if_alive(all_widgets_dict, player_info)
-        foe['HP'] -= max(random.randint(1, 15), player_hit)
+        if player_info['Current HP'] > 0:
+            foe['HP'] -= max(random.randint(1, 15), player_hit)
 
     all_widgets_dict['pause'].set(False)
 
