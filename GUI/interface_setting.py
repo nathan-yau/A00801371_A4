@@ -52,7 +52,7 @@ def gui_menubar(overall_gui: dict) -> None:
     """
     menu_bar = tk.Menu(name="menu_bar")
 
-    def create_file_menu():
+    def create_file_menu() -> None:
         """
         Create file menu dropdown tab with load game and exit game options on the menu bar of the given GUI.
 
