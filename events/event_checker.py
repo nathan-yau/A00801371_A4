@@ -1,5 +1,6 @@
 import random
 from GUI import GAME_FOE_DATA_PATH
+from save_load.uid_converter import decoder
 
 
 def check_for_predetermined_events(game_player: dict) -> str:
@@ -61,7 +62,7 @@ def pick_available_foe(happened_event: str, game_info: dict, foe_data: str = GAM
     :raises TypeError: if the decoded message is not a dictionary
     """
     with open(foe_data) as file_object:
-        foe_data = eval(file_object.read())
+        foe_data = eval(decoder(file_object.read()))
     if type(foe_data) is not dict:
         raise TypeError("the decoded message from boundary_file must represent a dictionary.")
     if happened_event == "Random" and random.randint(1, 10) <= 3:
