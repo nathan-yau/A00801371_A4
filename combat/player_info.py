@@ -1,6 +1,5 @@
 import random
 import tkinter as tk
-from GUI import DEFAULT_FONT
 from GUI_update.update_status_frame import update_status_message
 from new_game.new_player import status_reset
 from events.items_event import create_items_display
