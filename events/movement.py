@@ -154,7 +154,7 @@ def key_validate_move(key_file: str, next_move: dict, bag_info: dict) -> bool:
     return True
 
 
-def player_movement(game_player: dict, path: int) -> bool:
+def player_movement(game_player: dict, path: int, overall_gui_info: dict) -> bool:
     """
     Check whether the desired travel direction is allowed based the board layout, the player's location and the items
     player currently have
@@ -187,10 +187,64 @@ def player_movement(game_player: dict, path: int) -> bool:
     valid_move = board_validate_move(coordinate_copy, game_player['environment'])
     route_check = route_validate_move(GAME_WALL_DATA_PATH, game_player['character'], path)
     key_check = key_validate_move(GAME_REQUIRED_ITEM_PATH, coordinate_copy, game_player['character']['Items'])
-    if valid_move is True and route_check is True and key_check is True:
+    all_check = [key_check, route_check, valid_move]
+    if False not in all_check:
         move_character(game_player['character'], path)
         return True
-    return False
+    else:
+        display_invalid_move_reason(all_check.index(False), overall_gui_info)
+        return False
+
+
+def display_invalid_move_reason(failed_check: int, overall_gui_info: dict):
+    """
+    Update script display to indicate why the move is invalid
+
+    :param failed_check: an integer to indicate the kind of invalid move the player performed
+    :param overall_gui_info: a dictionary that contains the description of the tkinter objects in string as keys
+                             and their associated frame or widget objects as value
+    :precondition: failed_check must be an integer from 0 to 2
+    :precondition: overall_gui_info must be a dictionary
+    :precondition: overall_gui_info must contain key named as ['Script Frame']
+    :precondition: the value of ['Script Frame'] key must be a tkinter Frame
+    :precondition: the tkinter Frame of overall_gui_info['Script Frame'] must contain a tkinter label named as
+                   ['script display']
+    :postcondition:
+    :raises KeyError: if overall_gui_info does not contain key ['Script Frame']
+                      if ['Script Frame'] does not have a widget named as ['script display']
+                      if progress_switch does not contain keys ['result'] and ['opponent']
+    :raises TypeError: if overall_gui_info, progress_switch and/or environment_info is not a dictionary
+    :raises ValueError: if failed_check is not an integer between 0 and 2
+    """
+    if type(failed_check) is not int or 0 > failed_check or failed_check > 2:
+        raise ValueError("failed_check must be an integer between 0 to 2!")
+    if failed_check == 0:
+        message = "Halt! Access denied. \nIt seems like we don't have the key to enter this area! \n" \
+                  "We need to search for it \n if we want to uncover what's hidden inside, adventurer!"
+    elif failed_check == 1:
+        message = "Whoa, whoa, whoa! Hold up, adventurers! We've got a problem. \n" \
+                  "There's a massive wall blocking our path. \n" \
+                  "Looks like we'll need to find another way around if we want to keep going."
+    else:
+        message = "Stop right there, adventurers! \n" \
+                  "If you proceed in that direction, you'll fall outside the world"
+    overall_gui_info['Script Frame'].children['script_display'].config(text=f"{message}")
+
+
+def display_valid_move_description(character, overall_gui_info):
+    """
+
+    """
+    with open('./data/script.gamedata') as file_object:
+        foe_data = eval(file_object.read())
+    if type(foe_data) is not dict:
+        raise TypeError("the decoded message from boundary_file must represent a dictionary.")
+    coordinate = (character["X-coordinate"], character["Y-coordinate"])
+    if "Sanctum Key" in character['Items'] and coordinate == (4, 2):
+        message = "Just Go! You have already gotten the key and my amulet"
+    else:
+        message = foe_data[coordinate] if coordinate in foe_data else coordinate
+    overall_gui_info['Script Frame'].children['script_display'].config(text=f"{message}")
 
 
 def main():
