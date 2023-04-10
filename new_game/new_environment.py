@@ -45,6 +45,7 @@ def make_environment_attributes(columns: int, rows: int, game_data: str = NEW_GA
         :precondition: special_places must exist in the outer function
         :postcondition: randomly select an unused location represented by a tuple of coordinate (x, y) from
                         special_places inside a given column x row board
+        :return: a tuple of location without predetermined event
         :raises NameError: if special_places does not exist in the outer function
         :raises AttributeError: if special_events and special_places are not list
         """
