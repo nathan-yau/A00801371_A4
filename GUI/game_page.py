@@ -87,7 +87,7 @@ def create_status_frame(overall_game_frame: dict, player_data: dict) -> tk.Frame
         """
         coordinate = str(player_data["X-coordinate"]) + str(player_data["Y-coordinate"])
         create_text_label(frame_obj=left_frame, text_label_name="map_label", message=f"Current Oasis Map",
-                          font_size=10, pady=5, relief="groove", bg="#E89F71")
+                          pady=5, relief="groove", bg="#E89F71")
         left_frame.children['map_label'].grid(row=0, sticky='new')
         create_image_label(frame=left_frame, widget_name="current_map", image_path=GAME_MAP_PATH.format(coordinate))
         left_frame.children['current_map'].grid(row=1, sticky='nsew')
@@ -156,7 +156,7 @@ def create_script_frame(overall_interface_frame: dict) -> tk.Frame:
                          if the widget name cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=middle_top_frame, text_label_name="enemy_info", message=f"",
-                          font_size=10, relief="groove", justify="left")
+                          relief="groove", justify="left")
         middle_top_frame.children['enemy_info'].grid(row=0, column=0, sticky='nswe')
 
     def create_script_display_frame() -> None:
@@ -171,7 +171,7 @@ def create_script_frame(overall_interface_frame: dict) -> tk.Frame:
                          if the widget name cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=middle_top_frame, text_label_name="script_display", message=f"Welcome to Oasis",
-                          font_size=8, pady=10, relief="groove")
+                          pady=10, relief="groove")
         middle_top_frame.children['script_display'].grid(row=1, column=0, columnspan=2, sticky='nswe')
 
     middle_top_frame = tk.Frame(overall_interface_frame['Top Frame'], bd=1, relief='groove')

@@ -105,8 +105,7 @@ def create_new_player_page(name: str, interface_frames: dict) -> None:
                          if the widget name cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=main_frame, text_label_name="attribute_label",
-                          message="", font_style="Cascadia Code",
-                          font_size=15, justify="left")
+                          message="", font_size=15, justify="left")
         main_frame.children['attribute_label'].grid(row=1, column=1, rowspan=4)
 
     def display_attribute() -> dict:
