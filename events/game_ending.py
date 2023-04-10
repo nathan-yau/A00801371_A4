@@ -113,6 +113,7 @@ def easter_egg(overall_gui_info):
             widget.config(state="disabled")
     overall_gui_info['Side Bar Frame'].children['items'].config(state="disabled")
     overall_gui_info['Side Bar Frame'].children['save'].config(state="disabled")
+    overall_gui_info['Buttons Frame'].unbind("<KeyPress>")
 
 
 def main():
