@@ -69,7 +69,10 @@ def create_new_player_page(name: str, interface_frames: dict) -> None:
                          if the widget name cannot be found in the specific frame after creation
         :raises NameError: if PLAYER_ICON_IMAGE_PATH are not defined in __init__.py under GUI package
         """
-        create_image_label(frame=main_frame, widget_name="player_icon", image_path=PLAYER_ICON_IMAGE_PATH)
+        if pathlib.Path(GAME_BANNER).is_file():
+            create_image_label(frame=main_frame, widget_name="player_icon", image_path=PLAYER_ICON_IMAGE_PATH)
+        else:
+            raise FileNotFoundError("Player icon image cannot be found! Please check the path!")
         main_frame.children['player_icon'].grid(row=1, column=0, rowspan=4, ipady=40)
 
     def generate_attribute_text(random_attribute: dict, start_skip: int, end_skip: int) -> str:
