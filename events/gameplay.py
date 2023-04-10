@@ -13,11 +13,11 @@ from GUI.create_widgets import update_image_label
 from GUI_update.update_map_widget import map_widget_update
 from GUI_update.update_status_frame import update_status_message
 
-import os
+import pathlib
 from functools import partial
 
 
-def game(overall_gui_info, game_info, event):
+def game(overall_gui_info: dict, game_info: dict, event) -> None:
     """
     Drive the game flow.
     """
@@ -80,9 +80,13 @@ def game(overall_gui_info, game_info, event):
     if progress_switch['move']:
         game_info['character']['Escape'] = False
         image_file = 'Default'
-        if os.path.exists(GAME_LOCATION_IMAGE_PATH.format(progress_switch['move'])):
+        if pathlib.Path(GAME_LOCATION_IMAGE_PATH.format(progress_switch['move'])).is_file():
             image_file = str(progress_switch['move'])
-        update_image_label(overall_gui_info['Script Frame'], "image_box", GAME_LOCATION_IMAGE_PATH.format(image_file))
+        if pathlib.Path(GAME_LOCATION_IMAGE_PATH.format(image_file)).is_file():
+            update_image_label(overall_gui_info['Script Frame'], "image_box",
+                               GAME_LOCATION_IMAGE_PATH.format(image_file))
+        else:
+            raise FileNotFoundError("Location image cannot be found! Please check the path!")
 
     if progress_switch['opponent']:
         mid_boss_killed(progress_switch, game_info['environment'], overall_gui_info, (4, 2))
