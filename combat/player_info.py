@@ -140,7 +140,7 @@ def exp_calculator(gui_widgets_all, game_info, picked_foe):
         EXP = picked_foe['EXP']
         message = f'Gained {EXP} experience points by defeating {picked_foe["Name"]}'
     game_info['character']['NEXT LV (EXP)'] -= EXP
-    gui_widgets_all['Script Frame'].children['script_display'].config(text=message, font=(DEFAULT_FONT, 8))
+    gui_widgets_all['Script Frame'].children['script_display'].config(text=message)
     gui_widgets_all['Status Frame'].children['character_status'].config(
         text=update_status_message(game_info['character'], 4, -7))
     level_up(gui_widgets_all, game_info['character'])

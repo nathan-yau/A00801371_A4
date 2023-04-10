@@ -53,7 +53,7 @@ def create_top_frame() -> tk.Frame:
                          if the widget name cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=main_frame, text_label_name="name_label", message="Create Profile: ",
-                          font_size=12)
+                          font_size=15)
         main_frame.children['name_label'].grid(row=1, column=0, sticky='we', pady=10)
 
         create_user_entry(upper_frame=main_frame, box_width=30, widget_id="player_name", entry_font_size=12)
@@ -88,7 +88,7 @@ def create_top_frame() -> tk.Frame:
                          if the widget name cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=main_frame, text_label_name="copyright_label", message="All rights reserved ©",
-                          font_style="Yu Gothic UI Semibold", font_size=8)
+                          font_style="Yu Gothic UI Semibold", font_size=12)
         main_frame.children['copyright_label'].grid(row=2, column=2, columnspan=2, sticky='e', padx=10)
 
     main_frame = tk.Frame()

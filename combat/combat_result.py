@@ -38,7 +38,7 @@ def escape_from_fight(overall_gui_info: dict, game_info: dict, saved_coordinate:
     toggle_battle_buttons(overall_gui_info, "disable")
     overall_gui_info['Script Frame'].children['enemy_info'].config(text=f"")
     overall_gui_info['Script Frame'].children['script_display'].config(
-        text='Escaped the fight! Live to fight another day', font=(DEFAULT_FONT, 8))
+        text='Escaped the fight! Live to fight another day')
     game_info['character']["X-coordinate"] = saved_coordinate[0]
     game_info['character']["Y-coordinate"] = saved_coordinate[1]
     map_widget_update(game_info['character'], overall_gui_info)

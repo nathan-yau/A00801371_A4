@@ -223,13 +223,13 @@ def display_invalid_move_reason(failed_check: int, overall_gui_info: dict):
         message = "Halt! Access denied. \nIt seems like we don't have the key to enter this area! \n" \
                   "We need to search for it \n if we want to uncover what's hidden inside, adventurer!"
     elif failed_check == 1:
-        message = "Whoa, whoa, whoa! Hold up, adventurers! We've got a problem. \n" \
+        message = "Whoa, whoa, whoa! \nHold up, adventurers! We've got a problem. \n" \
                   "There's a massive wall blocking our path. \n" \
                   "Looks like we'll need to find another way around \n" \
                   "if we want to keep going."
     else:
         message = "Stop right there, adventurers! \n" \
-                  "If you proceed in that direction, you'll fall outside the world"
+                  "If you proceed in that direction, \nyou'll fall outside the world"
     overall_gui_info['Script Frame'].children['script_display'].config(text=f"{message}")
 
 

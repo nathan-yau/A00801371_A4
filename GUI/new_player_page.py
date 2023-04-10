@@ -105,7 +105,7 @@ def create_new_player_page(name: str, interface_frames: dict) -> None:
                          if the widget name cannot be found in the specific frame after creation
         """
         create_text_label(frame_obj=main_frame, text_label_name="attribute_label",
-                          message="", font_size=15, justify="left")
+                          message="", font_size=20, justify="left")
         main_frame.children['attribute_label'].grid(row=1, column=1, rowspan=4)
 
     def display_attribute() -> dict:
@@ -147,7 +147,7 @@ def create_new_player_page(name: str, interface_frames: dict) -> None:
                              'Load Save': partial(load_file, interface_frames)}
         for index, (key, value) in enumerate(new_player_button.items()):
             button_name = key.lower().replace(" ", "_")
-            create_click_button(belonging_frame=main_frame, widget_name_id=button_name, message=key)
+            create_click_button(belonging_frame=main_frame, widget_name_id=button_name, message=key, button_width=10)
             attach_button_function_call(button_name=main_frame.children[button_name],
                                         callable_function=value)
             main_frame.children[button_name].grid(row=index + 1, column=3, sticky='e', ipady=20, pady=30, padx=(50, 0))

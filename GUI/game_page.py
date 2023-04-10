@@ -62,11 +62,11 @@ def create_status_frame(overall_game_frame: dict, player_data: dict) -> tk.Frame
                          if player_data does not contain "Name" as key
         """
         create_text_label(frame_obj=left_frame, text_label_name="status_label",
-                          message=f"{player_data['Name']}'s Status", font_size=10, pady=5, relief="groove",
+                          message=f"{player_data['Name']}'s Status", font_size=12, pady=5, relief="groove",
                           bg="#E89F71")
         left_frame.children['status_label'].grid(row=2, sticky='nsew')
 
-        create_text_label(frame_obj=left_frame, text_label_name="character_status", font_size=12,
+        create_text_label(frame_obj=left_frame, text_label_name="character_status", font_size=15,
                           message=update_status_message(player_data, 4, -7), anchor="sw", justify="left")
         left_frame.children['character_status'].grid(row=3, sticky='n')
 
@@ -87,7 +87,7 @@ def create_status_frame(overall_game_frame: dict, player_data: dict) -> tk.Frame
         """
         coordinate = str(player_data["X-coordinate"]) + str(player_data["Y-coordinate"])
         create_text_label(frame_obj=left_frame, text_label_name="map_label", message=f"Current Oasis Map",
-                          pady=5, relief="groove", bg="#E89F71")
+                          pady=5, relief="groove", bg="#E89F71", font_size=12)
         left_frame.children['map_label'].grid(row=0, sticky='new')
         create_image_label(frame=left_frame, widget_name="current_map", image_path=GAME_MAP_PATH.format(coordinate))
         left_frame.children['current_map'].grid(row=1, sticky='nsew')
