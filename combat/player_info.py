@@ -26,11 +26,12 @@ def level_up(overall_gui_frame: dict, player_info: dict) -> None:
     :postcondition: reflect the player's new information on GUI after increasing the player's level and attributes
                     if their experience points are high enough for next levels
     :raises KeyError: if the keys ['Script Frame'] cannot be found inside all_widgets_dict
-                     if the keys ["Strength"], ["Dexterity"], ["Intelligence"], ["Magic Resistance"] and ["Magic Power"]
-                     inside game_player_info cannot be found
+                      if the keys ["Strength"], ["Dexterity"], ["Intelligence"], ["Magic Resistance"] and
+                      ["Magic Power"]
+                      inside game_player_info cannot be found
     :raises TypeError: if the value of the keys ['Level'], ['NEXT LV (EXP)'], ["Strength"], ["Dexterity"],
-                      ["Intelligence"], ["Magic Resistance"] and ["Magic Power"] inside foe is not number
-                      if game_player_info is not a dictionary
+                       ["Intelligence"], ["Magic Resistance"] and ["Magic Power"] inside foe is not number
+                       if game_player_info is not a dictionary
     """
     while player_info['NEXT LV (EXP)'] <= 0:
         player_info['Level'] += 1
@@ -41,7 +42,7 @@ def level_up(overall_gui_frame: dict, player_info: dict) -> None:
         level_up_widget_update(overall_gui_frame, player_info)
 
 
-def level_up_widget_update(overall_gui_frame, player_info):
+def level_up_widget_update(overall_gui_frame, player_info: dict) -> None:
     """
     Update GUI to reflect the player's information upon level up.
 
@@ -54,6 +55,8 @@ def level_up_widget_update(overall_gui_frame, player_info):
                    and ['script_display']
     :precondition: player_info must be a dictionary containing key named as ['Level']
     :postcondition: update GUI to reflect the player's information upon level up.
+    :raises KeyError: if the keys ['Script Frame'] cannot be found inside overall_gui_frame
+                      if the keys ["character_status"] and ["script_display"] cannot be found inside ['Script Frame']
     """
     overall_gui_frame['Status Frame'].children['character_status'].config(
         text=update_status_message(player_info, 4, -7))
@@ -84,7 +87,7 @@ def drop_item(gui_widgets_all: dict, player_character: dict, picked_foe: dict) -
                     based on a random probability assigned to the foe
     :raises KeyError: if the keys ['Item Frame'] cannot be found inside gui_widgets_all
                       if the key ["Items"] cannot be found inside player_character
-                     if the keys ['Items'] and ['Probability'] cannot be found inside picked_foe
+                      if the keys ['Items'] and ['Probability'] cannot be found inside picked_foe
     :raises TypeError: if gui_widgets_all, player_character and/or picked_foe is not a dictionary
                        if key ["Items"] from picked_foe is not a list
     :raises AttributeError: if key ["Items] from player_character is not a dictionary
@@ -102,7 +105,7 @@ def drop_item(gui_widgets_all: dict, player_character: dict, picked_foe: dict) -
             config(text=f"{text}\n You have found a {picked_foe['Items'][0]} ! ")
 
 
-def exp_calculator(gui_widgets_all, game_info, picked_foe):
+def exp_calculator(gui_widgets_all: dict, game_info: dict, picked_foe: dict) -> None:
     """
     Display the experience point gained from the defeated foe and the updated EXP point of the player on GUI
 
@@ -133,19 +136,19 @@ def exp_calculator(gui_widgets_all, game_info, picked_foe):
                       if key ['NEXT LV (EXP)'] inside player_character["character"] is not an integer
     """
     if random.randint(1, 20) == 1:
-        EXP = int(picked_foe['EXP'] * 1.5)
-        message = f'Wow! Defeating it granted you an \nunexpected surge of {EXP} experience points.'
+        exp = int(picked_foe['EXP'] * 1.5)
+        message = f'Wow! Defeating it granted you an \nunexpected surge of {exp} experience points.'
     else:
-        EXP = picked_foe['EXP']
-        message = f'Gained {EXP} experience points by defeating {picked_foe["Name"]}'
-    game_info['character']['NEXT LV (EXP)'] -= EXP
+        exp = picked_foe['EXP']
+        message = f'Gained {exp} experience points by defeating {picked_foe["Name"]}'
+    game_info['character']['NEXT LV (EXP)'] -= exp
     gui_widgets_all['Script Frame'].children['script_display'].config(text=message)
     gui_widgets_all['Status Frame'].children['character_status'].config(
         text=update_status_message(game_info['character'], 4, -7))
     level_up(gui_widgets_all, game_info['character'])
 
 
-def check_if_alive(gui_dict, player_info):
+def check_if_alive(gui_dict: dict, player_info: dict) -> None:
     """
     Disable buttons on GUI if player's HP is less than or equal to 0.
 
