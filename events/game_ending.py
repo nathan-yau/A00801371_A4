@@ -32,7 +32,7 @@ def game_over(overall_gui_info: dict) -> None:
         raise FileNotFoundError("Game map image cannot be found! Please check the path!")
 
 
-def goal_achieve(progress_switch, environment_info, overall_gui_info):
+def goal_achieve(progress_switch: dict, environment_info: dict, overall_gui_info: dict) -> None:
     """
     Update the GUI script display and creates an "End Game" button with a congratulatory message
     if the player defeats the boss final in the game.
@@ -69,7 +69,7 @@ def goal_achieve(progress_switch, environment_info, overall_gui_info):
                                     callable_function=partial(congratulation_scene, overall_gui_info))
 
 
-def congratulation_scene(overall_gui_info):
+def congratulation_scene(overall_gui_info: dict) -> None:
     """
     Create a congratulatory message on the top frame of the game GUI when the player wins the game.
 
@@ -91,7 +91,7 @@ def congratulation_scene(overall_gui_info):
     overall_gui_info['Top Frame'].children['end_game'].grid(row=0, sticky="we")
 
 
-def easter_egg(overall_gui_info):
+def easter_egg(overall_gui_info: dict) -> None:
     """
     Update the frame upon player's discovery on the Easter Egg
 
