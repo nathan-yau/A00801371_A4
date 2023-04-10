@@ -56,6 +56,7 @@ def pick_available_foe(happened_event: str, game_info: dict, foe_data: str = GAM
                    and a dictionary representing the foe's attributes and information.
     :precondition: the dictionary representing the foe's attributes and information must contain "EXP"
     :postcondition: picks a random foe from the game data based on the player current level, key items and locations
+    :return: an empty dictionary or a dictionary that contains the information of a foe
     :raises KeyError: if ['character'] cannot be found inside game_player
                       if ['Level'] and ['Items'] cannot be found inside game_player['character']
                       if the foe information inside encoded dictionary does not have key ["EXP"]
@@ -66,7 +67,7 @@ def pick_available_foe(happened_event: str, game_info: dict, foe_data: str = GAM
     if type(foe_data) is not dict:
         raise TypeError("the decoded message from boundary_file must represent a dictionary.")
     if happened_event == "Random" and random.randint(1, 10) <= 3:
-        picked_foe = random.randint(1, min(game_info['character']['Level'], len(foe_data)))
+        picked_foe = random.randint(1, min(game_info['character']['Level'], len(foe_data)-2))
         foe_data[picked_foe]['EXP'] = int(random.uniform(1, 2) * foe_data[picked_foe]['EXP'])
         return foe_data[picked_foe]
     elif happened_event == "Sage Thorne" and 'The Amulet of Knowledge' in game_info['character']['Items']:
