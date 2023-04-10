@@ -1,4 +1,3 @@
-import os
 from tkinter import messagebox, filedialog
 from utilities.initialize_game import load_into_game
 from save_load.uid_converter import decoder
