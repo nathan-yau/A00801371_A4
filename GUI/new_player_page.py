@@ -5,6 +5,7 @@ from new_game.new_player import create_character
 from GUI.create_widgets import create_click_button, create_text_label, create_image_label, attach_button_function_call
 from save_load.load_game_file import load_file
 from utilities.initialize_game import load_into_game
+import pathlib
 
 
 def create_new_player_page(name: str, interface_frames: dict) -> None:
@@ -44,8 +45,12 @@ def create_new_player_page(name: str, interface_frames: dict) -> None:
         :raises KeyError: if the proposed widget name in create_image_label() already exists in the specific frame
                          if the widget name cannot be found in the specific frame after creation
         :raises NameError: if GAME_BANNER are not defined
+        :raises FileNotFoundError: if GAME_BANNER image cannot be found in the given path
         """
-        create_image_label(frame=main_frame, widget_name="banner", image_path=GAME_BANNER)
+        if pathlib.Path(GAME_BANNER).is_file():
+            create_image_label(frame=main_frame, widget_name="banner", image_path=GAME_BANNER)
+        else:
+            raise FileNotFoundError("Banner image cannot be found! Please check the path!")
         main_frame.children['banner'].grid(row=0, column=0, columnspan=5, sticky="nsew")
 
     def create_player_image() -> None:
